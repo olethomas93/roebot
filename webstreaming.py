@@ -28,7 +28,7 @@ app = Flask(__name__)
 camera = PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 32
-rawCapture = PiRGBArray(camera, size=(640, 480))
+
 
 
 
@@ -48,6 +48,7 @@ def detect_motion(frameCount):
     # read thus far
     md = singleMotionDetector.SingleMotionDetector(accumWeight=0.5)
     total = 0
+    rawCapture = PiRGBArray(camera, size=(640, 480))
 
     # loop over frames from the video stream
     for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
