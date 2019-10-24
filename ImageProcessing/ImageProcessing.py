@@ -65,7 +65,7 @@ class imageProcessing:
                 color = 255, 0, 0
                 cv2.drawContours(drawing, countors, i, color, 2)
                 cv2.circle(drawing, (int(mc[i][0]), int(mc[i][1])), 4, color, -1)
-                cv2.drawContours(frame, countors, -1, (0, 0, 255), 1)
+                cv2.drawContours(image, countors, -1, (0, 0, 255), 1)
 
             cv2.imshow('gray', grayImage)
             cv2.imshow('frame', image)
