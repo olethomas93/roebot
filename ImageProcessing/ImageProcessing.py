@@ -46,7 +46,7 @@ class imageProcessing:
                 xCoor = mu[i]['m10'] / (mu[i]['m00'] + 1e-5)
                 Ycoor = mu[i]['m01'] / (mu[i]['m00'] + 1e-5)
                 heigth, width = dilatedImage.shape
-                print(heigth, width)
+
                 xCoor = width - xCoor
                 Ycoor = heigth - Ycoor
 
@@ -71,13 +71,10 @@ class imageProcessing:
             cv2.imshow('frame', image)
             cv2.imshow('bright', bwImage)
 
-            # cv2.imshow('bw',img)
-            cv2.imshow('ele', drawing)
-
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
                 break
-        rawCapture.truncate(0)
+            rawCapture.truncate(0)
 
         cv2.destroyAllWindows()
 
