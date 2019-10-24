@@ -86,6 +86,8 @@ def detect_motion(frameCount):
 
         # acquire the lock, set the output frame, and release the
         # lock
+        rawCapture.truncate(0)
+
         with lock:
             outputFrame = image.copy()
 
