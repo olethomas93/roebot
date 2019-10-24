@@ -29,16 +29,16 @@ class imageProcessing:
 
     def detect(self,image):
 
-            # Take each frame
-            # _, frame = capture.read()
+             #Take each frame
+             #_, frame = capture.read()
 
 
 
-            # h = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            # w = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-            kSize = np.ones((35, 35), np.uint8)
-            # grayImage = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            # brightGray = cv2.convertScaleAbs(grayImage, -1, alpha=5, beta=10)
+            #h = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            #w = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+            #kSize = np.ones((35, 35), np.uint8)
+            #grayImage = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            #brightGray = cv2.convertScaleAbs(grayImage, -1, alpha=5, beta=10)
             ret, bwImage = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (35, 35))

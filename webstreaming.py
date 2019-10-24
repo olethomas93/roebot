@@ -10,6 +10,8 @@ import datetime
 import imutils
 import time
 import cv2
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 
 # initialize the output frame and a lock used to ensure thread-safe
 # exchanges of the output frames (useful when multiple browsers/tabs
@@ -22,9 +24,13 @@ app = Flask(__name__)
 
 # initialize the video stream and allow the camera sensor to
 # warmup
-vs = VideoStream(usePiCamera=1).start()
-# vs = VideoStream(src=0).start()
-time.sleep(2.0)
+# initialize the camera and grab a reference to the raw camera capture
+camera = PiCamera()
+camera.resolution = (640, 480)
+camera.framerate = 32
+rawCapture = PiRGBArray(camera, size=(640, 480))
+
+
 
 
 @app.route("/")
@@ -44,12 +50,11 @@ def detect_motion(frameCount):
     total = 0
 
     # loop over frames from the video stream
-    while True:
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         # read the next frame from the video stream, resize it,
         # convert the frame to grayscale, and blur it
-        frame = vs.read()
-        frame = imutils.resize(frame, width=400)
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        image = frame.array
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         # grab the current timestamp and draw it on the frame
@@ -81,7 +86,7 @@ def detect_motion(frameCount):
         # acquire the lock, set the output frame, and release the
         # lock
         with lock:
-            outputFrame = frame.copy()
+            outputFrame = image.copy()
 
 
 def generate():

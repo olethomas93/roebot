@@ -1,5 +1,5 @@
 import cv2
-import ImageProcessing.RoeImage
+import ImageProcessing.RoeImage as roeimage
 import time
 
 
@@ -19,7 +19,7 @@ class Camera:
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
     def takePicture(self, cameraHeigth, pictureIndex):
-        result = RoeImage.RoeImage(cameraHeigth, self.FOV)
+        result = roeimage(cameraHeigth, self.FOV)
 
         _, self.frame = self.cap.read()
 
