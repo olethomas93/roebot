@@ -76,7 +76,7 @@ def detect_motion(frameCount):
                 # unpack the tuple and draw the box surrounding the
                 # "motion area" on the output frame
                 (thresh, (minX, minY, maxX, maxY)) = motion
-                cv2.rectangle(frame, (minX, minY), (maxX, maxY),
+                cv2.rectangle(image, (minX, minY), (maxX, maxY),
                               (0, 0, 255), 2)
 
         # update the background model and increment the total number
