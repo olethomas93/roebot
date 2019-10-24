@@ -59,8 +59,8 @@ def detect_motion(frameCount):
 
         # grab the current timestamp and draw it on the frame
         timestamp = datetime.datetime.now()
-        cv2.putText(frame, timestamp.strftime(
-            "%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
+        cv2.putText(image, timestamp.strftime(
+            "%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
         # if the total number of frames has reached a sufficient
