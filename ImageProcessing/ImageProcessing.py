@@ -28,7 +28,7 @@ class imageProcessing:
             brightGray = cv2.convertScaleAbs(grayImage, -1, alpha=5, beta=10)
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
+            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
             erodedImage = cv2.erode(bwImage, StructureElement)
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
             countors, _ = cv2.findContours(dilatedImage, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
