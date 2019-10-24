@@ -3,10 +3,12 @@ import numpy as np
 import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from threading import Thread, Lock
+
+regs_lock = Lock()
 
 
-
-class imageProcessing:
+class imageProcessing(object):
 
     def __init__(self):
 
@@ -50,9 +52,9 @@ class imageProcessing:
                 xCoor = width - xCoor
                 Ycoor = heigth - Ycoor
 
-                #cor = Coordinate.Coordinate(xCoor, Ycoor)
+                # cor = Coordinate.Coordinate(xCoor, Ycoor)
 
-                #print(cor.xCoord)
+                # print(cor.xCoord)
 
                 mc[i] = (mu[i]['m10'] / (mu[i]['m00'] + 1e-5), mu[i]['m01'] / (mu[i]['m00'] + 1e-5))
 
@@ -78,26 +80,10 @@ class imageProcessing:
 
         cv2.destroyAllWindows()
 
-    # def elementsInProcessingQueue(self):
-    #     return len(self.processingQueue)
-    #
-    # def runTilStackEmpty(self):
-    #
-    #     while (True):
-    #
-    #         if self.elementsInProcessingQueue() > 0:
-    #
-    #             processImage()
-    #         else:
-    #             print("kroefoe")
+    t1 = Thread(target=processImage)
 
-    # t1 = threading.Thread(target= img.runTilStackEmpty)
-
-    # t1.start()
-
-
-img = imageProcessing()
-img.processImage()
+    t1.daemon = True
+    t1.start()
 
 
 

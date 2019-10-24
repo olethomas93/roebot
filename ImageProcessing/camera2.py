@@ -14,7 +14,7 @@ class VideoCamera(object):
             # instead.
         self.video = urllib.urlopen('http://10.0.0.36:8888/update.html')   #cv2.VideoCapture(0)
             # If you decide to use video.mp4, you must have this file in the folder
-            # as the main.py.
+            # as the start.py.
             # self.video = cv2.VideoCapture('video.mp4')
 
     def __del__(self):
