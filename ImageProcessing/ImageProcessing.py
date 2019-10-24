@@ -6,9 +6,6 @@ from picamera import PiCamera
 
 
 
-import threading
-
-
 class imageProcessing:
 
     def __init__(self):
@@ -53,9 +50,9 @@ class imageProcessing:
                 xCoor = width - xCoor
                 Ycoor = heigth - Ycoor
 
-                cor = Coordinate.Coordinate(xCoor, Ycoor)
+                #cor = Coordinate.Coordinate(xCoor, Ycoor)
 
-                print(cor.xCoord)
+                #print(cor.xCoord)
 
                 mc[i] = (mu[i]['m10'] / (mu[i]['m00'] + 1e-5), mu[i]['m01'] / (mu[i]['m00'] + 1e-5))
 
