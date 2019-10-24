@@ -69,7 +69,7 @@ class imageProcessing:
 
             cv2.imshow('gray', grayImage)
             cv2.imshow('frame', image)
-            cv2.imshow('bright', bwImage)
+            cv2.imshow('bright', drawing)
 
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
