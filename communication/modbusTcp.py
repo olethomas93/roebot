@@ -46,8 +46,6 @@ class modbusClient(object):
             if reg_list:
                 with regs_lock:
                     regs = list(reg_list)
-                    for x in regs:
-                        print(x)
 
 
 
@@ -65,6 +63,6 @@ class modbusClient(object):
     while True:
         # print regs list (with thread lock synchronization)
         with regs_lock:
-            print(regs[1])
+            print(regs[0])
         # 1s before next print
         time.sleep(1)
