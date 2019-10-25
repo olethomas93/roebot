@@ -36,7 +36,7 @@ class modbusClient(object):
             if not c.is_open():
                 c.open()
             # do modbus reading on socket
-            test = self.read_float(2)
+            test = self.read_float(0,10)
             print(test)
             reg_list = c.read_holding_registers(0, 10)
             # if read is ok, store result in regs (with thread lock synchronization)
@@ -51,7 +51,7 @@ class modbusClient(object):
 
 
     # start polling thread
-    tp = Thread(target=polling_thread)
+    tp = Thread(target=polling_thread ,args="self")
     # set daemon: polling thread will exit if main thread exit
     tp.daemon = True
     tp.start()
