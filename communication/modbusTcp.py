@@ -52,7 +52,7 @@ class modbusClient(object):
                 time.sleep(3)
 
     # start polling thread
-    tp = Thread(target=polling_thread)
+    tp = Thread(target=polling_thread,args=())
     # set daemon: polling thread will exit if main thread exit
     tp.daemon = True
     tp.start()
