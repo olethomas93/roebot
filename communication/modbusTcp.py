@@ -34,6 +34,7 @@ class modbusClient(object):
         while True:
             # keep TCP open
             if not c.is_open():
+                print("r3r3")
                 c.open()
             # do modbus reading on socket
             test = self.read_float(0,20)
