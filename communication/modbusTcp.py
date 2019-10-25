@@ -36,7 +36,7 @@ class modbusClient(object):
             if not c.is_open():
                 c.open()
             # do modbus reading on socket
-            test = self.read_float(4,10)
+            test = self.read_float(4,1)
             print(test)
             reg_list = c.read_holding_registers(0, 10)
             # if read is ok, store result in regs (with thread lock synchronization)
