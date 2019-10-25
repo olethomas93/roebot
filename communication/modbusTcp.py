@@ -32,6 +32,8 @@ class modbusClient(object):
         c = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
         # polling loop
         while True:
+            if c.is_open():
+                print("isOPEN")
             # keep TCP open
             if not c.is_open():
 
