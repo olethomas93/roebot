@@ -4,7 +4,7 @@ from threading import Thread, Lock
 from pyModbusTCP import utils
 
 SERVER_HOST = "158.38.140.61"
-SERVER_PORT = 502
+SERVER_PORT = 2000
 
 # set global
 regs = []
