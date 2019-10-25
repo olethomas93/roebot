@@ -37,6 +37,7 @@ class modbusClient(object):
                 c.open()
             # do modbus reading on socket
             test = self.read_float(0,20)
+            print("heei")
             print(test[18])
 
             reg_list = c.read_holding_registers(0, 10)
