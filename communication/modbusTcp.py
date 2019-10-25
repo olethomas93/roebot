@@ -41,9 +41,11 @@ class modbusClient(object):
             if reg_list:
                 with regs_lock:
                     regs = list(reg_list)
-                    print(regs[0])
+                    print(regs[1]);
+
+
             # 1s before next polling
-            time.sleep(1)
+            time.sleep(3)
 
 
     # start polling thread
