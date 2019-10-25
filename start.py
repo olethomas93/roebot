@@ -5,9 +5,10 @@ from communication import modbusTcp
 
 
 def main():
-    tcpClient = modbusTcp.modbusClient()
+
     image = ImageProcessing.imageProcessing()
     image.processImage()
+    tcpClient = modbusTcp.modbusClient()
     tcpClient.polling_thread()
 
 
