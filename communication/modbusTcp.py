@@ -34,18 +34,20 @@ class modbusClient(object):
         while True:
             # keep TCP open
             if not c.is_open():
-                print("r3r3")
+
                 c.open()
             # do modbus reading on socket
-            test = self.read_float(0,20)
-            print("heei")
-            print(test[18])
 
-            reg_list = c.read_holding_registers(0, 10)
+
+
+
+            reg_list = c.read_holding_registers(0, 20)
             # if read is ok, store result in regs (with thread lock synchronization)
             if reg_list:
                 with regs_lock:
                     regs = list(reg_list)
+                    for x in regs:
+                        print(x)
 
 
 
@@ -63,6 +65,6 @@ class modbusClient(object):
     while True:
         # print regs list (with thread lock synchronization)
         with regs_lock:
-            print(regs)
+            print(regs[1])
         # 1s before next print
         time.sleep(1)
