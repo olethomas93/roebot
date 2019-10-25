@@ -37,17 +37,19 @@ class modbusClient(object):
                 print("isOPEN")
             # keep TCP open
             if not c.is_open():
-                c.open()
-            # do modbus reading on socket
+                if not c.open():
+                    print("unable to connect to " + SERVER_HOST + ":" + str(SERVER_PORT))
 
-            reg_list = c.read_holding_registers(3, 1)
+            # do modbus reading on socket
+            if c.is_open():
+                reg_list = c.read_holding_registers(0, 10)
             # if read is ok, store result in regs (with thread lock synchronization)
-            if reg_list:
-                with regs_lock:
-                    regs = list(reg_list)
+                if reg_list:
+                    with regs_lock:
+                        regs = list(reg_list)
 
             # 1s before next polling
-            time.sleep(3)
+                time.sleep(3)
 
     # start polling thread
     tp = Thread(target=polling_thread)
@@ -59,6 +61,6 @@ class modbusClient(object):
     while True:
         # print regs list (with thread lock synchronization)
         with regs_lock:
-            print(regs[0])
+            print(str(regs))
         # 1s before next print
         time.sleep(1)
