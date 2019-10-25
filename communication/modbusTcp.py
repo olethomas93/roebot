@@ -3,7 +3,7 @@ import time
 from threading import Thread, Lock
 from pyModbusTCP import utils
 
-SERVER_HOST = "localhost"
+SERVER_HOST = "158.38.140.61"
 SERVER_PORT = 502
 
 # set global
@@ -12,7 +12,7 @@ regs = []
 # init a thread lock
 regs_lock = Lock()
 
-class modbusClient():
+class modbusClient(object):
 
     def read_float(self, address, number=1):
         reg_l = self.read_holding_registers(address, number * 2)
@@ -41,6 +41,7 @@ class modbusClient():
             if reg_list:
                 with regs_lock:
                     regs = list(reg_list)
+                    print(regs[0])
             # 1s before next polling
             time.sleep(1)
 
