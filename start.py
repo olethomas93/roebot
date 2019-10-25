@@ -5,7 +5,7 @@ from ImageProcessing import ImageProcessing
 
 def main():
 
-    image = ImageProcessing.imageProcessing
+    image = ImageProcessing.imageProcessing()
     image.processImage()
 
 
