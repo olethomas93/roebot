@@ -49,7 +49,7 @@ class modbusClient(object):
                         regs = list(reg_list)
 
             # 1s before next polling
-                time.sleep(3)
+                time.sleep(1)
 
     # start polling thread
     tp = Thread(target=polling_thread,args=())

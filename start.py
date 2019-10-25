@@ -8,8 +8,8 @@ def main():
 
     image = ImageProcessing.imageProcessing()
     image.processImage()
-    tcpClient = modbusTcp.modbusClient()
-    tcpClient.polling_thread()
+    # tcpClient = modbusTcp.modbusClient()
+    # tcpClient.polling_thread()
 
 
 if __name__ == "__main__":
