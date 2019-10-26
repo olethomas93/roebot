@@ -1,15 +1,39 @@
-from ImageProcessing import ImageProcessing
+
 from communication import modbusTcp
+from ImageProcessing import ImageProcessing
+from threading import Thread, Lock
 
 
 
 
 def main():
 
-    image = ImageProcessing.imageProcessing()
-    image.processImage()
-    # tcpClient = modbusTcp.modbusClient()
-    # tcpClient.polling_thread()
+
+    tcpClient = modbusTcp.modbusClient()
+    imageProcess = ImageProcessing.imageProcessing()
+
+
+    test = tcpClient.getValue(2)
+
+    if test:
+        x,y = imageProcess.processImage();
+
+        print(x,y)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

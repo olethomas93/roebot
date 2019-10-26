@@ -3,9 +3,6 @@ import time
 from threading import Thread, Lock
 from pyModbusTCP import utils
 
-SERVER_HOST = "158.38.140.61"
-SERVER_PORT = 2000
-
 # set global
 regs = []
 
@@ -13,7 +10,14 @@ regs = []
 regs_lock = Lock()
 
 
+
 class modbusClient(object):
+    th = None
+
+    def __init__(self):
+        self.th = Thread(target=self.polling_thread, args=())
+        self.SERVER_HOST = "169.254.127.11"
+        self.SERVER_PORT = 2000
 
     def read_float(self, address, number=1):
         reg_l = self.read_holding_registers(address, number * 2)
@@ -27,40 +31,47 @@ class modbusClient(object):
         b16_l = utils.long_list_to_word(b32_l)
         return self.write_multiple_registers(address, b16_l)
 
+    def getValue(self,address):
+        self.th.daemon = True
+        self.th.start()
+        while True:
+            # print regs list (with thread lock synchronization)
+            with regs_lock:
+                if len(regs)>0:
+
+
+                    if  regs[address] == 34:
+                        return True
+
+
+            # 1s before next print
+            time.sleep(1)
+
+
     # modbus polling thread
     def polling_thread(self):
         global regs
-        c = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
+
+        c = ModbusClient(host=self.SERVER_HOST, port=self.SERVER_PORT)
         # polling loop
         while True:
-            if c.is_open():
-                print("isOPEN")
+
             # keep TCP open
             if not c.is_open():
                 if not c.open():
-                    print("unable to connect to " + SERVER_HOST + ":" + str(SERVER_PORT))
+                    print("unable to connect to " + self.SERVER_HOST + ":" + str(self.SERVER_PORT))
 
             # do modbus reading on socket
             if c.is_open():
+                print("connection")
                 reg_list = c.read_holding_registers(0, 10)
-            # if read is ok, store result in regs (with thread lock synchronization)
+                # if read is ok, store result in regs (with thread lock synchronization)
                 if reg_list:
                     with regs_lock:
-                        regs = list(reg_list)
+                        regs = reg_list
 
-            # 1s before next polling
+                # 1s before next polling
                 time.sleep(1)
 
-    # start polling thread
-    tp = Thread(target=polling_thread,args=())
-    # set daemon: polling thread will exit if main thread exit
-    tp.daemon = True
-    tp.start()
 
-    # display loop (in main thread)
-    while True:
-        # print regs list (with thread lock synchronization)
-        with regs_lock:
-            print(str(regs))
-        # 1s before next print
-        time.sleep(1)
+

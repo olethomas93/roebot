@@ -52,6 +52,8 @@ class imageProcessing(object):
                 xCoor = width - xCoor
                 Ycoor = heigth - Ycoor
 
+                
+
                 # cor = Coordinate.Coordinate(xCoor, Ycoor)
 
                 # print(cor.xCoord)
@@ -79,11 +81,3 @@ class imageProcessing(object):
             rawCapture.truncate(0)
 
         cv2.destroyAllWindows()
-
-    t1 = Thread(target=processImage)
-
-    t1.daemon = True
-    t1.start()
-
-
-
