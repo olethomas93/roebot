@@ -16,9 +16,6 @@ class imageProcessing(object):
 
     def processImage(self):
 
-
-
-
         camera = PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 30
@@ -26,14 +23,12 @@ class imageProcessing(object):
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 
-
-
             image = frame.array
             thresh = cv2.inRange(image.copy(), (0, 0, 0), (213, 255, 255))
             kSize = np.ones((35, 35), np.uint8)
             kernel = np.ones((5, 5), np.float32) / 25
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            grayImage= cv2.GaussianBlur(thresh, (5, 5), 0)
+            grayImage = cv2.GaussianBlur(thresh, (5, 5), 0)
             grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=-2, beta=10)
             edged = cv2.Canny(thresh, 10, 40)  # 10 and 40 to be more perceptive
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
@@ -42,15 +37,12 @@ class imageProcessing(object):
             erodedImage = cv2.erode(thresh, StructureElement)
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
-
             countors, _ = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
 
             # Get the moments
             mu = [None] * len(countors)
             for i in range(len(countors)):
                 mu[i] = cv2.moments(countors[i])
-
 
             # Get the mass centers, X & Y coordinates of blob
             mc = [None] * len(countors)
@@ -83,10 +75,10 @@ class imageProcessing(object):
                 cv2.drawContours(image, countors, -1, (0, 0, 255), 1)
 
             cv2.imshow('image', image)
-            cv2.imshow('bwimage',dilatedImage)
+            cv2.imshow('bwimage', dilatedImage)
             cv2.imshow('frame', thresh)
             cv2.imshow('bright', drawing)
-            #cv2.imshow('keypoints', with_key_points)
+            # cv2.imshow('keypoints', with_key_points)
 
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
