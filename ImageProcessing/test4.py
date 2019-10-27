@@ -3,10 +3,8 @@ import numpy as np
 import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-from imutils.perspective import four_point_transform
-from imutils import contours
-import argparse
-import imutils
+
+
 
 
 
