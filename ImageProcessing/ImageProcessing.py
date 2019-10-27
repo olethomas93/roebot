@@ -73,6 +73,7 @@ class imageProcessing(object):
                 cv2.drawContours(image, countors, -1, (0, 0, 255), 1)
 
             cv2.imshow('gray', grayImage)
+            cv2.imshow('bwimage',bwImage)
             cv2.imshow('frame', image)
             cv2.imshow('bright', drawing)
             #cv2.imshow('keypoints', with_key_points)
