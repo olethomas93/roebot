@@ -38,7 +38,7 @@ class imageProcessing(object):
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
             params = cv2.SimpleBlobDetector_Params()
             params.filterByCircularity = True
-            params.minCircularity = 1
+            params.minCircularity = 0.1
             detector = cv2.SimpleBlobDetector_create(params)
             keypoints = detector.detect(image)
 
