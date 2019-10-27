@@ -28,7 +28,7 @@ class imageProcessing(object):
 
             image_color = frame.array
             image_ori = cv2.cvtColor(image_color,cv2.COLOR_BGR2GRAY)
-            thresh = cv2.inRange(image_color.copy(), (0, 0, 0), (213, 255, 255))
+
 
 
             lower_bound = np.array([0, 0, 10])
@@ -37,6 +37,7 @@ class imageProcessing(object):
             image = image_color
 
             mask = cv2.inRange(image, lower_bound, upper_bound)
+            thresh = cv2.inRange(image, (0, 0, 0), (213, 255, 255))
 
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
@@ -51,7 +52,7 @@ class imageProcessing(object):
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
             contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                        cv2.CHAIN_APPROX_SIMPLE)[0]
+                                        cv2.CHAIN_APPROX_SIMPLE)[1]
             #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
             array = []
@@ -62,7 +63,7 @@ class imageProcessing(object):
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
-                if r >= 0 and r <= 50:
+                if r >= 0 and r <= 100:
                     cv2.circle(image, center, r, (0, 255, 0), 2)
                     array.append(center)
 
