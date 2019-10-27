@@ -5,7 +5,7 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import imutils
 
-regs_lock = Lock()
+
 
 
 class imageProcessing(object):
