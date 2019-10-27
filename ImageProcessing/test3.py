@@ -19,7 +19,7 @@ class imageProcessing(object):
         camera = PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 30
-        rawCapture = PiRGBArray(camera, size=(1920, 1080))
+        rawCapture = PiRGBArray(camera, size=(640, 480))
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 

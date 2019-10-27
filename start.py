@@ -13,13 +13,14 @@ def main():
     tcpClient = modbusTcp.modbusClient()
     #imageProcess = ImageProcessing.imageProcessing()
     test2 = test3.imageProcessing()
+    test2.processImage()
 
-    test = tcpClient.getValue(2)
-
-    if test:
-        x,y = test2.processImage();
-
-        print(x,y)
+    # test = tcpClient.getValue(2)
+    #
+    # if test:
+    #     x,y = test2.processImage();
+    #
+    #     print(x,y)
 
 
 
