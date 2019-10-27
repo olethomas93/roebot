@@ -28,6 +28,8 @@ class imageProcessing(object):
 
             image_color = frame.array
             image_ori = cv2.cvtColor(image_color,cv2.COLOR_BGR2GRAY)
+            thresh = cv2.inRange(image_color.copy(), (0, 0, 0), (213, 255, 255))
+
 
             lower_bound = np.array([0, 0, 10])
             upper_bound = np.array([255, 255, 195])
@@ -43,12 +45,12 @@ class imageProcessing(object):
 
             # Use erosion and dilation combination to eliminate false positives.
             # In this case the text Q0X could be identified as circles but it is not.
-            mask = cv2.erode(mask, kernel, iterations=6)
-            mask = cv2.dilate(mask, kernel, iterations=3)
+            thresh = cv2.erode(thresh, kernel, iterations=6)
+            thresh = cv2.dilate(thresh, kernel, iterations=3)
 
-            closing = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+            closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
-            contours = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+            contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
                                         cv2.CHAIN_APPROX_SIMPLE)[0]
             contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
