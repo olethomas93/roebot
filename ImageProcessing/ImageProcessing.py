@@ -53,7 +53,7 @@ class imageProcessing(object):
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-            erodedImage = cv2.erode(bwImage, StructureElement)
+            erodedImage = cv2.erode(thresh, StructureElement)
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
 
