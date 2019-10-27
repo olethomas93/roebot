@@ -44,10 +44,11 @@ class imageProcessing(object):
 
 
             image = frame.array
-            thresh = cv2.inRange(image, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
+
             kSize = np.ones((35, 35), np.uint8)
             kernel = np.ones((5, 5), np.float32) / 25
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            thresh = cv2.inRange(grayImage, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
             grayImage = cv2.filter2D(grayImage, -1, kernel)
             grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=1, beta=10)
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
