@@ -15,16 +15,7 @@ class imageProcessing(object):
         processingQueue = list
 
     def processImage(self):
-        def nothing(x):
-            pass
-        cv2.namedWindow('temp')
-        cv2.createTrackbar('bl', 'temp', 0, 255, nothing)
-        cv2.createTrackbar('gl', 'temp', 0, 255, nothing)
-        cv2.createTrackbar('rl', 'temp', 0, 255, nothing)
-        cv2.createTrackbar('bh', 'temp', 255, 255, nothing)
-        cv2.createTrackbar('gh', 'temp', 255, 255, nothing)
-        cv2.createTrackbar('rh', 'temp', 255, 255, nothing)
-
+     
 
 
 
@@ -34,13 +25,7 @@ class imageProcessing(object):
         rawCapture = PiRGBArray(camera, size=(640, 480))
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-            bl_temp = cv2.getTrackbarPos('bl', 'temp')
-            gl_temp = cv2.getTrackbarPos('gl', 'temp')
-            rl_temp = cv2.getTrackbarPos('rl', 'temp')
 
-            bh_temp = cv2.getTrackbarPos('bh', 'temp')
-            gh_temp = cv2.getTrackbarPos('gh', 'temp')
-            rh_temp = cv2.getTrackbarPos('rh', 'temp')
 
 
             image = frame.array
