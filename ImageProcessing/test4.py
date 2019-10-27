@@ -3,6 +3,9 @@ import numpy as np
 import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from imutils.perspective import four_point_transform
+from imutils import contours
+import argparse
 import imutils
 
 
@@ -25,28 +28,46 @@ class imageProcessing(object):
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 
-            image = frame.array
-            imgray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            ret, thresh = cv2.threshold(imgray, 200, 255, cv2.THRESH_BINARY)
-            cimg = cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR)
+            image_color = frame.array
+            image_ori = cv2.cvtColor(image_color,cv2.COLOR_BGR2GRAY)
 
-            c = cv2.HoughCircles(thresh, cv2.HOUGH_GRADIENT, 0.5, 41, param1=70,
-                                 param2=30, minRadius=3, maxRadius=30)
-            c = np.uint16(np.around(c))
+            lower_bound = np.array([0, 0, 10])
+            upper_bound = np.array([255, 255, 195])
 
-            for i in c[0, :]:
-                # draw the outer circle
-                cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
-                # draw the center of the circle
-                cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
+            image = image_color
 
-            cv2.namedWindow('img', cv2.WINDOW_NORMAL)
-            cv2.resizeWindow('img', 800, 800)
-            cv2.imshow('img', cimg)
+            mask = cv2.inRange(image, lower_bound, upper_bound)
 
+            # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
+            #             cv2.THRESH_BINARY_INV,33,2)
 
+            kernel = np.ones((3, 3), np.uint8)
+
+            # Use erosion and dilation combination to eliminate false positives.
+            # In this case the text Q0X could be identified as circles but it is not.
+            mask = cv2.erode(mask, kernel, iterations=6)
+            mask = cv2.dilate(mask, kernel, iterations=3)
+
+            closing = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+
+            contours = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+                                        cv2.CHAIN_APPROX_SIMPLE)[0]
+            contours.sort(key=lambda x: cv2.boundingRect(x)[0])
+
+            array = []
+            ii = 1
+            print
+            len(contours)
+            for c in contours:
+                (x, y), r = cv2.minEnclosingCircle(c)
+                center = (int(x), int(y))
+                r = int(r)
+                if r >= 6 and r <= 10:
+                    cv2.circle(image, center, r, (0, 255, 0), 2)
+                    array.append(center)
+
+            cv2.imshow("preprocessed", image_color)
             k = cv2.waitKey(5) & 0xFF
-
             if k == 27:
                 break
             rawCapture.truncate(0)
