@@ -17,7 +17,7 @@ class imageProcessing(object):
     def processImage(self):
 
         camera = PiCamera()
-        camera.resolution = (1920, 1080)
+        camera.resolution = (640, 480)
         camera.framerate = 30
         rawCapture = PiRGBArray(camera, size=(1920, 1080))
 
