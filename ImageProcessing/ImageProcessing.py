@@ -29,7 +29,7 @@ class imageProcessing(object):
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             grayImage = cv2.filter2D(grayImage, -1, kernel)
             grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=1, beta=10)
-            ret, bwImage = cv2.threshold(grayImage, 0, 100, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+            ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
             erodedImage = cv2.erode(bwImage, StructureElement)
@@ -73,7 +73,7 @@ class imageProcessing(object):
                 cv2.drawContours(image, countors, -1, (0, 0, 255), 1)
 
             cv2.imshow('gray', grayImage)
-            cv2.imshow('bwimage',bwImage)
+            cv2.imshow('bwimage',dilatedImage)
             cv2.imshow('frame', image)
             cv2.imshow('bright', drawing)
             #cv2.imshow('keypoints', with_key_points)
