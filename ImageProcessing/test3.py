@@ -27,7 +27,8 @@ class imageProcessing(object):
             kSize = np.ones((35, 35), np.uint8)
 
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=5, beta=10)
+            grayImage = cv2.filter2D(grayImage,-1)
+            grayImage = cv2.convertScaleAbs(grayImage, alpha=5, beta=10)
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (10, 10))
@@ -43,7 +44,7 @@ class imageProcessing(object):
             with_key_points = cv2.drawKeypoints(image, keypoints, np.array([]), (0, 0, 255),
                                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
             # draw circls around mass center of detected object
-
+            cv2.imshow('gray', grayImage)
             cv2.imshow('fdf',dilatedImage)
             cv2.imshow('keypoints', with_key_points)
 
