@@ -29,7 +29,7 @@ class imageProcessing(object):
 
 
             image = frame.array
-            thresh = cv2.inRange(image, (0, 0, 0), (213, 255, 255))
+            thresh = cv2.inRange(image.copy(), (0, 0, 0), (213, 255, 255))
             kSize = np.ones((35, 35), np.uint8)
             kernel = np.ones((5, 5), np.float32) / 25
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
