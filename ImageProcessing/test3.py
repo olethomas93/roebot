@@ -33,13 +33,18 @@ class imageProcessing(object):
 
             image = frame.array
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            edged = cv2.Canny(gray, 50, 100)
+            blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+            edged = cv2.Canny(blurred, 10, 40)  # 10 and 40 to be more perceptive
             cv2.imshow("Original", image)
 
             cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
             cnts = imutils.grab_contours(cnts)
             mask = np.ones(image.shape[:2], dtype="uint8") * 255
-
+            # loop over the contours
+            for c in cnts:
+                # if the contour is bad, draw it on the mask
+                if self.is_contour_bad(c):
+                    cv2.drawContours(mask, [c], -1, 0, -1)
             # remove the contours from the image and show the resulting images
             image = cv2.bitwise_and(image, image, mask=mask)
             cv2.imshow("Mask", mask)
