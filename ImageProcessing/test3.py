@@ -29,7 +29,7 @@ class imageProcessing(object):
 
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             grayImage = cv2.filter2D(grayImage,-1,kernel)
-            grayImage = cv2.convertScaleAbs(grayImage, alpha=1, beta=10)
+            grayImage = cv2.convertScaleAbs(grayImage, alpha=2, beta=10)
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (10, 10))
