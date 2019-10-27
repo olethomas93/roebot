@@ -12,12 +12,12 @@ def main():
 
     tcpClient = modbusTcp.modbusClient()
     #imageProcess = ImageProcessing.imageProcessing()
-    test = test3.imageProcessing()
+    test2 = test3.imageProcessing()
 
     test = tcpClient.getValue(2)
 
     if test:
-        x,y = test.processImage();
+        x,y = test2.processImage();
 
         print(x,y)
 
