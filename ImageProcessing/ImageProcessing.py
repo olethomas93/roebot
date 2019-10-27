@@ -57,8 +57,6 @@ class imageProcessing(object):
                 xCoor = width - xCoor
                 Ycoor = heigth - Ycoor
 
-
-
                 # cor = Coordinate.Coordinate(xCoor, Ycoor)
 
                 # print(cor.xCoord)
@@ -68,7 +66,8 @@ class imageProcessing(object):
             # Draw contours
 
             drawing = np.zeros((dilatedImage.shape[0], dilatedImage.shape[1], 3), dtype=np.uint8)
-            with_key_points = cv2.drawKeypoints(image,keypoints,np.array(0,0,255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            with_key_points = cv2.drawKeypoints(image, keypoints, np.array([]), (0, 0, 255),
+                                                cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
             # draw circls around mass center of detected object
             for i in range(len(countors)):
                 color = 255, 0, 0
