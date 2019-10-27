@@ -32,7 +32,8 @@ class imageProcessing(object):
 
             image = frame.array
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+            thresh = cv2.inRange(image.copy(), (0, 0, 0), (213, 255, 255))
+            blurred = cv2.GaussianBlur(thresh, (5, 5), 0)
             edged = cv2.Canny(blurred, 10, 40)  # 10 and 40 to be more perceptive
             cv2.imshow("Original", image)
 
