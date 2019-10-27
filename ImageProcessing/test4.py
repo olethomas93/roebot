@@ -63,9 +63,9 @@ class imageProcessing(object):
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
-                #if r >= 6 and r <= 50:
-                cv2.circle(image, center, r, (0, 255, 0), 2)
-                array.append(center)
+                if r >= 6 and r <= 10:
+                    cv2.circle(image, center, r, (0, 255, 0), 2)
+                    array.append(center)
 
             cv2.imshow("preprocessed", image_color)
             cv2.imshow('mask',thresh)
