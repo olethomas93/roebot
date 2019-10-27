@@ -30,14 +30,11 @@ class imageProcessing(object):
             grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=2, beta=10)
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (35, 35))
+            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
             erodedImage = cv2.erode(bwImage, StructureElement)
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
-            params = cv2.SimpleBlobDetector_Params()
-            params.filterByCircularity = True
-            params.minCircularity = 0.1
-            #detector = cv2.SimpleBlobDetector()
-            #keypoints = detector.detect(dilatedImage)
+
+
             countors, _ = cv2.findContours(dilatedImage, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
             # Get the moments
@@ -66,8 +63,7 @@ class imageProcessing(object):
             # Draw contours
 
             drawing = np.zeros((dilatedImage.shape[0], dilatedImage.shape[1], 3), dtype=np.uint8)
-            #with_key_points = cv2.drawKeypoints(dilatedImage, keypoints, np.array([]), (0, 0, 255),
-                                                #cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
             # draw circls around mass center of detected object
             for i in range(len(countors)):
                 color = 255, 0, 0
