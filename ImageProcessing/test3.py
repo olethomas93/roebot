@@ -43,7 +43,7 @@ class imageProcessing(object):
                                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
             # draw circls around mass center of detected object
 
-
+            cv2.imshow('fdf',dilatedImage)
             cv2.imshow('keypoints', with_key_points)
 
             k = cv2.waitKey(5) & 0xFF
