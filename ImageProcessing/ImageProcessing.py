@@ -34,7 +34,7 @@ class imageProcessing(object):
             kernel = np.ones((5, 5), np.float32) / 25
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             grayImage= cv2.GaussianBlur(thresh, (5, 5), 0)
-            #grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=1, beta=10)
+            grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=-2, beta=10)
             edged = cv2.Canny(thresh, 10, 40)  # 10 and 40 to be more perceptive
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
