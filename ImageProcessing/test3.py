@@ -27,7 +27,7 @@ class imageProcessing(object):
             kSize = np.ones((35, 35), np.uint8)
 
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=2, beta=10)
+            grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=5, beta=10)
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (35, 35))
@@ -35,7 +35,7 @@ class imageProcessing(object):
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
             params = cv2.SimpleBlobDetector_Params()
             params.filterByCircularity = True
-            params.minCircularity = 0.1
+            params.minCircularity = 1
             detector = cv2.SimpleBlobDetector_create(params)
             keypoints = detector.detect(dilatedImage)
 
