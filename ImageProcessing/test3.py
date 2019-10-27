@@ -40,7 +40,7 @@ class imageProcessing(object):
             params.filterByCircularity = True
             params.minCircularity = 0.9
             detector = cv2.SimpleBlobDetector_create(params)
-            keypoints = detector.detect(image)
+            keypoints = detector.detect(dilatedImage)
 
             with_key_points = cv2.drawKeypoints(image, keypoints, np.array([]), (0, 0, 255),
                                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
