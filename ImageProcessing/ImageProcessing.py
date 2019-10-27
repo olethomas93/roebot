@@ -42,8 +42,9 @@ class imageProcessing(object):
             gh_temp = cv2.getTrackbarPos('gh', 'temp')
             rh_temp = cv2.getTrackbarPos('rh', 'temp')
 
-            thresh = cv2.inRange(frame, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
+
             image = frame.array
+            thresh = cv2.inRange(image, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
             kSize = np.ones((35, 35), np.uint8)
             kernel = np.ones((5, 5), np.float32) / 25
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
