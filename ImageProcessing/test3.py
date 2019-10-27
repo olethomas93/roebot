@@ -14,7 +14,7 @@ class imageProcessing(object):
 
         processingQueue = list
 
-    def is_contour_bad(c):
+    def is_contour_bad(self,c):
         # approximate the contour
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
