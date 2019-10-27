@@ -48,8 +48,9 @@ class imageProcessing(object):
             kSize = np.ones((35, 35), np.uint8)
             kernel = np.ones((5, 5), np.float32) / 25
             grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            grayImage = cv2.filter2D(grayImage, -1, kernel)
-            grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=1, beta=10)
+            grayImage= cv2.GaussianBlur(grayImage, (5, 5), 0)
+            #grayImage = cv2.convertScaleAbs(grayImage, -1, alpha=1, beta=10)
+            edged = cv2.Canny(thresh, 10, 40)  # 10 and 40 to be more perceptive
             ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (10, 10))
@@ -57,7 +58,7 @@ class imageProcessing(object):
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
 
-            countors, _ = cv2.findContours(dilatedImage, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+            countors, _ = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
             # Get the moments
             mu = [None] * len(countors)
