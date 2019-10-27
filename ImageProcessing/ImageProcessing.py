@@ -95,7 +95,7 @@ class imageProcessing(object):
 
             cv2.imshow('gray', grayImage)
             cv2.imshow('bwimage',dilatedImage)
-            cv2.imshow('frame', image)
+            cv2.imshow('frame', thresh)
             cv2.imshow('bright', drawing)
             #cv2.imshow('keypoints', with_key_points)
 
