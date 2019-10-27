@@ -56,7 +56,7 @@ class imageProcessing(object):
 
             array = []
             ii = 1
-            print
+
             len(contours)
             for c in contours:
                 (x, y), r = cv2.minEnclosingCircle(c)
@@ -67,6 +67,7 @@ class imageProcessing(object):
                     array.append(center)
 
             cv2.imshow("preprocessed", image_color)
+            cv2.imshow('mask',thresh)
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
                 break
