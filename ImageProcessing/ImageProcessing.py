@@ -45,10 +45,12 @@ class imageProcessing(object):
 
             countors, _ = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+
             # Get the moments
             mu = [None] * len(countors)
             for i in range(len(countors)):
                 mu[i] = cv2.moments(countors[i])
+
 
             # Get the mass centers, X & Y coordinates of blob
             mc = [None] * len(countors)
@@ -75,11 +77,12 @@ class imageProcessing(object):
             # draw circls around mass center of detected object
             for i in range(len(countors)):
                 color = 255, 0, 0
+                approx = cv2.approxPolyDP(countors, 0.01 * cv2.arcLength(countors, True), True)
                 cv2.drawContours(drawing, countors, i, color, 2)
                 cv2.circle(drawing, (int(mc[i][0]), int(mc[i][1])), 4, color, -1)
                 cv2.drawContours(image, countors, -1, (0, 0, 255), 1)
 
-            cv2.imshow('gray', grayImage)
+            cv2.imshow('image', image)
             cv2.imshow('bwimage',dilatedImage)
             cv2.imshow('frame', thresh)
             cv2.imshow('bright', drawing)

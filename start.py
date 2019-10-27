@@ -11,7 +11,7 @@ def main():
 
 
     tcpClient = modbusTcp.modbusClient()
-    imageProcess = ImageProcessing.imageProcessing()
+    imageProcess = test3.imageProcessing()
     imageProcess.processImage()
 
 

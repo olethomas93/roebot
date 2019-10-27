@@ -3,7 +3,7 @@ import numpy as np
 import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-from threading import Thread, Lock
+import imutils
 
 regs_lock = Lock()
 
@@ -13,6 +13,14 @@ class imageProcessing(object):
     def __init__(self):
 
         processingQueue = list
+
+    def is_contour_bad(c):
+        # approximate the contour
+        peri = cv2.arcLength(c, True)
+        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+
+        # the contour is 'bad' if it is not a rectangle
+        return not len(approx) == 4
 
     def processImage(self):
 
@@ -24,32 +32,20 @@ class imageProcessing(object):
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 
             image = frame.array
-            kSize = np.ones((35, 35), np.uint8)
-            kernel = np.ones((5, 5), np.float32) / 25
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            edged = cv2.Canny(gray, 50, 100)
+            cv2.imshow("Original", image)
 
-            grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            grayImage = cv2.filter2D(grayImage,-1,kernel)
-            #grayImage = cv2.convertScaleAbs(grayImage, alpha=2, beta=10)
-            ret, bwImage = cv2.threshold(grayImage, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+            cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+            cnts = imutils.grab_contours(cnts)
+            mask = np.ones(image.shape[:2], dtype="uint8") * 255
 
-            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
-
-            erodedImage = cv2.erode(bwImage, StructureElement)
-            dilatedImage = cv2.dilate(erodedImage, StructureElement)
-            params = cv2.SimpleBlobDetector_Params()
-            params.filterByCircularity = True
-            params.minCircularity = 0.9
-            detector = cv2.SimpleBlobDetector_create(params)
-            keypoints = detector.detect(dilatedImage)
-
-            with_key_points = cv2.drawKeypoints(image, keypoints, np.array([]), (0, 0, 255),
-                                                cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-            # draw circls around mass center of detected object
-            cv2.imshow('gray', grayImage)
-            cv2.imshow('fdf',dilatedImage)
-            cv2.imshow('keypoints', with_key_points)
-
+            # remove the contours from the image and show the resulting images
+            image = cv2.bitwise_and(image, image, mask=mask)
+            cv2.imshow("Mask", mask)
+            cv2.imshow("After", image)
             k = cv2.waitKey(5) & 0xFF
+
             if k == 27:
                 break
             rawCapture.truncate(0)
