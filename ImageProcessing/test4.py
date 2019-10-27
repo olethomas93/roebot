@@ -52,8 +52,8 @@ class imageProcessing(object):
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
             contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                        cv2.CHAIN_APPROX_SIMPLE)[1]
-            #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
+                                        cv2.CHAIN_APPROX_SIMPLE)
+            contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
             array = []
             ii = 1
