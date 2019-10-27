@@ -1,7 +1,7 @@
 
 from communication import modbusTcp
 from ImageProcessing import ImageProcessing
-from ImageProcessing import test3
+from ImageProcessing import test4
 from threading import Thread, Lock
 
 
@@ -11,7 +11,7 @@ def main():
 
 
     tcpClient = modbusTcp.modbusClient()
-    imageProcess = test3.imageProcessing()
+    imageProcess = test4.imageProcessing()
     imageProcess.processImage()
 
 
