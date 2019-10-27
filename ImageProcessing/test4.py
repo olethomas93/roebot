@@ -52,7 +52,7 @@ class imageProcessing(object):
 
             contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
                                         cv2.CHAIN_APPROX_SIMPLE)[0]
-            contours.sort(key=lambda x: cv2.boundingRect(x)[0])
+            #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
             array = []
             ii = 1
