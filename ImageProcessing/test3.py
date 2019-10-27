@@ -17,10 +17,9 @@ class imageProcessing(object):
     def is_contour_bad(self,c):
         # approximate the contour
         peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-
+        approx = cv2.approxPolyDP(c, 0.01 * cv2.arcLength(c, True), True)
         # the contour is 'bad' if it is not a rectangle
-        return not len(approx) == 4
+        return not len(approx) > 10
 
     def processImage(self):
 
