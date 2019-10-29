@@ -69,7 +69,7 @@ class imageProcessing(object):
                 if r >= 5 and r <= 10:
                     print(center)
 
-                    
+
 
                     cv2.circle(image, center, r, (0, 255, 0), 2)
                     array.append(center)
