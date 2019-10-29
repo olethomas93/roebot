@@ -83,7 +83,7 @@ class imageProcessing(object):
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
-                if r >= 3 and r <= 10:
+                if r >= 5 and r <= 20:
                     print(center)
 
 
