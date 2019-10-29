@@ -68,8 +68,8 @@ class imageProcessing(object):
                 r = int(r)
                 if r >= 5 and r <= 10:
                     print(center)
-                    coor = Coordinate.Coordinate(center[0],center[1])
-                    print(coor)
+
+                    
 
                     cv2.circle(image, center, r, (0, 255, 0), 2)
                     array.append(center)
