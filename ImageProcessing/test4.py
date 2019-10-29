@@ -57,12 +57,12 @@ class imageProcessing(object):
             mask = cv2.inRange(image, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
 
            # mask = cv2.inRange(image, lower_bound, upper_bound)
-            thresh = cv2.inRange(image, (0, 0, 255), (255, 255, 255))
+            thresh = cv2.inRange(image_color, (0, 0, 255), (255, 255, 255))
 
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
-            kernel = np.zeros((5, 5), np.uint8)
+            kernel = np.zeros((3, 3), np.uint8)
 
             # Use erosion and dilation combination to eliminate false positives.
             # In this case the text Q0X could be identified as circles but it is not.
