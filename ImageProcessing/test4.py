@@ -66,7 +66,7 @@ class imageProcessing(object):
 
             # Use erosion and dilation combination to eliminate false positives.
             # In this case the text Q0X could be identified as circles but it is not.
-            thresh = cv2.erode(thresh, kernel, iterations=6)
+            #thresh = cv2.erode(thresh, kernel, iterations=6)
             thresh = cv2.dilate(thresh, kernel, iterations=3)
 
 
