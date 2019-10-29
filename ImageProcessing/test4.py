@@ -67,8 +67,8 @@ class imageProcessing(object):
             # Use erosion and dilation combination to eliminate false positives.
             # In this case the text Q0X could be identified as circles but it is not.
 
-            thresh = cv2.dilate(thresh, kernel, iterations=6)
-            thresh = cv2.erode(thresh, kernel, iterations=3)
+            # thresh = cv2.dilate(thresh, kernel, iterations=6)
+            # thresh = cv2.erode(thresh, kernel, iterations=3)
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
@@ -84,7 +84,7 @@ class imageProcessing(object):
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
-                if r >= 1 and r <= 50:
+                if r >= 1 and r <= 10:
                     print(center)
 
 
