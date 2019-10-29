@@ -48,12 +48,13 @@ class imageProcessing(object):
             bh_temp = cv2.getTrackbarPos('bh', 'temp')
             gh_temp = cv2.getTrackbarPos('gh', 'temp')
             rh_temp = cv2.getTrackbarPos('rh', 'temp')
-            mask = cv2.inRange(frame, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
+
 
             lower_bound = np.array([0, 0, 10])
             upper_bound = np.array([255, 255, 195])
 
             image = image_color
+            mask = cv2.inRange(image, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
 
            # mask = cv2.inRange(image, lower_bound, upper_bound)
             thresh = cv2.inRange(image, (0, 0, 0), (213, 255, 255))
