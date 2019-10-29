@@ -1,27 +1,32 @@
 import cv2
-import ImageProcessing.RoeImage as roeimage
+from ImageProcessing import RoeImage
 import time
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+
 
 
 class Camera:
+    frame = None
+    camToOpen = 0
+    FOV = 62
+    found = False
+    timestamp = None
 
-    def __init__(self):
-        self.found = False
-        self.camToOpen = 0
-        self.FOV = 78
 
-    def Camera(self):
-        self.cap = cv2.VideoCapture(self.camToOpen)
-        if not self.cap.isOpened():
-            raise Exception("Could not open video device")
 
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+
 
     def takePicture(self, cameraHeigth, pictureIndex):
-        result = roeimage(cameraHeigth, self.FOV)
+        camera = PiCamera()
+        camera.resolution=(640,480)
+        rawCapture = PiRGBArray(camera, size=(640, 480))
 
-        _, self.frame = self.cap.read()
+
+        result = RoeImage.RoeImage(cameraHeigth, self.FOV)
+        self.frame = camera.capture(rawCapture, format="bgr")
+
 
         self.timeStamp = int(round(time.time() * 1000))
 

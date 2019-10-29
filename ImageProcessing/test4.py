@@ -3,6 +3,7 @@ import numpy as np
 import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from ImageProcessing import Coordinate
 
 
 
@@ -18,6 +19,8 @@ class imageProcessing(object):
 
 
     def processImage(self):
+
+
 
         camera = PiCamera()
         camera.resolution = (640, 480)
@@ -47,7 +50,7 @@ class imageProcessing(object):
             # Use erosion and dilation combination to eliminate false positives.
             # In this case the text Q0X could be identified as circles but it is not.
             thresh = cv2.erode(thresh, kernel, iterations=8)
-            thresh = cv2.dilate(thresh, kernel, iterations=3)
+            thresh = cv2.dilate(thresh, kernel, iterations=4)
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
@@ -64,6 +67,10 @@ class imageProcessing(object):
                 center = (int(x), int(y))
                 r = int(r)
                 if r >= 5 and r <= 10:
+                    print(center)
+                    coor = Coordinate.Coordinate(center[0],center[1])
+                    print(coor)
+
                     cv2.circle(image, center, r, (0, 255, 0), 2)
                     array.append(center)
 
@@ -76,3 +83,6 @@ class imageProcessing(object):
             rawCapture.truncate(0)
 
         cv2.destroyAllWindows()
+
+
+

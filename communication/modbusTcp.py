@@ -3,12 +3,8 @@ import time
 from threading import Thread, Lock
 from pyModbusTCP import utils
 
-# set global
-regs = []
-
 # init a thread lock
 regs_lock = Lock()
-
 
 
 class modbusClient(object):
@@ -18,6 +14,7 @@ class modbusClient(object):
         self.th = Thread(target=self.polling_thread, args=())
         self.SERVER_HOST = "169.254.127.11"
         self.SERVER_PORT = 2000
+        self.regs = []
 
     def read_float(self, address, number=1):
         reg_l = self.read_holding_registers(address, number * 2)
@@ -31,26 +28,22 @@ class modbusClient(object):
         b16_l = utils.long_list_to_word(b32_l)
         return self.write_multiple_registers(address, b16_l)
 
-    def getValue(self,address):
+    def getValue(self, address):
         self.th.daemon = True
         self.th.start()
         while True:
             # print regs list (with thread lock synchronization)
             with regs_lock:
-                if len(regs)>0:
+                if len(self.regs) > 0:
 
-
-                    if  regs[address] == 34:
+                    if self.regs[address] == 34:
                         return True
-
 
             # 1s before next print
             time.sleep(1)
 
-
     # modbus polling thread
     def polling_thread(self):
-        global regs
 
         c = ModbusClient(host=self.SERVER_HOST, port=self.SERVER_PORT)
         # polling loop
@@ -68,10 +61,7 @@ class modbusClient(object):
                 # if read is ok, store result in regs (with thread lock synchronization)
                 if reg_list:
                     with regs_lock:
-                        regs = reg_list
+                        self.regs = reg_list
 
                 # 1s before next polling
                 time.sleep(1)
-
-
-

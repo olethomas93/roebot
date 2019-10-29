@@ -4,6 +4,8 @@ import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from threading import Thread, Lock
+from ImageProcessing import Coordinate
+import cmath as math
 
 regs_lock = Lock()
 
@@ -56,7 +58,8 @@ class imageProcessing(object):
                 xCoor = width - xCoor
                 Ycoor = heigth - Ycoor
 
-                # cor = Coordinate.Coordinate(xCoor, Ycoor)
+                cor = Coordinate.Coordinate(xCoor, Ycoor)
+                self.pixelToMillimeterConversion(cor,)
 
                 # print(cor.xCoord)
 
@@ -86,3 +89,34 @@ class imageProcessing(object):
             rawCapture.truncate(0)
 
         cv2.destroyAllWindows()
+
+    def pixelToMillimeterConversion(self, coordinate, RoeImage):
+        fieldOfView = RoeImage.getFieldOfView()
+        distance = RoeImage.getDistance()
+        imageHeigth = RoeImage.getImage().heigth()
+        imageWidth = RoeImage.getImage().width()
+
+        # calculate length of diagonal of image in mm
+        diagonalMillimeter = distance * math.tan((fieldOfView / 2) * (math.pi / 180)) * 2
+
+        # calculate angle of diagonal
+        theta = math.atan(imageHeigth / imageWidth)
+
+        # calculate width of image in milimeter
+        imageWidthMillimeter = math.cos(theta) * diagonalMillimeter
+
+        # calculate heigth of image in millimeter
+        imageHeigthInMillimeter = math.sin(theta) * diagonalMillimeter
+
+        # calculate the size of a pixel in x directon in mm
+        pixelSizeDirX = imageHeigthInMillimeter / imageHeigth
+
+        # calculate the size of a pixel in y directon in mm
+        pixelSizeDirY = imageWidthMillimeter / imageWidth
+
+        xPositionMillimeter = coordinate.getxCoord() * pixelSizeDirY
+
+        yPositionMillimeter = coordinate.getyCoord() * pixelSizeDirX
+
+        millimeterCoordinate = Coordinate.Coordinate(xPositionMillimeter, yPositionMillimeter)
+        RoeImage.addRoePositionMillimeter(millimeterCoordinate)
