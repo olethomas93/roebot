@@ -58,7 +58,7 @@ class imageProcessing(object):
 
            # mask = cv2.inRange(image, lower_bound, upper_bound)
             thresh = cv2.inRange(image, (0, 0, 255), (255, 255, 255))
-
+            thresh  =cv2.cvtColor(thresh, cv2.COLOR_BGR2GRAY)
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
