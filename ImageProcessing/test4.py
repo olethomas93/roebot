@@ -69,7 +69,7 @@ class imageProcessing(object):
             thresh = cv2.erode(thresh, kernel, iterations=6)
             thresh = cv2.dilate(thresh, kernel, iterations=3)
 
-            closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+            #closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
             contours,_ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
                                         cv2.CHAIN_APPROX_SIMPLE)
