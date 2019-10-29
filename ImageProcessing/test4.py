@@ -19,7 +19,16 @@ class imageProcessing(object):
 
 
     def processImage(self):
+        def nothing(x):
+            pass
 
+        cv2.namedWindow('temp')
+        cv2.createTrackbar('bl', 'temp', 0, 255, nothing)
+        cv2.createTrackbar('gl', 'temp', 0, 255, nothing)
+        cv2.createTrackbar('rl', 'temp', 0, 255, nothing)
+        cv2.createTrackbar('bh', 'temp', 255, 255, nothing)
+        cv2.createTrackbar('gh', 'temp', 255, 255, nothing)
+        cv2.createTrackbar('rh', 'temp', 255, 255, nothing)
 
 
         camera = PiCamera()
@@ -32,14 +41,21 @@ class imageProcessing(object):
             image_color = frame.array
             image_ori = cv2.cvtColor(image_color,cv2.COLOR_BGR2GRAY)
 
+            bl_temp = cv2.getTrackbarPos('bl', 'temp')
+            gl_temp = cv2.getTrackbarPos('gl', 'temp')
+            rl_temp = cv2.getTrackbarPos('rl', 'temp')
 
+            bh_temp = cv2.getTrackbarPos('bh', 'temp')
+            gh_temp = cv2.getTrackbarPos('gh', 'temp')
+            rh_temp = cv2.getTrackbarPos('rh', 'temp')
+            mask = cv2.inRange(frame, (bl_temp, gl_temp, rl_temp), (bh_temp, gh_temp, rh_temp))
 
             lower_bound = np.array([0, 0, 10])
             upper_bound = np.array([255, 255, 195])
 
             image = image_color
 
-            mask = cv2.inRange(image, lower_bound, upper_bound)
+           # mask = cv2.inRange(image, lower_bound, upper_bound)
             thresh = cv2.inRange(image, (0, 0, 0), (213, 255, 255))
 
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
@@ -77,6 +93,7 @@ class imageProcessing(object):
             cv2.imshow("preprocessed", image_color)
             cv2.imshow('mask',thresh)
             cv2.imshow('prosessed',image)
+            cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
                 break

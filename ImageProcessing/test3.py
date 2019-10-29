@@ -10,6 +10,8 @@ import imutils
 
 class imageProcessing(object):
 
+
+
     def __init__(self):
 
         processingQueue = list
