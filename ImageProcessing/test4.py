@@ -62,7 +62,7 @@ class imageProcessing(object):
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
-            kernel = np.zeros((3, 3), np.uint8)
+            kernel = np.zeros((3, 3), dtype=int)
 
             # Use erosion and dilation combination to eliminate false positives.
             # In this case the text Q0X could be identified as circles but it is not.
@@ -92,7 +92,7 @@ class imageProcessing(object):
                     array.append(center)
 
             cv2.imshow("preprocessed", image_color)
-            cv2.imshow('mask',thresh)
+            cv2.imshow('tresh',thresh)
             cv2.imshow('prosessed',image)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
