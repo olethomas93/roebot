@@ -4,9 +4,8 @@ import random as rng
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from threading import Thread, Lock
-from ImageProcessing import Coordinate
 import cmath as math
-
+from ImageProcessing.Coordinate import Coordinate
 regs_lock = Lock()
 
 
