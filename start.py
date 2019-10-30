@@ -9,15 +9,15 @@ from ImageProcessing import Camera
 
 def main():
 
+    takePicture()
 
-
-    tcpClient = r_w_float_modbus.FloatModbusClient(host='localhost', port=2000, auto_open=True)
-
-    if True:
-        command = tcpClient.read_float(0)
-        switch(int(command))
-
-        tcpClient.close()
+    # tcpClient = r_w_float_modbus.FloatModbusClient(host='localhost', port=2000, auto_open=True)
+    #
+    # if True:
+    #     command = tcpClient.read_float(0)
+    #     switch(int(command))
+    # 
+    #     tcpClient.close()
 
 
 

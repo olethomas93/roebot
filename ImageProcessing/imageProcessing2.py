@@ -30,17 +30,18 @@ class imageProcessing(object):
         image = image_color
 
         mask = cv2.inRange(image, lower_bound, upper_bound)
-        thresh = cv2.inRange(image, (0, 0, 0), (213, 255, 255))
+        thresh = cv2.inRange(image_color, (255, 0, 0), (255, 255, 255))
+        # gh = 230
 
         # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
         #             cv2.THRESH_BINARY_INV,33,2)
 
-        kernel = np.ones((3, 3), np.uint8)
+        kernel = np.zeros((3, 3), np.uint8)
 
         # Use erosion and dilation combination to eliminate false positives.
         # In this case the text Q0X could be identified as circles but it is not.
-        thresh = cv2.erode(thresh, kernel, iterations=8)
-        thresh = cv2.dilate(thresh, kernel, iterations=4)
+        # thresh = cv2.erode(thresh, kernel, iterations=6)
+        # thresh = cv2.dilate(thresh, kernel, iterations=3)
 
         closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
@@ -50,13 +51,14 @@ class imageProcessing(object):
 
         array = []
         ii = 1
+        ii = 1
 
         len(contours)
         for c in contours:
             (x, y), r = cv2.minEnclosingCircle(c)
             center = (int(x), int(y))
             r = int(r)
-            if r >= 5 and r <= 10:
+            if r >= 0.8 and r <= 5:
                 print(center)
                 cord = Coordinate.Coordinate(center[0], center[1])
                 self.corArray.append(cord)
@@ -67,9 +69,8 @@ class imageProcessing(object):
         while self.debug:
 
 
-            cv2.imshow("preprocessed", image_color)
-            cv2.imshow('mask', thresh)
-            cv2.imshow('prosessed', image)
+
+            cv2.imwrite('prosessed.png', image)
 
 
     def pixelToMillimeterConversion(self, coordinate, RoeImage):
