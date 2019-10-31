@@ -24,17 +24,18 @@ class Camera:
         # camera = PiCamera()
         # camera.resolution=(640,480)
         #rawCapture = PiRGBArray(camera, size=(640, 480))
-
+        result = RoeImage.RoeImage(cameraHeigth, self.FOV)
         with picamera.PiCamera() as camera:
             with picamera.array.PiRGBArray(camera) as output:
                 camera.resolution=(640,480)
                 camera.capture(output, 'rgb')
+                self.frame = (output.array.shape[1],output.array.shape[0])
                 print('Captured %dx%d image' % (
                     output.array.shape[1], output.array.shape[0]))
 
-        result = RoeImage.RoeImage(cameraHeigth, self.FOV)
 
-        self.frame = camera.capture('rawCapture.jpg')
+
+
 
 
         self.timeStamp = int(round(time.time() * 1000))
