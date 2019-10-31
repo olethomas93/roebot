@@ -18,6 +18,7 @@ def waitForCommands():
         print(str(command)+" ----"+"command")
         if command >0:
             modbusclient.close()
+            modbusclient.write_float(0,[0])
             switch_case(command)
 
 def takePicture():
