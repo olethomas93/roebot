@@ -31,8 +31,7 @@ class Camera:
                 camera.capture(output, format='bgr')
 
                 self.frame = output.array
-                print('Captured %dx%d image' % (
-                    output.array))
+               
 
 
 
