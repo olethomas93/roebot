@@ -1,46 +1,57 @@
-
+from concurrent.futures import ThreadPoolExecutor
+import threading
 from communication import r_w_float_modbus
-
-from ImageProcessing import imageProcessing2
-
 from ImageProcessing import Camera
+from ImageProcessing import imageProcessing2
+import random
 
 
+Roeimages = []
 
-def main():
-
-    takePicture()
-
-    # tcpClient = r_w_float_modbus.FloatModbusClient(host='localhost', port=2000, auto_open=True)
-    #
-    # if True:
-    #     command = tcpClient.read_float(0)
-    #     switch(int(command))
-    # 
-    #     tcpClient.close()
-
-
+def waitForCommands():
+    print("started")
+    wait = True
+    modbusclient = r_w_float_modbus.FloatModbusClient(host='169.254.127.11',port=2000,auto_open=True)
+    while wait:
+        command, wait = modbusclient.read_float(1)
+        if command >0:
+            modbusclient.close()
+            switch_case(command)
 
 def takePicture():
+    print("Executing take picture")
     camera = Camera.Camera()
-    image = camera.takePicture(80, 1)
-    processImage(image)
+    RoeImage = camera.takePicture(80)
+    Roeimages.append(RoeImage)
 
 
-def processImage(image):
-    imageProcess = imageProcessing2.imageProcessing()
-    imageProcess.processImage(image)
+
+    switch_case(1)
 
 
-def switch(i):
+def processImages():
+    imageCv = imageProcessing2.imageProcessing()
+    for image in Roeimages:
+
+        imageCv.processImage(image)
+
+def switch_case(command):
     switcher = {
-        1: takePicture
-
+        1: waitForCommands,
+        2: takePicture,
+        3: processImages
     }
-    func = switcher.get(i, lambda: 'Invalid')
+    # Get the function from switcher dictionary
+    func = switcher.get(command, lambda: "Invalid command")
+    # Execute the function
     return func()
 
 
-if __name__ == '__main__':
+def main():
+    executor = ThreadPoolExecutor(max_workers=3)
+    task1 = executor.submit(switch_case(1))
+    task2 = executor.submit(switch_case(3))
 
+
+if __name__ == '__main__':
     main()

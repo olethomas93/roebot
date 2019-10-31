@@ -11,7 +11,7 @@ class modbusClient(object):
     th = None
 
     def __init__(self):
-        self.th = Thread(target=self.polling_thread, args=())
+        #self.th = Thread(target=self.polling_thread, args=())
         self.SERVER_HOST = "169.254.127.11"
         self.SERVER_PORT = 2000
         self.regs = []
@@ -19,9 +19,9 @@ class modbusClient(object):
     def read_float(self, address, number=1):
         reg_l = self.read_holding_registers(address, number * 2)
         if reg_l:
-            return [utils.decode_ieee(f) for f in utils.word_list_to_long(reg_l)]
+            return [utils.decode_ieee(f) for f in utils.word_list_to_long(reg_l)],True
         else:
-            return None
+            return 0,False
 
     def write_float(self, address, floats_list):
         b32_l = [utils.encode_ieee(f) for f in floats_list]
@@ -52,6 +52,7 @@ class modbusClient(object):
             # keep TCP open
             if not c.is_open():
                 if not c.open():
+
                     print("unable to connect to " + self.SERVER_HOST + ":" + str(self.SERVER_PORT))
 
             # do modbus reading on socket
@@ -62,6 +63,7 @@ class modbusClient(object):
                 if reg_list:
                     with regs_lock:
                         self.regs = reg_list
+                        print(self.regs)
 
                 # 1s before next polling
                 time.sleep(1)

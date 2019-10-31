@@ -5,7 +5,7 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 from threading import Thread, Lock
 import cmath as math
-from ImageProcessing.Coordinate import Coordinate
+from ImageProcessing.Coordinate import coordinate
 regs_lock = Lock()
 
 
@@ -59,7 +59,7 @@ class imageProcessing(object):
             r = int(r)
             if r >= 0.8 and r <= 5:
                 print(center)
-                cord = Coordinate.Coordinate(center[0], center[1])
+                cord = coordinate(center[0], center[1])
                 self.corArray.append(cord)
                 cv2.circle(image, center, r, (0, 255, 0), 2)
                 array.append(center)

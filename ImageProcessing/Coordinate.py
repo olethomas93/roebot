@@ -1,6 +1,13 @@
-class Coordinate:
+class coordinate(object):
 
-    def __init__(self,xCoord,yCoord,zCoord = 0):
+    def __init__(self, xCoord, yCoord):
         self.xCoord = xCoord
         self.YCoord = yCoord
-        self.zCoord = zCoord
+
+    def getxCoor(self):
+        return self.xCoord
+
+    def getyCoor(self):
+        return self.YCoord
+
+
