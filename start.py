@@ -15,7 +15,7 @@ def waitForCommands():
     while wait:
         command, wait = modbusclient.read_float(0,10)
 
-        print(int(command)+" ----"+"command")
+        print(str(command)+" ----"+"command")
         if command >0:
             modbusclient.close()
             switch_case(command)

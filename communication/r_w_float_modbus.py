@@ -11,7 +11,7 @@ class FloatModbusClient(ModbusClient):
     def read_float(self, address, number=1):
         reg_l = self.read_holding_registers(address, number * 2)
         if reg_l:
-            return [utils.decode_ieee(f) for f in utils.word_list_to_long(reg_l)],False
+            return reg_l,False
         else:
             return 0,True
 
