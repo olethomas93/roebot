@@ -21,7 +21,7 @@ class imageProcessing(object):
 
         image_color = roeImage.getImage()
 
-        image_ori = cv2.cvtColor(image_color, cv2.COLOR_BGR2GRAY)
+        #image_ori = cv2.cvtColor(image_color, cv2.COLOR_BGR2GRAY)
 
         lower_bound = np.array([0, 0, 10])
         upper_bound = np.array([255, 255, 195])
