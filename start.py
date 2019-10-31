@@ -39,7 +39,7 @@ def processImages():
     imageCv = imageProcessing2.imageProcessing()
     for image in Roeimages:
 
-        imageCv.processImage(image.getImage())
+        imageCv.processImage(image)
 
 def switch_case(command):
     switcher = {

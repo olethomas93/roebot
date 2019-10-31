@@ -31,14 +31,14 @@ class Camera:
                 camera.capture(output, format='bgr')
 
                 self.frame = output.array
-               
 
 
 
 
 
 
-        self.timeStamp = int(round(time.time() * 1000))
+
+        self.timeStamp = "imagestamp"
 
         result.setImage(self.frame)
         result.setTimeStamp(self.timeStamp)
