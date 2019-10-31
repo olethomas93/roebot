@@ -43,5 +43,6 @@ class Camera:
         result.setImage(self.frame)
         result.setTimeStamp(self.timeStamp)
         result.setPictureIndex(pictureIndex)
+        print(result.getTimeStamp())
 
         return result
