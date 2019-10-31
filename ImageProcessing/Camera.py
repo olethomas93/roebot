@@ -26,7 +26,7 @@ class Camera:
         #rawCapture = PiRGBArray(camera, size=(640, 480))
         result = RoeImage.RoeImage(cameraHeigth, self.FOV)
         with picamera.PiCamera() as camera:
-            with picamera.array.PiRGBArray(camera) as output:
+            with picamera.array.PiRGBArray(camera,size=(640,480)) as output:
                 camera.resolution=(640,480)
                 camera.capture(output, 'bgr')
                 self.frame = (output.array.shape[1],output.array.shape[0])
