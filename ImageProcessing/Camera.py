@@ -28,7 +28,7 @@ class Camera:
         with picamera.PiCamera() as camera:
             with picamera.array.PiRGBArray(camera) as output:
                 camera.resolution=(640,480)
-                camera.capture(output, 'rgb')
+                camera.capture(output, 'bgr')
                 self.frame = (output.array.shape[1],output.array.shape[0])
                 print('Captured %dx%d image' % (
                     output.array.shape[1], output.array.shape[0]))
