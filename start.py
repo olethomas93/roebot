@@ -16,6 +16,8 @@ def waitForCommands():
         command, wait = modbusclient.read_float(0)
         command = int(command[0])
         print(str(command)+" ----"+"command")
+        if command == 0:
+            wait = True
         if command >0:
             modbusclient.close()
             modbusclient.write_float(0,[0])
