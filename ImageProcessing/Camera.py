@@ -32,7 +32,7 @@ class Camera:
 
                 self.frame = (output.array)
                 print('Captured %dx%d image' % (
-                    output.array.shape[1], output.array.shape[0]))
+                    output.array))
 
 
 
