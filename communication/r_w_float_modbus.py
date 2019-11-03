@@ -3,14 +3,13 @@
 
 # how-to add float support to ModbusClient
 
-from pyModbusTCP.client import ModbusClient
 from pyModbusTCP import utils
 
 
 class FloatModbusClient():
 
-    def __init__(self,ModbusClient):
-        self.ModbusClient = ModbusClient
+    def __init__(self,Modbus):
+        self.ModbusClient = Modbus
         self.reg_l = []
 
     def read_float(self, address, number=1):
