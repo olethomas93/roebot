@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # how-to add float support to ModbusClient
-
+from pymodbus.constants import Endian
+from pymodbus.payload import BinaryPayloadDecoder
+from pymodbus.payload import BinaryPayloadBuilder
 from pyModbusTCP.client import ModbusClient
 from pyModbusTCP import utils
 
@@ -19,6 +21,17 @@ class FloatModbusClient():
             return self.reg_l, False
         else:
             return 0, True
+
+    def sendInt(self, value, address):
+        """Send a 32 bit value to the first modbus unit.
+        Parameters: value and address where the value will be
+        stored in.
+        Return: Result if it was successful or not."""
+        builder = BinaryPayloadBuilder(byteorder=Endian.Big)
+        builder.add_32bit_int(value)
+        payload = builder.build()
+        result = self.modbusClient.write_registers(address, payload, skip_encode=True, unit=1)
+        return result
 
     def write_float(self, address, value):
 
