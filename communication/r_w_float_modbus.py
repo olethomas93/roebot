@@ -27,8 +27,7 @@ class FloatModbusClient():
         result = self.modbusClient.write_single_register(address, value)
         return result
 
-    def write_float(self, address, value):
-
-        b16_l = utils.long_list_to_word(value)
-
-        return self.modbusClient.write_multiple_registers(address, b16_l)
+    def write_float(self, address, floats_list):
+        b32_l = [utils.encode_ieee(f) for f in floats_list]
+        b16_l = utils.long_list_to_word(b32_l)
+        return self.write_multiple_registers(address, b16_l)
