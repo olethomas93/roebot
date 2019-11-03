@@ -1,7 +1,7 @@
 
 class RoeImage:
-    roePositionPixels = list
-    roePositionMillimeters = list
+    roePositionPixels = []
+    roePositionMillimeters = []
     FOV = None
     timeStamp = None
     Image = None
