@@ -102,9 +102,9 @@ class imageProcessing(object):
         # calculate the size of a pixel in y directon in mm
         pixelSizeDirY = imageWidthMillimeter / imageWidth
 
-        xPositionMillimeter = coord.getxCoor() * pixelSizeDirY
+        xPositionMillimeter = coord.getxCoor() * pixelSizeDirX
 
-        yPositionMillimeter = coord.getyCoor() * pixelSizeDirX
+        yPositionMillimeter = coord.getyCoor() * pixelSizeDirY
 
         millimeterCoordinate = coordinate(xPositionMillimeter.real, yPositionMillimeter.real)
         RoeImage.addRoePositionMillimeter(millimeterCoordinate)

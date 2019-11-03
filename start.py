@@ -29,13 +29,13 @@ def waitForCommands():
 
 
 def getDistanceFromTray():
-    r_w_float_modbus
+    pass
 
 
 def takePicture():
     print("Executing take picture")
     camera = Camera.Camera()
-    RoeImage = camera.takePicture(800,62)
+    RoeImage = camera.takePicture(80,62)
     Roeimages.append(RoeImage)
 
 
@@ -76,7 +76,7 @@ def switch_case(command):
         1: waitForCommands,
         2: takePicture,
         3: processImages,
-        4:sendCordToPLC
+        4: sendCordToPLC
     }
     # Get the function from switcher dictionary
     func = switcher.get(command, lambda: "Invalid command")
