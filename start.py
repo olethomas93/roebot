@@ -48,12 +48,15 @@ def processImages():
     switch_case(1)
 
 def sendCordToPLC():
-
+    arrayX = list
+    arrayY = list
     for cord in Roeimages[0].getRoePositionMillimeter():
-        print(cord.getCoord())
-    print(Roeimages[0].getRoePositionMillimeter()[0].getxCoor())
+        arrayX.append(cord.getxCoor())
+        arrayY.append(cord.getyCoor())
+
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
     client.sendInt(45,6)
+    client.write_float(6,arrayY)
     switch_case(1)
 
 def switch_case(command):
