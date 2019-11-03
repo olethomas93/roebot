@@ -11,6 +11,6 @@ class coordinate(object):
         return self.YCoord
 
     def getCoord(self):
-        return str(self.xCoord) +","+ str(self.YCoord)
+        return self.xCoord,self.YCoord
 
 
