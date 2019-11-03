@@ -23,14 +23,8 @@ class FloatModbusClient():
             return 0, True
 
     def sendInt(self, value, address):
-        """Send a 32 bit value to the first modbus unit.
-        Parameters: value and address where the value will be
-        stored in.
-        Return: Result if it was successful or not."""
-        builder = BinaryPayloadBuilder(byteorder=Endian.Big)
-        builder.add_32bit_int(value)
-        payload = builder.build()
-        result = self.modbusClient.write_single_register(address, payload)
+
+        result = self.modbusClient.write_single_register(address, value)
         return result
 
     def write_float(self, address, value):
