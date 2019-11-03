@@ -52,7 +52,7 @@ def sendcoord(arrayX,arrayY):
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
     print(arrayY)
     for i in range(0,len(arrayY)):
-        client.sendInt(int(arrayY[i]),i)
+        client.sendInt(int(arrayY[i]),i+2)
 
 
 def sendCordToPLC():
