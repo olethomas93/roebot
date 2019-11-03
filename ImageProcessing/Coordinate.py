@@ -10,4 +10,7 @@ class coordinate(object):
     def getyCoor(self):
         return self.YCoord
 
+    def getCoord(self):
+        return str(self.xCoord +","+ self.getyCoor())
+
 
