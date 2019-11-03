@@ -30,7 +30,7 @@ class FloatModbusClient():
         builder = BinaryPayloadBuilder(byteorder=Endian.Big)
         builder.add_32bit_int(value)
         payload = builder.build()
-        result = self.modbusClient.write_registers(address, payload, skip_encode=True, unit=1)
+        result = self.modbusClient.write_single_register(address, payload, skip_encode=True, unit=1)
         return result
 
     def write_float(self, address, value):
