@@ -85,7 +85,7 @@ class imageProcessing(object):
 
 
         # calculate length of diagonal of image in mm
-        diagonalMillimeter = float(distance) * math.tan((fieldOfView / 2) * (math.pi / 180)) * 2
+        diagonalMillimeter = float(distance) * math.cos((fieldOfView / 2) * (math.pi / 180)) * 2
 
         # calculate angle of diagonal
         theta = math.atan(imageHeigth / imageWidth)
