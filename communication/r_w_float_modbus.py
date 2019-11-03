@@ -27,6 +27,17 @@ class FloatModbusClient():
         result = self.modbusClient.write_single_register(address, value)
         return result
 
+    def sendFloat(self, value, address):
+        """Send a 32 bit value to the first modbus unit.
+        Parameters: value and address where the value will be
+        stored in.
+        Return: Result if it was successful or not."""
+        builder = BinaryPayloadBuilder(byteorder=Endian.Big)
+        builder.add_32bit_float(value)
+        payload = builder.build()
+        result = self.modbusClient.write_single_register(address, payload)
+        return result
+
     def write_float(self, address, floats_list):
         b32_l = [utils.encode_ieee(f) for f in floats_list]
         b16_l = utils.long_list_to_word(b32_l)

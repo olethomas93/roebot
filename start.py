@@ -30,7 +30,7 @@ def waitForCommands():
 def takePicture():
     print("Executing take picture")
     camera = Camera.Camera()
-    RoeImage = camera.takePicture(80,1)
+    RoeImage = camera.takePicture(80,62)
     Roeimages.append(RoeImage)
 
 
