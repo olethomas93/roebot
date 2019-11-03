@@ -52,7 +52,7 @@ def sendcoord(arrayX,arrayY):
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
     for i in range(3,20):
-        client.sendInt(i,arrayY[i])
+        client.sendInt(i,int(arrayY[i]))
 
 
 def sendCordToPLC():
@@ -65,7 +65,7 @@ def sendCordToPLC():
     sendcoord(arrayX,arrayY)
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
     client.sendInt(45,2)
-   
+
     switch_case(1)
 
 def switch_case(command):
