@@ -72,7 +72,7 @@ class imageProcessing(object):
             cv2.imwrite('prosessed.png', image)
 
 
-    def pixelToMillimeterConversion(self, coordinate, RoeImage):
+    def pixelToMillimeterConversion(self, coord, RoeImage):
         fieldOfView = RoeImage.getFieldOfView()
         distance = RoeImage.getDistance()
         width, height,_ = RoeImage.getImage().shape
@@ -97,9 +97,9 @@ class imageProcessing(object):
         # calculate the size of a pixel in y directon in mm
         pixelSizeDirY = imageWidthMillimeter / imageWidth
 
-        xPositionMillimeter = coordinate.getxCoor() * pixelSizeDirY
+        xPositionMillimeter = coord.getxCoor() * pixelSizeDirY
 
-        yPositionMillimeter = coordinate.getyCoor() * pixelSizeDirX
+        yPositionMillimeter = coord.getyCoor() * pixelSizeDirX
 
-        millimeterCoordinate = Coordinate.Coordinate(xPositionMillimeter, yPositionMillimeter)
+        millimeterCoordinate = coordinate(xPositionMillimeter, yPositionMillimeter)
         RoeImage.addRoePositionMillimeter(millimeterCoordinate)
