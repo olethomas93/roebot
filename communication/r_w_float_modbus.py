@@ -7,11 +7,16 @@ from pyModbusTCP.client import ModbusClient
 from pyModbusTCP import utils
 
 
+
 class FloatModbusClient(ModbusClient):
+
+    def __init__(self):
+        self.reg_l = []
+
     def read_float(self, address, number=1):
-        reg_l = self.read_holding_registers(address, number * 1)
-        if reg_l:
-            return reg_l,False
+        self.reg_l = self.read_holding_registers(address, number * 1)
+        if self.reg_l:
+            return self.reg_l,False
         else:
             return 0,True
 

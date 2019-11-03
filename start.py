@@ -12,6 +12,7 @@ def waitForCommands():
     print("started")
     wait = True
     modbusclient = r_w_float_modbus.FloatModbusClient(host='158.38.140.51',port=2000,auto_open=True)
+
     while wait:
         command, wait = modbusclient.read_float(0)
         command = int(command[0])

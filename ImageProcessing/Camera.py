@@ -7,7 +7,6 @@ from time import sleep
 import picamera
 
 
-
 class Camera:
     frame = None
     camToOpen = 0
@@ -15,28 +14,18 @@ class Camera:
     found = False
     timestamp = None
 
-
-
-
-
-
     def takePicture(self, cameraHeigth, pictureIndex):
         # camera = PiCamera()
         # camera.resolution=(640,480)
-        #rawCapture = PiRGBArray(camera, size=(640, 480))
+        # rawCapture = PiRGBArray(camera, size=(640, 480))
         result = RoeImage.RoeImage(cameraHeigth, self.FOV)
         with picamera.PiCamera() as camera:
-            with picamera.array.PiRGBArray(camera,size=(640,480)) as output:
-                camera.resolution=(640,480)
+            camera.resolution = (1920, 1080)
+            with picamera.array.PiRGBArray(camera, size=(1920, 1080)) as output:
+
                 camera.capture(output, format='bgr')
 
                 self.frame = output.array
-
-
-
-
-
-
 
         self.timeStamp = "imagestamp"
 
