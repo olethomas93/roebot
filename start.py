@@ -47,20 +47,23 @@ def processImages():
 
     switch_case(1)
 
+def sendCordToPLC():
+    client = r_w_float_modbus.FloatModbusClient(ModbusClient)
+    client.write_float(4,[Roeimages[0].getRoePositionMillimeter])
+
 def switch_case(command):
     switcher = {
         1: waitForCommands,
         2: takePicture,
-        3: processImages
+        3: processImages,
+        4:sendCordToPLC
     }
     # Get the function from switcher dictionary
     func = switcher.get(command, lambda: "Invalid command")
     # Execute the function
     return func()
 
-def sendCordToPLC():
-    client = r_w_float_modbus.FloatModbusClient(ModbusClient)
-    client.write_float(4,[Roeimages[0].getRoePositionMillimeter])
+
 
 
 def main():
