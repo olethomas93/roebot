@@ -44,6 +44,8 @@ def processImages():
 
         imageCv.processImage(image)
 
+    switch_case(1)
+
 def switch_case(command):
     switcher = {
         1: waitForCommands,
