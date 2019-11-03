@@ -27,10 +27,15 @@ def waitForCommands():
             modbusclient.modbusClient.close()
             switch_case(command)
 
+
+def getDistanceFromTray():
+    r_w_float_modbus
+
+
 def takePicture():
     print("Executing take picture")
     camera = Camera.Camera()
-    RoeImage = camera.takePicture(800,62)
+    RoeImage = camera.takePicture(getDistanceFromTray(),62)
     Roeimages.append(RoeImage)
 
 
@@ -52,9 +57,10 @@ def sendcoord(arrayX,arrayY):
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
     print(arrayY)
     for i in range(0,len(arrayY)):
-        client.sendInt(int(arrayY[i]),i+2)
+        client.sendInt(int(arrayY[i]),i+10)
 
-
+    for i in range(0,len(arrayX)):
+        client.sendInt(int(arrayX[i]),i+50)
 def sendCordToPLC():
     arrayX = []
     arrayY = []
@@ -63,9 +69,6 @@ def sendCordToPLC():
         arrayY.append(cord.getyCoor())
 
     sendcoord(arrayX,arrayY)
-    client = r_w_float_modbus.FloatModbusClient(ModbusClient)
-    client.sendInt(45,2)
-
     switch_case(1)
 
 def switch_case(command):
