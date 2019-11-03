@@ -39,7 +39,7 @@ def takePicture():
 
 
 def processImages():
-    imageCv = imageProcessing2.imageProcessing()
+    imageCv = imageProcessing2.imageProcessing(True)
     for image in Roeimages:
 
         imageCv.processImage(image)
