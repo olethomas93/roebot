@@ -65,7 +65,7 @@ class imageProcessing(object):
                 array.append(center)
                 self.pixelToMillimeterConversion(cord,roeImage)
 
-        while self.debug:
+        if self.debug:
 
 
 
