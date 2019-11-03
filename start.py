@@ -16,14 +16,15 @@ def waitForCommands():
 
     while wait:
         command, wait = modbusclient.read_float(0)
-        
+
         command = int(command[0])
 
         if command == 0:
             wait = True
         if command >0:
-            modbusclient.modbusClient.close()
+
             modbusclient.write_float(0,[0])
+            modbusclient.modbusClient.close()
             switch_case(command)
 
 def takePicture():
@@ -57,11 +58,15 @@ def switch_case(command):
     # Execute the function
     return func()
 
+def sendCordToPLC():
+    client = r_w_float_modbus.FloatModbusClient(ModbusClient)
+    client.write_float(4,[Roeimages[0].getRoePositionMillimeter])
+
 
 def main():
     executor = ThreadPoolExecutor(max_workers=3)
     task1 = executor.submit(switch_case(1))
-    task2 = executor.submit(switch_case(3))
+
 
 
 if __name__ == '__main__':
