@@ -48,8 +48,8 @@ def processImages():
     switch_case(1)
 
 def sendCordToPLC():
-    arrayX = list
-    arrayY = list
+    arrayX = []
+    arrayY = []
     for cord in Roeimages[0].getRoePositionMillimeter():
         arrayX.append(cord.getxCoor())
         arrayY.append(cord.getyCoor())
