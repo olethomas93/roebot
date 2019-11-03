@@ -77,7 +77,7 @@ class imageProcessing(object):
         distance = RoeImage.getDistance()
         width, height,_ = RoeImage.getImage().shape
         imageHeigth = height
-        print("image hegight: "+imageHeigth)
+        print("image hegight: "+int(imageHeigth))
         imageWidth = width
 
         # calculate length of diagonal of image in mm
