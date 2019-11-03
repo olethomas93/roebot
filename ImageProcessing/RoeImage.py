@@ -24,6 +24,7 @@ class RoeImage:
         return self.timeStamp
 
     def addRoePositionPixel(self, coordinate):
+
         self.roePositionPixels.append(coordinate)
 
     def getRoePositionPixel(self):
@@ -31,6 +32,7 @@ class RoeImage:
 
     def addRoePositionMillimeter(self, coordinate):
         self.roePositionMillimeters.apppend(coordinate)
+        
 
     def getRoePositionMillimeter(self):
         return self.roePositionMillimeters
