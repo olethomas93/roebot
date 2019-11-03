@@ -1,5 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 import threading
+from pyModbusTCP.client import ModbusClient
 from communication import r_w_float_modbus
 from ImageProcessing import Camera
 from ImageProcessing import imageProcessing2
