@@ -7,7 +7,7 @@ from pyModbusTCP import utils
 regs_lock = Lock()
 
 
-class modbusClient(object):
+class modbusClient2(object):
     th = None
 
     def __init__(self):
