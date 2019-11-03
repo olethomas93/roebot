@@ -51,6 +51,7 @@ def sendCordToPLC():
     print(Roeimages[0].getRoePositionMillimeter()[0].getxCoor())
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
     client.write_float(5,[4.0])
+    switch_case(1)
 
 def switch_case(command):
     switcher = {
