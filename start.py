@@ -47,6 +47,14 @@ def processImages():
 
     switch_case(1)
 
+
+def sendcoord(arrayX,arrayY):
+    client = r_w_float_modbus.FloatModbusClient(ModbusClient)
+
+    for i in range(3,20):
+        client.sendInt(i,arrayY[i])
+
+
 def sendCordToPLC():
     arrayX = []
     arrayY = []
@@ -54,9 +62,10 @@ def sendCordToPLC():
         arrayX.append(cord.getxCoor())
         arrayY.append(cord.getyCoor())
 
+    sendcoord(arrayX,arrayY)
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
-    client.sendInt(45,6)
-    client.write_float(6,arrayY)
+    client.sendInt(45,2)
+   
     switch_case(1)
 
 def switch_case(command):
