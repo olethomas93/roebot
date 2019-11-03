@@ -49,7 +49,7 @@ def processImages():
 
 def sendCordToPLC():
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
-    client.write_float(4,[4])
+    client.write_float(4,[float(4)])
 
 def switch_case(command):
     switcher = {
