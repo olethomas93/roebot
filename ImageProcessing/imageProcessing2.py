@@ -69,7 +69,7 @@ class imageProcessing(object):
 
 
 
-            cv2.imwrite('prosessed.png', image)
+            cv2.imwrite('prosessed %d.png', image)
 
 
     def pixelToMillimeterConversion(self, coord, RoeImage):
