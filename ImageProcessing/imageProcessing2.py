@@ -50,7 +50,7 @@ class imageProcessing(object):
 
         array = []
         ii = 1
-        ii = 1
+
 
         len(contours)
         for c in contours:
