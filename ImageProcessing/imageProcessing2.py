@@ -74,12 +74,15 @@ class imageProcessing(object):
 
     def pixelToMillimeterConversion(self, coord, RoeImage):
         fieldOfView = RoeImage.getFieldOfView()
+        print()
         distance = RoeImage.getDistance()
         height, width,_ = RoeImage.getImage().shape
         imageHeigth = height
-        print("image hegight: ", imageHeigth)
+        print("image height: ", imageHeigth)
         imageWidth = width
-        print("image hegight: ", imageWidth)
+        print("image width: ", imageWidth)
+
+
 
         # calculate length of diagonal of image in mm
         diagonalMillimeter = distance * math.tan((fieldOfView / 2) * (math.pi / 180)) * 2
