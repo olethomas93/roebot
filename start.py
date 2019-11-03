@@ -48,9 +48,9 @@ def processImages():
     switch_case(1)
 
 def sendCordToPLC():
-    xcor = float(Roeimages[0].getRoePositionMillimeter()[0].getxCoor())
+    print(Roeimages[0].getRoePositionMillimeter()[0].getxCoor())
     client = r_w_float_modbus.FloatModbusClient(ModbusClient)
-    client.write_float(5,[xcor])
+    client.write_float(5,[4.0])
 
 def switch_case(command):
     switcher = {
