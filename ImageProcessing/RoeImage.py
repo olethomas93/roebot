@@ -31,8 +31,8 @@ class RoeImage:
         return self.roePositionPixels
 
     def addRoePositionMillimeter(self, coordinate):
-        self.roePositionMillimeters.apppend(coordinate)
-        
+        self.roePositionMillimeters.append(coordinate)
+
 
     def getRoePositionMillimeter(self):
         return self.roePositionMillimeters
