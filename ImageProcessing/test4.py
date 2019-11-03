@@ -73,7 +73,7 @@ class imageProcessing(object):
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
-            contours,_ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
+            _,contours,_ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
                                         cv2.CHAIN_APPROX_SIMPLE)
             #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 

@@ -39,7 +39,7 @@ class imageProcessing(object):
             erodedImage = cv2.erode(thresh, StructureElement)
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
-            _,countors, _ = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+            _ ,countors, _ = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
             # Get the moments
             mu = [None] * len(countors)
