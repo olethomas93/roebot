@@ -58,11 +58,9 @@ class imageProcessing(object):
             center = (int(x), int(y))
             r = int(r)
             if r >= 0.8 and r <= 5:
-                print(center)
-                cord = coordinate(center[0], center[1])
-                self.corArray.append(cord)
+                x,y = center
+                cord = coordinate(x, y)
                 cv2.circle(image, center, r, (0, 255, 0), 2)
-                array.append(center)
                 self.pixelToMillimeterConversion(cord,roeImage)
 
         if self.debug:
