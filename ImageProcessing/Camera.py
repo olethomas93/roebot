@@ -22,7 +22,7 @@ class Camera:
         with picamera.PiCamera() as camera:
 
             with picamera.array.PiRGBArray(camera) as output:
-                camera.resolution = (1920, 1080)
+                camera.resolution = (1640, 1232)
                 camera.capture(output, format='bgr')
 
                 self.frame = output.array

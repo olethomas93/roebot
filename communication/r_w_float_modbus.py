@@ -12,7 +12,7 @@ from pyModbusTCP import utils
 class FloatModbusClient():
 
     def __init__(self, modbus):
-        self.modbusClient = modbus(host="158.38.140.52", port=2000, auto_open=True)
+        self.modbusClient = modbus(host="192.168.137.11", port=2000, auto_open=True)
         self.reg_l = []
 
     def read_float(self, address, number=1):
