@@ -35,7 +35,7 @@ def getDistanceFromTray():
 def takePicture():
     print("Executing take picture")
     camera = Camera.Camera()
-    RoeImage = camera.takePicture(800,62)
+    RoeImage = camera.takePicture(330,62)
     Roeimages.append(RoeImage)
 
 
