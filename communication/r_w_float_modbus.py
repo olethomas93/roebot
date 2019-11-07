@@ -12,6 +12,7 @@ from pyModbusTCP import utils
 class FloatModbusClient():
 
     def __init__(self, modbus):
+        print("created")
         self.modbusClient = modbus(host="192.168.137.65", port=2000, auto_open=True)
         self.reg_l = []
 

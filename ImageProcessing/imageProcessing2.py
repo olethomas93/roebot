@@ -14,61 +14,73 @@ class imageProcessing(object):
     def __init__(self,debug):
 
         self.corArray = []
-        processingQueue = list
+        self.processingQueue = []
+
         self.debug = debug
 
-    def processImage(self, roeImage):
+    def processImages(self):
+        imageList = []
+        for roeImage in self.processingQueue:
 
-        image_color = roeImage.getImage()
+            print("processing images")
+            image_color = roeImage.getImage()
 
-        image_ori = cv2.cvtColor(image_color, cv2.COLOR_BGR2GRAY)
+            image_ori = cv2.cvtColor(image_color, cv2.COLOR_BGR2GRAY)
 
-        lower_bound = np.array([0, 0, 10])
-        upper_bound = np.array([255, 255, 195])
+            lower_bound = np.array([0, 0, 10])
+            upper_bound = np.array([255, 255, 195])
 
-        image = image_color
+            image = image_color
 
-        mask = cv2.inRange(image, lower_bound, upper_bound)
-        thresh = cv2.inRange(image_color, (255, 0, 0), (255, 255, 255))
-        # gh = 230
-        cv2.imwrite('tresh.png',thresh)
-        # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
-        #             cv2.THRESH_BINARY_INV,33,2)
+            mask = cv2.inRange(image, lower_bound, upper_bound)
+            thresh = cv2.inRange(image_color, (255, 0, 0), (255, 255, 255))
+            # gh = 230
+            cv2.imwrite('tresh.png',thresh)
+            # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
+            #             cv2.THRESH_BINARY_INV,33,2)
 
-        kernel = np.zeros((3, 3), np.uint8)
+            kernel = np.zeros((3, 3), np.uint8)
 
-        # Use erosion and dilation combination to eliminate false positives.
-        # In this case the text Q0X could be identified as circles but it is not.
-        # thresh = cv2.erode(thresh, kernel, iterations=6)
-        # thresh = cv2.dilate(thresh, kernel, iterations=3)
+            # Use erosion and dilation combination to eliminate false positives.
+            # In this case the text Q0X could be identified as circles but it is not.
+            # thresh = cv2.erode(thresh, kernel, iterations=6)
+            # thresh = cv2.dilate(thresh, kernel, iterations=3)
 
-        closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+            closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
-        _,contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
-                                       cv2.CHAIN_APPROX_SIMPLE)
-        # contours.sort(key=lambda x: cv2.boundingRect(x)[0])
+            _,contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
+                                           cv2.CHAIN_APPROX_SIMPLE)
+            # contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
-        array = []
-        ii = 1
-
-
-        len(contours)
-        for c in contours:
-            (x, y), r = cv2.minEnclosingCircle(c)
-            center = (int(x), int(y))
-            r = int(r)
-            if r >= 10 and r <= 20:
-                x,y = center
-                cord = coordinate(x, y)
-                cv2.circle(image, center, r, (0, 255, 0), 2)
-                self.pixelToMillimeterConversion(cord,roeImage)
-
-        if self.debug:
+            array = []
+            ii = 1
 
 
+            len(contours)
+            for c in contours:
+                (x, y), r = cv2.minEnclosingCircle(c)
+                center = (int(x), int(y))
+                r = int(r)
+                if r >= 10 and r <= 20:
+                    x,y = center
+                    cord = coordinate(x, y)
+                    cv2.circle(image, center, r, (0, 255, 0), 2)
+                    self.pixelToMillimeterConversion(cord,roeImage)
 
-            cv2.imwrite('prosessed %d.png', image)
 
+            imageList.append(roeImage)
+            if self.debug:
+
+
+
+                cv2.imwrite('prosessed %d.png', image)
+
+
+        if len(imageList) >=2:
+
+            return imageList,True
+        else:
+            None,False
 
     def pixelToMillimeterConversion(self, coord, RoeImage):
         fieldOfView = RoeImage.getFieldOfView()
@@ -106,3 +118,8 @@ class imageProcessing(object):
 
         millimeterCoordinate = coordinate(xPositionMillimeter.real, yPositionMillimeter.real)
         RoeImage.addRoePositionMillimeter(millimeterCoordinate)
+
+
+
+
+
