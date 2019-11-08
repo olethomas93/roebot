@@ -54,11 +54,13 @@ class roebot():
                 return True, command
 
     def getValueFromRegister(self, indexNmbr):
-        while True:
+        wait = False
+        while not wait:
             with regs_lock:
                 if self.regList:
                     value = self.regList[indexNmbr]
                     if value > 0:
+                        wait = True
                         return value
 
     # Takes picture of tray.
@@ -147,12 +149,12 @@ class roebot():
         arrayX = []
         arrayY = []
         corrdList = self.generatecoordinateList()
-        for cord in self.Roeimages[0].getRoePositionMillimeter():
+        for cord in corrdList:
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
 
         self.sendcoord(arrayX, arrayY)
-        self.switch_case(1)
+        self.switch_case(0)
 
     def switch_case(self, command):
 
