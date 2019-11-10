@@ -36,7 +36,6 @@ class roebot():
 
             if self.regList:
                 command = self.regList[0]
-                print(command)
                 if command in range(1, 6):
 
                    if self.sendIntModbus(0, 0):
@@ -122,7 +121,7 @@ class roebot():
                 for i in range(len(list)):
                     coordinate = list[i]
 
-                    xpos = coordinate.getxCoor() + (int(roeImage.getPictureIndex()) * 300)
+                    xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex())+1) * 300)
                     ypos = coordinate.getyCoor()
 
                     newcoord = Coordinate.coordinate(xpos, ypos)
@@ -138,9 +137,10 @@ class roebot():
         for cord in corrdList:
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
-
+        print(arrayX)
         self.client.write_multiple_registers(10, arrayX)
 
+        #sleep so register can be updated
         time.sleep(1)
 
 
