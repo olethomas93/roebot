@@ -26,12 +26,12 @@ class roebot():
 
         # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
-    def poll_command(self, ):
+    def poll_command(self):
         print("Polling server for commands")
         commandpoll = False
         # display loop (in main thread)
         while not commandpoll:
-            print("heeei")
+
             # print regs list (with thread lock synchronization)
 
             if self.regList:
@@ -39,29 +39,10 @@ class roebot():
                 print(command)
                 if command in range(1, 5):
                     commandpoll = True
-                    self.sendIntModbus(0,0)
+                    self.sendIntModbus(0, 0)
                     self.switch_case(command)
             # 1s before next print
             time.sleep(1)
-
-    def waitForCommands(self, waitCommand):
-        print("started")
-        wait = True
-        while wait:
-            command, wait = self.getCommand()
-            if command == waitCommand:
-                self.modbusclient.sendInt(0, 0)
-                return True, command
-
-    def getValueFromRegister(self, indexNmbr):
-        wait = False
-        while not wait:
-            with regs_lock:
-                if self.regList:
-                    value = self.regList[indexNmbr]
-                    if value > 0:
-                        wait = True
-                        return value
 
     # Takes picture of tray.
     def takePicture(self):
@@ -114,7 +95,6 @@ class roebot():
         else:
             self.imageList = []
 
-
         self.switch_case(0)
 
     def sendcoord(self, arrayX, arrayY):
@@ -130,20 +110,17 @@ class roebot():
     def generatecoordinateList(self):
         coordList = []
         for roeImage in self.imageList:
-            if len(roeImage.getRoePositionMillimeter())>0:
+            if len(roeImage.getRoePositionMillimeter()) > 0:
 
                 for i in range(len(roeImage.getRoePositionMillimeter())):
-
                     coordinate = roeImage.getRoePositionMillimeter()[i]
 
-                    xpos = coordinate.getxCoor() + i* 300
+                    xpos = coordinate.getxCoor() + i * 300
                     ypos = coordinate.getyCoor()
 
-                    newcoord = Coordinate.coordinate(xpos,ypos)
+                    newcoord = Coordinate.coordinate(xpos, ypos)
 
                     coordList.append(newcoord)
-
-
 
         return coordList
 
