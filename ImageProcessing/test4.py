@@ -50,8 +50,8 @@ class imageProcessing(object):
             bh_temp = cv2.getTrackbarPos('bh', 'temp')
             gh_temp = cv2.getTrackbarPos('gh', 'temp')
             rh_temp = cv2.getTrackbarPos('rh', 'temp')
-            radiusl = cv2.getTrackbarPos('ru', 'temp')
-            radiusu = cv2.getTrackbarPos('rl', 'temp')
+            radiusl = cv2.getTrackbarPos('rl', 'temp')
+            radiusu = cv2.getTrackbarPos('ru', 'temp')
 
 
 
