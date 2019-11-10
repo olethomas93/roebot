@@ -158,4 +158,4 @@ class roebot():
         return func()
 
     def getImageList(self):
-        return len(self.imageList)
+        return print(len(self.imageList))
