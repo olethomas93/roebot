@@ -29,6 +29,8 @@ class imageProcessing(object):
         cv2.createTrackbar('bh', 'temp', 255, 255, nothing)
         cv2.createTrackbar('gh', 'temp', 255, 255, nothing)
         cv2.createTrackbar('rh', 'temp', 255, 255, nothing)
+        cv2.createTrackbar('rl', 'temp', 0, 100, nothing)
+        cv2.createTrackbar('ru', 'temp', 100, 100, nothing)
 
 
         camera = PiCamera()
@@ -48,6 +50,8 @@ class imageProcessing(object):
             bh_temp = cv2.getTrackbarPos('bh', 'temp')
             gh_temp = cv2.getTrackbarPos('gh', 'temp')
             rh_temp = cv2.getTrackbarPos('rh', 'temp')
+            radiusl = cv2.getTrackbarPos('ru', 'temp')
+            radiusu = cv2.getTrackbarPos('rl', 'temp')
 
 
 
@@ -76,9 +80,9 @@ class imageProcessing(object):
             erodedImage = cv2.erode(dilatedImage, StructureElement)
 
 
-            closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+            closing = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
 
-            _,contours,_ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
+            _,contours,_ = cv2.findContours(mask.copy(), cv2.RETR_LIST,
                                         cv2.CHAIN_APPROX_SIMPLE)
             #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
@@ -90,7 +94,7 @@ class imageProcessing(object):
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
-                if r >= 5 and r <= 20:
+                if r >= radiusl and radiusu <= 20:
                     print(center)
 
 
@@ -99,8 +103,6 @@ class imageProcessing(object):
                     array.append(center)
 
             cv2.imshow("preprocessed", image_color)
-            cv2.imshow('tresh',erodedImage)
-            cv2.imshow('prosessed',image_ori)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
