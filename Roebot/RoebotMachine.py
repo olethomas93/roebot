@@ -71,7 +71,6 @@ class roebot():
 
             # do modbus reading on socket
             reg_list = self.client.read_holding_registers(0, 10)
-            print(reg_list)
             # if read is ok, store result in regs (with thread lock synchronization)
             if reg_list:
                 with regs_lock:
@@ -100,12 +99,13 @@ class roebot():
     def sendcoord(self, arrayX, arrayY):
 
         for i in range(0, len(arrayY)):
-            print(arrayY[i])
+            
             self.sendIntModbus(int(arrayX[i]), i + 10)
 
         for i in range(0, len(arrayX)):
             self.sendIntModbus(int(arrayY[i]), i + 50)
 
+        return True
     # generate coordinate list relative to the robot
 
     def generatecoordinateList(self):
@@ -120,7 +120,7 @@ class roebot():
                 for i in range(len(list)):
                     coordinate = list[i]
 
-                    xpos = coordinate.getxCoor() + i * 300
+                    xpos = coordinate.getxCoor() + (i * 300)
                     ypos = coordinate.getyCoor()
 
                     newcoord = Coordinate.coordinate(xpos, ypos)
@@ -136,10 +136,9 @@ class roebot():
         for cord in corrdList:
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
+        if self.sendcoord(arrayX, arrayY):
 
-        print(arrayY,arrayX)
-        self.sendcoord(arrayX, arrayY)
-        self.switch_case(0)
+            self.switch_case(0)
 
     def switch_case(self, command):
 
