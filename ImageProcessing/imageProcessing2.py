@@ -11,7 +11,7 @@ regs_lock = Lock()
 
 class imageProcessing(object):
 
-    def __init__(self,debug):
+    def __init__(self,debug = True):
 
         self.corArray = []
         self.processingQueue = []
