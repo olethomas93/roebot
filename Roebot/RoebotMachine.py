@@ -121,7 +121,7 @@ class roebot():
                 for i in range(len(list)):
                     coordinate = list[i]
 
-                    xpos = coordinate.getxCoor() + (i * 300)
+                    xpos = coordinate.getxCoor() + (int(roeImage.getPictureIndex()) * 300)
                     ypos = coordinate.getyCoor()
 
                     newcoord = Coordinate.coordinate(xpos, ypos)
