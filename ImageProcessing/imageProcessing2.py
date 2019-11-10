@@ -55,7 +55,7 @@ class imageProcessing(object):
             # contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
 
-            len(contours)
+
             loopcount = 0
             for c in contours:
                 (x, y), r = cv2.minEnclosingCircle(c)
@@ -84,7 +84,6 @@ class imageProcessing(object):
             None, False
 
     def pixelToMillimeterConversion(self, coord, roe):
-        print("hei")
         fieldOfView = roe.getFieldOfView()
         distance = roe.getDistance()
         height, width, _ = roe.getImage().shape

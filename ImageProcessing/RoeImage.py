@@ -1,7 +1,7 @@
 
 class RoeImage:
     roePositionPixels = []
-    roePositionMillimeters = []
+
     FOV = None
     timeStamp = None
     Image = None
@@ -10,6 +10,7 @@ class RoeImage:
     def __init__(self, captureHeight, fieldOfView):
         self.captureHeight = captureHeight
         self.FOV = fieldOfView
+        self.roePositionMillimeters = []
 
     def setImage(self, image):
         self.image = image
