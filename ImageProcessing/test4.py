@@ -88,15 +88,17 @@ class imageProcessing(object):
 
             array = []
             ii = 1
+            if detected_circles is not None:
+                # Convert the circle parameters a, b and r to integers.
+                detected_circles = np.uint16(np.around(detected_circles))
 
-            len(contours)
-            for pt in detected_circles[0, :]:
-                a, b, r = pt[0], pt[1], pt[2]
+                for pt in detected_circles[0, :]:
+                    a, b, r = pt[0], pt[1], pt[2]
 
-                # Draw the circumference of the circle.
-                cv2.circle(image, (a, b), r, (0, 255, 0), 2)
+                    # Draw the circumference of the circle.
+                    cv2.circle(image, (a, b), r, (0, 255, 0), 2)
 
-                cv2.circle(image, (a, b), 1, (0, 0, 255), 3)
+                    cv2.circle(image, (a, b), 1, (0, 0, 255), 3)
 
 
 
