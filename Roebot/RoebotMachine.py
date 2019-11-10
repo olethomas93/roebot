@@ -98,13 +98,10 @@ class roebot():
 
     def sendcoord(self, arrayX, arrayY):
 
-        for i in range(len(arrayX)):
-            print(arrayX[i])
-
-            self.sendIntModbus(int(arrayX[i]), (i + 10))
-
-        for i in range(len(arrayY)):
-            self.sendIntModbus(int(arrayY[i]), (i + 50))
+        if self.client.write_multiple_registers(10, arrayX):
+            print("write ok")
+        else:
+            print("write error")
 
         return True
     # generate coordinate list relative to the robot
