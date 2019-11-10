@@ -72,8 +72,9 @@ class imageProcessing(object):
             # thresh = cv2.erode(thresh, kernel, iterations=6)
             # thresh = cv2.dilate(thresh, kernel, iterations=3)
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
-            erodedImage = cv2.erode(mask, StructureElement)
-            dilatedImage = cv2.dilate(erodedImage, StructureElement)
+            dilatedImage = cv2.dilate(mask, StructureElement)
+            erodedImage = cv2.erode(dilatedImage, StructureElement)
+
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
@@ -98,7 +99,7 @@ class imageProcessing(object):
                     array.append(center)
 
             cv2.imshow("preprocessed", image_color)
-            cv2.imshow('tresh',dilatedImage)
+            cv2.imshow('tresh',erodedImage)
             cv2.imshow('prosessed',image_ori)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
