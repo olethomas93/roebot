@@ -40,7 +40,7 @@ class imageProcessing(object):
 
             image_color = frame.array
             image_ori = cv2.cvtColor(image_color,cv2.COLOR_BGR2GRAY)
-
+            image_ori = cv2.GaussianBlur(image_ori, (5, 5), 0)
             bl_temp = cv2.getTrackbarPos('bl', 'temp')
             gl_temp = cv2.getTrackbarPos('gl', 'temp')
             rl_temp = cv2.getTrackbarPos('rl', 'temp')
@@ -49,6 +49,9 @@ class imageProcessing(object):
             gh_temp = cv2.getTrackbarPos('gh', 'temp')
             rh_temp = cv2.getTrackbarPos('rh', 'temp')
 
+            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+            erodedImage = cv2.erode(thresh, StructureElement)
+            dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
             lower_bound = np.array([0, 0, 10])
             upper_bound = np.array([255, 255, 195])
@@ -94,7 +97,7 @@ class imageProcessing(object):
                     array.append(center)
 
             cv2.imshow("preprocessed", image_color)
-            cv2.imshow('tresh',thresh)
+            cv2.imshow('tresh',dilatedImage)
             cv2.imshow('prosessed',image_ori)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
