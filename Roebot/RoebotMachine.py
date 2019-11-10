@@ -115,7 +115,7 @@ class roebot():
         for roeImage in self.imageList:
             list = roeImage.getRoePositionMillimeter()
             if len(roeImage.getRoePositionMillimeter()) > 0:
-                print("OK generating")
+
 
 
                 for i in range(len(list)):
@@ -138,7 +138,7 @@ class roebot():
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
 
-        self.client.write_multiple_registers(10, arrayX)
+         self.client.write_multiple_registers(10, arrayX)
         print("write ok")
 
 
