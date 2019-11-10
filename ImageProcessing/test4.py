@@ -81,7 +81,7 @@ class imageProcessing(object):
             closing = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
             detected_circles = cv2.HoughCircles(mask.copy(),
                                                 cv2.HOUGH_GRADIENT, 1, 20, param1=50,
-                                                param2=30, minRadius=1, maxRadius=40)
+                                                param2=10, minRadius=1, maxRadius=40)
             _,contours,_ = cv2.findContours(mask.copy(), cv2.RETR_LIST,
                                         cv2.CHAIN_APPROX_SIMPLE)
             #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
@@ -89,6 +89,7 @@ class imageProcessing(object):
             array = []
             ii = 1
             if detected_circles is not None:
+                print("fefe")
                 # Convert the circle parameters a, b and r to integers.
                 detected_circles = np.uint16(np.around(detected_circles))
 
