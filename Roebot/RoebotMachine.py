@@ -42,8 +42,8 @@ class roebot():
                    if self.sendIntModbus(0, 0):
 
                         self.switch_case(command)
-            # 1s before next print
-            time.sleep(1)
+
+
 
     # Takes picture of tray.
     def takePicture(self):
@@ -77,7 +77,7 @@ class roebot():
                 with regs_lock:
                     self.regList = list(reg_list)
             # 1s before next polling
-            time.sleep(1)
+            time.sleep(0.2)
 
     # send int to modbusServer
     def sendIntModbus(self, value, address):
