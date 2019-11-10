@@ -36,14 +36,14 @@ class roebot():
         while not commandpoll:
             print("heeei")
             # print regs list (with thread lock synchronization)
-            with regs_lock:
-                if self.regList:
-                    command = self.regList[0]
-                    print(command)
-                    if command in range(1, 4):
-                        commandpoll = True
-                        self.sendIntModbus(0,0)
-                        self.switch_case(command)
+
+            if self.regList:
+                command = self.regList[0]
+                print(command)
+                if command in range(1, 4):
+                    commandpoll = True
+                    self.sendIntModbus(0,0)
+                    self.switch_case(command)
             # 1s before next print
             time.sleep(1)
 
