@@ -38,7 +38,7 @@ class roebot():
                 command = self.regList[0]
                 print(command)
                 if command in range(1, 6):
-                    commandpoll = True
+
                    if self.sendIntModbus(0, 0):
 
                         self.switch_case(command)
