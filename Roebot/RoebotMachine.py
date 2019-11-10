@@ -40,6 +40,7 @@ class roebot():
                     command = self.regList[0]
                     print(command)
                     if command in range(1, 4):
+                        self.sendIntModbus(0,0)
                         self.switch_case(command)
             # 1s before next print
             time.sleep(1)
@@ -87,7 +88,7 @@ class roebot():
                 if not isOpen:
                     print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
                     isOpen = True
-            print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
+            
             # do modbus reading on socket
             reg_list = self.client.read_holding_registers(0, 10)
             # if read is ok, store result in regs (with thread lock synchronization)
