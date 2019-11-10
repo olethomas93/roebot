@@ -83,10 +83,10 @@ class imageProcessing(object):
         else:
             None, False
 
-    def pixelToMillimeterConversion(self, coord, RoeImage):
-        fieldOfView = RoeImage.getFieldOfView()
-        distance = RoeImage.getDistance()
-        height, width, _ = RoeImage.getImage().shape
+    def pixelToMillimeterConversion(self, coord, image):
+        fieldOfView = image.getFieldOfView()
+        distance = image.getDistance()
+        height, width, _ = image.getImage().shape
         imageHeigth = height
         imageWidth = width
 
@@ -114,4 +114,4 @@ class imageProcessing(object):
 
         millimeterCoordinate = coordinate(int(round(xPositionMillimeter.real, 2)),
                                           int(round(yPositionMillimeter.real, 2)))
-        RoeImage.addRoePositionMillimeter(millimeterCoordinate)
+        image.addRoePositionMillimeter(millimeterCoordinate)

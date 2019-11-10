@@ -150,6 +150,7 @@ class roebot():
 
     def getImageList(self):
         print(len(self.imageList))
+        self.switch_case(0)
 
     def switch_case(self, command):
 
