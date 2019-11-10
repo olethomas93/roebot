@@ -103,6 +103,7 @@ class imageProcessing(object):
                     array.append(center)
 
             cv2.imshow("preprocessed", image_color)
+            cv2.imshow("processed", image)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
