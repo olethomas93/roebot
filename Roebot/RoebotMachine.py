@@ -39,8 +39,9 @@ class roebot():
                 print(command)
                 if command in range(1, 6):
                     commandpoll = True
-                    self.sendIntModbus(0, 0)
-                    self.switch_case(command)
+                   if self.sendIntModbus(0, 0):
+
+                        self.switch_case(command)
             # 1s before next print
             time.sleep(1)
 
@@ -81,7 +82,7 @@ class roebot():
     # send int to modbusServer
     def sendIntModbus(self, value, address):
 
-        self.client.write_single_register(address, value)
+        return self.client.write_single_register(address, value)
 
 
     # process images by creating a RoeImage adding them to roeimage Queue
