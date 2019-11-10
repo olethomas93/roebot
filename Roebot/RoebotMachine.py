@@ -98,12 +98,12 @@ class roebot():
 
     def sendcoord(self, arrayX, arrayY):
 
-        for i in range(0, len(arrayY)):
-            
-            self.sendIntModbus(int(arrayX[i]), i + 10)
+        for i in range(len(arrayX)):
 
-        for i in range(0, len(arrayX)):
-            self.sendIntModbus(int(arrayY[i]), i + 50)
+            self.sendIntModbus(arrayX[i], (i + 10))
+
+        for i in range(len(arrayY)):
+            self.sendIntModbus(arrayY[i], (i + 50))
 
         return True
     # generate coordinate list relative to the robot
