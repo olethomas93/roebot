@@ -8,7 +8,7 @@ from ImageProcessing import Camera
 from ImageProcessing import imageProcessing2
 import random
 
-SERVER_HOST = "localhost"
+SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
 
 # init a thread lock
