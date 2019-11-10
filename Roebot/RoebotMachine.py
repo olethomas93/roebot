@@ -145,7 +145,7 @@ class roebot():
         #sleep so register can be updated
         time.sleep(1)
 
-
+        self.imageList = []
         self.switch_case(0)
 
     def getImageList(self):

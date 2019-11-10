@@ -56,11 +56,12 @@ class imageProcessing(object):
 
 
             len(contours)
+            loopcount = 0
             for c in contours:
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
-                loopcount = 0
+
                 if r >= 10 and r <= 20:
                     loopcount = loopcount + 1
                     print("loopcount: " + str(loopcount))
@@ -76,6 +77,7 @@ class imageProcessing(object):
                 cv2.imwrite('prosessed'+str(roeImage.getPictureIndex())+".png", image)
 
         if len(imageList) >= 2:
+            self.processingQueue = []
 
             return imageList, True
         else:
