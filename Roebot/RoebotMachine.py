@@ -139,8 +139,9 @@ class roebot():
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
 
-        self.client.write_multiple_registers(10, arrayX)
-        print("write ok")
+        while not self.client.write_multiple_registers(10, arrayX):
+
+            print("write ok")
 
 
 
