@@ -14,7 +14,6 @@ class imageProcessing(object):
 
     def __init__(self, debug=True):
 
-        self.corArray = []
         self.processingQueue = []
 
         self.debug = debug
@@ -55,8 +54,6 @@ class imageProcessing(object):
                                               cv2.CHAIN_APPROX_SIMPLE)
             # contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
-            array = []
-            ii = 1
 
             len(contours)
             for c in contours:
@@ -76,7 +73,7 @@ class imageProcessing(object):
             imageList.append(roeImage)
             if self.debug:
                 print("LENGTH millimeter: " + str(len(roeImage.getRoePositionMillimeter())))
-                cv2.imwrite('prosessed %d.png', image)
+                cv2.imwrite('prosessed'+str(roeImage.getPictureIndex())+".png", image)
 
         if len(imageList) >= 2:
 
