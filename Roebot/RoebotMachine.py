@@ -81,8 +81,8 @@ class roebot():
     # send int to modbusServer
     def sendIntModbus(self, value, address):
 
-        result = self.client.write_single_register(address, value)
-        return result
+        self.client.write_single_register(address, value)
+
 
     # process images by creating a RoeImage adding them to roeimage Queue
     def processImages(self):
@@ -99,11 +99,12 @@ class roebot():
     def sendcoord(self, arrayX, arrayY):
 
         for i in range(len(arrayX)):
+            print(arrayX[i])
 
-            self.sendIntModbus(arrayX[i], (i + 10))
+            self.sendIntModbus(int(arrayX[i]), (i + 10))
 
         for i in range(len(arrayY)):
-            self.sendIntModbus(arrayY[i], (i + 50))
+            self.sendIntModbus(int(arrayY[i]), (i + 50))
 
         return True
     # generate coordinate list relative to the robot
