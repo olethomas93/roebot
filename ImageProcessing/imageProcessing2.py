@@ -114,7 +114,7 @@ class imageProcessing(object):
 
         yPositionMillimeter = coord.getyCoor() * pixelSizeDirY
 
-        millimeterCoordinate = coordinate(round(xPositionMillimeter.real,2), round(yPositionMillimeter.real,2))
+        millimeterCoordinate = coordinate(int(round(xPositionMillimeter.real,2)), int(round(yPositionMillimeter.real,2)))
         RoeImage.addRoePositionMillimeter(millimeterCoordinate)
 
 

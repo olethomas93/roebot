@@ -139,6 +139,9 @@ class roebot():
 
             self.switch_case(0)
 
+    def getImageList(self):
+        print(len(self.imageList))
+
     def switch_case(self, command):
 
         switcher = {
@@ -146,7 +149,7 @@ class roebot():
             2: self.takePicture,
             3: self.processImages,
             4: self.sendCordToPLC,
-            5: self.getImageList()
+            5: self.getImageList
 
         }
         # Get the function from switcher dictionary
@@ -154,5 +157,3 @@ class roebot():
         # Execute the function
         return func()
 
-    def getImageList(self):
-        return print(len(self.imageList))
