@@ -13,13 +13,14 @@ SERVER_PORT = 2000
 
 # init a thread lock
 regs_lock = Lock()
-regList = []
+
 
 class roebot():
 
     def __init__(self, threadpool):
         self.tp = Thread(target=self.polling_thread)
         self.threadpool = threadpool
+        self.regList = []
         self.tp.start()
         self.pictureIndex = 0
         self.camera = Camera.Camera()
@@ -35,8 +36,8 @@ class roebot():
         while True:
             # print regs list (with thread lock synchronization)
             with regs_lock:
-                if regList:
-                    command = regList[0]
+                if self.regList:
+                    command = self.regList[0]
                     print(command)
                     if command in range(1, 4):
                         self.sendIntModbus(0,0)
@@ -67,14 +68,13 @@ class roebot():
     def takePicture(self):
         print("Executing take picture")
 
-        RoeImage = self.camera.takePicture(330, self.pictureIndexindex)
+        RoeImage = self.camera.takePicture(330, self.pictureIndex)
         self.pictureIndex += 1
         self.imageCv.processingQueue.append(RoeImage)
         self.switch_case(0)
 
     # modbus polling thread
     def polling_thread(self):
-        global regList
         self.client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
         isOpen = False
         # polling loop
@@ -95,7 +95,7 @@ class roebot():
             # if read is ok, store result in regs (with thread lock synchronization)
             if reg_list:
                 with regs_lock:
-                    regList = list(reg_list)
+                    self.regList = list(reg_list)
             # 1s before next polling
             time.sleep(1)
 
