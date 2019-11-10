@@ -138,13 +138,14 @@ class roebot():
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
 
-        if self.sendcoord(arrayX, arrayY):
-            print("sending success")
-            self.switch_case(0)
-
+        if self.client.write_multiple_registers(10, arrayX):
+            print("write ok")
+            sending = True
         else:
-            print("sending failed")
-            self.switch_case(0)
+            print("write error")
+            sending = False
+
+        self.switch_case(0)
 
     def getImageList(self):
         print(len(self.imageList))
