@@ -97,13 +97,16 @@ class roebot():
         self.switch_case(0)
 
     def sendcoord(self, arrayX, arrayY):
+        sending = False
 
         if self.client.write_multiple_registers(10, arrayX):
             print("write ok")
+            sending = True
         else:
             print("write error")
+            sending = False
 
-        return True
+        return sending
     # generate coordinate list relative to the robot
 
     def generatecoordinateList(self):
@@ -136,7 +139,11 @@ class roebot():
             arrayY.append(cord.getyCoor())
 
         if self.sendcoord(arrayX, arrayY):
+            print("sending success")
+            self.switch_case(0)
 
+        else:
+            print("sending failed")
             self.switch_case(0)
 
     def getImageList(self):
