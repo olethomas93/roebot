@@ -114,7 +114,8 @@ class roebot():
         coordList = []
         for roeImage in self.imageList:
             list = roeImage.getRoePositionMillimeter()
-            if len(roeImage.getRoePositionMillimeter()) > 0:
+            print("lIST LENGTH :" + str(len(list)))
+            if len(list) > 0:
 
 
 
@@ -134,6 +135,7 @@ class roebot():
         arrayX = []
         arrayY = []
         corrdList = self.generatecoordinateList()
+        print("LENGTH OF CORDLIST:"+str(len(corrdList)))
         for cord in corrdList:
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
