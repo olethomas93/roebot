@@ -138,12 +138,10 @@ class roebot():
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
 
-        if self.client.write_multiple_registers(10, arrayX):
-            print("write ok")
-            sending = True
-        else:
-            print("write error")
-            sending = False
+        self.client.write_multiple_registers(10, arrayX)
+        print("write ok")
+
+
 
         self.switch_case(0)
 
