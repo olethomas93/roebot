@@ -98,22 +98,27 @@ class roebot():
         self.switch_case(0)
 
     def sendcoord(self, arrayX, arrayY):
-        print(arrayY)
+
         for i in range(0, len(arrayY)):
-            self.sendIntModbus(int(arrayY[i]), i + 10)
+            print(arrayY[i])
+            self.sendIntModbus(int(arrayX[i]), i + 10)
 
         for i in range(0, len(arrayX)):
-            self.sendIntModbus(int(arrayX[i]), i + 50)
+            self.sendIntModbus(int(arrayY[i]), i + 50)
 
     # generate coordinate list relative to the robot
 
     def generatecoordinateList(self):
+        print("generating cordinate list")
         coordList = []
         for roeImage in self.imageList:
+            list = roeImage.getRoePositionMillimeter()
             if len(roeImage.getRoePositionMillimeter()) > 0:
+                print("OK generating")
 
-                for i in range(len(roeImage.getRoePositionMillimeter())):
-                    coordinate = roeImage.getRoePositionMillimeter()[i]
+
+                for i in range(len(list)):
+                    coordinate = list[i]
 
                     xpos = coordinate.getxCoor() + i * 300
                     ypos = coordinate.getyCoor()
@@ -132,6 +137,7 @@ class roebot():
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
 
+        print(arrayY,arrayX)
         self.sendcoord(arrayX, arrayY)
         self.switch_case(0)
 
