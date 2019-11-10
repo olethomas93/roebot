@@ -75,9 +75,7 @@ class imageProcessing(object):
             # In this case the text Q0X could be identified as circles but it is not.
             # thresh = cv2.erode(thresh, kernel, iterations=6)
             # thresh = cv2.dilate(thresh, kernel, iterations=3)
-            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
-            dilatedImage = cv2.dilate(mask, StructureElement)
-            erodedImage = cv2.erode(dilatedImage, StructureElement)
+
 
 
             closing = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
@@ -102,7 +100,7 @@ class imageProcessing(object):
                     cv2.circle(image, center, r, (0, 255, 0), 2)
                     array.append(center)
 
-            cv2.imshow("preprocessed", image_color)
+            
             cv2.imshow("processed", image)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
