@@ -84,13 +84,11 @@ class imageProcessing(object):
 
     def pixelToMillimeterConversion(self, coord, RoeImage):
         fieldOfView = RoeImage.getFieldOfView()
-        print()
         distance = RoeImage.getDistance()
         height, width,_ = RoeImage.getImage().shape
         imageHeigth = height
-        print("image height: ", imageHeigth)
         imageWidth = width
-        print("image width: ", imageWidth)
+
 
 
 

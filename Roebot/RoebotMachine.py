@@ -1,12 +1,9 @@
 from pyModbusTCP.client import ModbusClient
-from communication import r_w_float_modbus
-from communication import modbusTcp
 import time
 from threading import Thread, Lock
 from ImageProcessing import Coordinate
 from ImageProcessing import Camera
 from ImageProcessing import imageProcessing2
-import random
 
 SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
@@ -112,11 +109,11 @@ class roebot():
 
         if len(self.imageList) == 0:
             print("processing images")
-            imageList, processing = self.imageCv.processImages()
-            self.imageList = imageList
+            imageList1, processing = self.imageCv.processImages()
+            self.imageList = imageList1
         else:
             self.imageList = []
-            self.processImages()
+
 
         self.switch_case(0)
 
