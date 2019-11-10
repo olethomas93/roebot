@@ -37,7 +37,7 @@ class roebot():
             if self.regList:
                 command = self.regList[0]
                 print(command)
-                if command in range(1, 5):
+                if command in range(1, 6):
                     commandpoll = True
                     self.sendIntModbus(0, 0)
                     self.switch_case(command)
@@ -136,6 +136,7 @@ class roebot():
         for cord in corrdList:
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
+
         if self.sendcoord(arrayX, arrayY):
 
             self.switch_case(0)
@@ -146,9 +147,14 @@ class roebot():
             0: self.poll_command,
             2: self.takePicture,
             3: self.processImages,
-            4: self.sendCordToPLC
+            4: self.sendCordToPLC,
+            5: self.getImageList()
+
         }
         # Get the function from switcher dictionary
         func = switcher.get(command, lambda: "Invalid command")
         # Execute the function
         return func()
+
+    def getImageList(self):
+        return len(self.imageList)
