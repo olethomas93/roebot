@@ -79,7 +79,9 @@ class imageProcessing(object):
 
 
             closing = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-
+            detected_circles = cv2.HoughCircles(mask.copy(),
+                                                cv2.HOUGH_GRADIENT, 1, 20, param1=50,
+                                                param2=30, minRadius=1, maxRadius=40)
             _,contours,_ = cv2.findContours(mask.copy(), cv2.RETR_LIST,
                                         cv2.CHAIN_APPROX_SIMPLE)
             #contours.sort(key=lambda x: cv2.boundingRect(x)[0])
@@ -88,19 +90,17 @@ class imageProcessing(object):
             ii = 1
 
             len(contours)
-            for c in contours:
-                (x, y), r = cv2.minEnclosingCircle(c)
-                center = (int(x), int(y))
-                r = int(r)
-                if r >= radiusl and radiusu <= 20:
-                    print(center)
+            for pt in detected_circles[0, :]:
+                a, b, r = pt[0], pt[1], pt[2]
+
+                # Draw the circumference of the circle.
+                cv2.circle(image, (a, b), r, (0, 255, 0), 2)
+
+                cv2.circle(image, (a, b), 1, (0, 0, 255), 3)
 
 
 
-                    cv2.circle(image, center, r, (0, 255, 0), 2)
-                    array.append(center)
 
-            
             cv2.imshow("processed", image)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
