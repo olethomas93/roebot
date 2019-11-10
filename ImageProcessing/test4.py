@@ -59,7 +59,7 @@ class imageProcessing(object):
 
            # mask = cv2.inRange(image, lower_bound, upper_bound)
             thresh = cv2.inRange(image_color, (255, 0, 0), (255, 255, 255))
-            ret, bwImage = cv2.threshold(image_ori, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
             #gh = 230
 
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
@@ -72,7 +72,7 @@ class imageProcessing(object):
             # thresh = cv2.erode(thresh, kernel, iterations=6)
             # thresh = cv2.dilate(thresh, kernel, iterations=3)
             StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
-            erodedImage = cv2.erode(bwImage, StructureElement)
+            erodedImage = cv2.erode(mask, StructureElement)
             dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
