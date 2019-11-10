@@ -95,7 +95,7 @@ class imageProcessing(object):
 
             cv2.imshow("preprocessed", image_color)
             cv2.imshow('tresh',thresh)
-            cv2.imshow('prosessed',image)
+            cv2.imshow('prosessed',image_ori)
             cv2.imshow('masked',mask)
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
