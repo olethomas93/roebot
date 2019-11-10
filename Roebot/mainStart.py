@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 import threading
-from Roebot import RoebotMachine
+from Roebot.RoebotMachine import roebot
 
 
 
@@ -9,8 +9,8 @@ def main():
 
     threadpool = ThreadPoolExecutor(max_workers=3)
 
-    roebot = RoebotMachine.roebot(threadpool)
-    roebot.switch_case(0)
+    roebotmachine = roebot(threadpool)
+    roebotmachine.switch_case(0)
 
 
 
