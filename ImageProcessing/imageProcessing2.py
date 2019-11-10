@@ -6,12 +6,13 @@ from picamera import PiCamera
 from threading import Thread, Lock
 import cmath as math
 from ImageProcessing.Coordinate import coordinate
+
 regs_lock = Lock()
 
 
 class imageProcessing(object):
 
-    def __init__(self,debug = True):
+    def __init__(self, debug=True):
 
         self.corArray = []
         self.processingQueue = []
@@ -23,7 +24,7 @@ class imageProcessing(object):
 
         for roeImage in self.processingQueue:
 
-            print("processing images"+ str(roeImage.getPictureIndex()))
+            print("processing images" + str(roeImage.getPictureIndex()))
 
             image_color = roeImage.getImage()
 
@@ -37,7 +38,7 @@ class imageProcessing(object):
             mask = cv2.inRange(image, lower_bound, upper_bound)
             thresh = cv2.inRange(image_color, (255, 0, 0), (255, 255, 255))
             # gh = 230
-            cv2.imwrite('tresh.png',thresh)
+            cv2.imwrite('tresh.png', thresh)
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
@@ -50,13 +51,12 @@ class imageProcessing(object):
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
-            _,contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
-                                           cv2.CHAIN_APPROX_SIMPLE)
+            _, contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_LIST,
+                                              cv2.CHAIN_APPROX_SIMPLE)
             # contours.sort(key=lambda x: cv2.boundingRect(x)[0])
 
             array = []
             ii = 1
-
 
             len(contours)
             for c in contours:
@@ -65,37 +65,31 @@ class imageProcessing(object):
                 r = int(r)
                 loopcount = 0
                 if r >= 10 and r <= 20:
-                    loopcount = loopcount +1
-                    print("loopcount: "+str(loopcount))
-                    x,y = center
+                    loopcount = loopcount + 1
+                    print("loopcount: " + str(loopcount))
+                    x, y = center
                     cord = coordinate(x, y)
                     cv2.circle(image, center, r, (0, 255, 0), 2)
-                    self.pixelToMillimeterConversion(cord,roeImage)
+                    self.pixelToMillimeterConversion(cord, roeImage)
 
-            #add image to imagelist
+            # add image to imagelist
             imageList.append(roeImage)
             if self.debug:
-
-
-
+                print("LENGTH millimeter: " + str(len(roeImage.getRoePositionMillimeter())))
                 cv2.imwrite('prosessed %d.png', image)
 
+        if len(imageList) >= 2:
 
-        if len(imageList) >=2:
-
-            return imageList,True
+            return imageList, True
         else:
-            None,False
+            None, False
 
     def pixelToMillimeterConversion(self, coord, RoeImage):
         fieldOfView = RoeImage.getFieldOfView()
         distance = RoeImage.getDistance()
-        height, width,_ = RoeImage.getImage().shape
+        height, width, _ = RoeImage.getImage().shape
         imageHeigth = height
         imageWidth = width
-
-
-
 
         # calculate length of diagonal of image in mm
         diagonalMillimeter = float(distance) * math.tan((fieldOfView / 2) * (math.pi / 180)) * 2
@@ -119,10 +113,6 @@ class imageProcessing(object):
 
         yPositionMillimeter = coord.getyCoor() * pixelSizeDirY
 
-        millimeterCoordinate = coordinate(int(round(xPositionMillimeter.real,2)), int(round(yPositionMillimeter.real,2)))
+        millimeterCoordinate = coordinate(int(round(xPositionMillimeter.real, 2)),
+                                          int(round(yPositionMillimeter.real, 2)))
         RoeImage.addRoePositionMillimeter(millimeterCoordinate)
-
-
-
-
-
