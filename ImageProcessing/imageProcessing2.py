@@ -83,10 +83,11 @@ class imageProcessing(object):
         else:
             None, False
 
-    def pixelToMillimeterConversion(self, coord, image):
-        fieldOfView = image.getFieldOfView()
-        distance = image.getDistance()
-        height, width, _ = image.getImage().shape
+    def pixelToMillimeterConversion(self, coord, roe):
+        print("hei")
+        fieldOfView = roe.getFieldOfView()
+        distance = roe.getDistance()
+        height, width, _ = roe.getImage().shape
         imageHeigth = height
         imageWidth = width
 
@@ -114,4 +115,4 @@ class imageProcessing(object):
 
         millimeterCoordinate = coordinate(int(round(xPositionMillimeter.real, 2)),
                                           int(round(yPositionMillimeter.real, 2)))
-        image.addRoePositionMillimeter(millimeterCoordinate)
+        roe.addRoePositionMillimeter(millimeterCoordinate)
