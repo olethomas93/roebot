@@ -23,7 +23,7 @@ class imageProcessing(object):
 
         for roeImage in self.processingQueue:
 
-            print("processing images"+ roeImage.getPictureIndex())
+            print("processing images"+ str(roeImage.getPictureIndex()))
 
             image_color = roeImage.getImage()
 
