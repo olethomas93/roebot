@@ -49,9 +49,7 @@ class imageProcessing(object):
             gh_temp = cv2.getTrackbarPos('gh', 'temp')
             rh_temp = cv2.getTrackbarPos('rh', 'temp')
 
-            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-            erodedImage = cv2.erode(thresh, StructureElement)
-            dilatedImage = cv2.dilate(erodedImage, StructureElement)
+
 
             lower_bound = np.array([0, 0, 10])
             upper_bound = np.array([255, 255, 195])
@@ -72,7 +70,9 @@ class imageProcessing(object):
             # In this case the text Q0X could be identified as circles but it is not.
             # thresh = cv2.erode(thresh, kernel, iterations=6)
             # thresh = cv2.dilate(thresh, kernel, iterations=3)
-
+            StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+            erodedImage = cv2.erode(thresh, StructureElement)
+            dilatedImage = cv2.dilate(erodedImage, StructureElement)
 
             closing = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
