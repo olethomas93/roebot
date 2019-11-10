@@ -20,9 +20,11 @@ class imageProcessing(object):
 
     def processImages(self):
         imageList = []
+
         for roeImage in self.processingQueue:
 
-            print("processing images")
+            print("processing images"+ roeImage.getPictureIndex())
+
             image_color = roeImage.getImage()
 
             image_ori = cv2.cvtColor(image_color, cv2.COLOR_BGR2GRAY)
