@@ -62,7 +62,7 @@ class imageProcessing(object):
                 center = (int(x), int(y))
                 r = int(r)
 
-                if r >= 10 and r <= 20:
+                if r >= 8 and r <= 20:
                     loopcount = loopcount + 1
                     print("loopcount: " + str(loopcount))
                     x, y = center
