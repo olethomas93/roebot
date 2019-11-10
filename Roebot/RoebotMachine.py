@@ -4,8 +4,8 @@ from communication import modbusTcp
 import time
 from threading import Thread, Lock
 from ImageProcessing import Coordinate
-# from ImageProcessing import Camera
-# from ImageProcessing import imageProcessing2
+from ImageProcessing import Camera
+from ImageProcessing import imageProcessing2
 import random
 
 SERVER_HOST = "localhost"
