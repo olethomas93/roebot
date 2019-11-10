@@ -2,8 +2,8 @@ import time
 from threading import Thread, Lock
 from pyModbusTCP.client import ModbusClient
 
-SERVER_HOST = "localhost"
-SERVER_PORT = 502
+SERVER_HOST = "192.168.137.65"
+SERVER_PORT = 2000
 
 # set global
 regs = []

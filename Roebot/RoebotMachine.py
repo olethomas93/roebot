@@ -13,14 +13,13 @@ SERVER_PORT = 2000
 
 # init a thread lock
 regs_lock = Lock()
-
+regList = []
 
 class roebot():
 
     def __init__(self, threadpool):
         self.tp = Thread(target=self.polling_thread)
         self.threadpool = threadpool
-        self.regList = []
         self.tp.start()
         self.pictureIndex = 0
         self.camera = Camera.Camera()
@@ -36,8 +35,8 @@ class roebot():
         while True:
             # print regs list (with thread lock synchronization)
             with regs_lock:
-                if self.regList:
-                    command = self.regList[0]
+                if regList:
+                    command = regList[0]
                     print(command)
                     if command in range(1, 4):
                         self.sendIntModbus(0,0)
@@ -75,6 +74,7 @@ class roebot():
 
     # modbus polling thread
     def polling_thread(self):
+        global regList
         self.client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
         isOpen = False
         # polling loop
@@ -88,13 +88,14 @@ class roebot():
                 if not isOpen:
                     print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
                     isOpen = True
-            
+
             # do modbus reading on socket
             reg_list = self.client.read_holding_registers(0, 10)
+            print(reg_list)
             # if read is ok, store result in regs (with thread lock synchronization)
             if reg_list:
                 with regs_lock:
-                    self.regList = list(reg_list)
+                    regList = list(reg_list)
             # 1s before next polling
             time.sleep(1)
 
