@@ -63,13 +63,16 @@ class imageProcessing(object):
                 (x, y), r = cv2.minEnclosingCircle(c)
                 center = (int(x), int(y))
                 r = int(r)
+                loopcount = 0
                 if r >= 10 and r <= 20:
+                    loopcount = loopcount +1
+                    print("loopcount: "+str(loopcount))
                     x,y = center
                     cord = coordinate(x, y)
                     cv2.circle(image, center, r, (0, 255, 0), 2)
                     self.pixelToMillimeterConversion(cord,roeImage)
 
-
+            #add image to imagelist
             imageList.append(roeImage)
             if self.debug:
 
