@@ -114,7 +114,7 @@ class roebot():
         coordList = []
         for roeImage in self.imageList:
             list = roeImage.getRoePositionMillimeter()
-            print("lIST LENGTH :" + str(len(list)))
+
             if len(list) > 0:
 
 
@@ -132,10 +132,10 @@ class roebot():
         return coordList
 
     def sendCordToPLC(self):
+        print("sending to PLC")
         arrayX = []
         arrayY = []
         corrdList = self.generatecoordinateList()
-        print("LENGTH OF CORDLIST:"+str(len(corrdList)))
         for cord in corrdList:
             arrayX.append(cord.getxCoor())
             arrayY.append(cord.getyCoor())
@@ -144,7 +144,7 @@ class roebot():
 
         #sleep so register can be updated
         time.sleep(1)
-
+        self.imageCv.processingQueue = []
         self.imageList = []
         self.switch_case(0)
 
