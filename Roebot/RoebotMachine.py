@@ -87,6 +87,7 @@ class roebot():
                 if not isOpen:
                     print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
                     isOpen = True
+            print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
             # do modbus reading on socket
             reg_list = self.client.read_holding_registers(0, 10)
             # if read is ok, store result in regs (with thread lock synchronization)
