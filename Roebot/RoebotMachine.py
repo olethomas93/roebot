@@ -31,15 +31,17 @@ class roebot():
 
     def poll_command(self, ):
         print("Polling server for commands")
-
+        commandpoll = False
         # display loop (in main thread)
-        while True:
+        while not commandpoll:
+            print("heeei")
             # print regs list (with thread lock synchronization)
             with regs_lock:
                 if self.regList:
                     command = self.regList[0]
                     print(command)
                     if command in range(1, 4):
+                        commandpoll = True
                         self.sendIntModbus(0,0)
                         self.switch_case(command)
             # 1s before next print
