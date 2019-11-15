@@ -250,17 +250,9 @@ class roebot():
             with lock:
                 outputFrame = frame.copy()
 
-            # update the background model and increment the total number
-            # of frames read thus far
-            md.update(gray)
-            total += 1
 
-            # acquire the lock, set the output frame, and release the
-            # lock
-            rawCapture.truncate(0)
 
-            with lock:
-                outputFrame = image.copy()
+
 
     def generate(self):
         # grab global references to the output frame and lock variables
