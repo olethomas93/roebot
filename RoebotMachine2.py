@@ -275,13 +275,13 @@ def video_feed():
 
 if __name__ == '__main__':
     # start a thread that will perform motion detection
-    t = threading.Thread(target=detect_motion, args=(
+    t = Thread(target=detect_motion, args=(
         32,))
     t.daemon = True
     tp = Thread(target=polling_thread)
     tp.daemon = True
-    tp.start()
     t.start()
+    tp.start()
     switch_case(0)
 
     # start the flask app
