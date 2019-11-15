@@ -1,6 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
-import threading
-from Roebot.RoebotMachine2 import roebot
+from RoebotMachine2 import roebot
 
 
 
