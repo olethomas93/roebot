@@ -17,7 +17,6 @@ import cv2
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
-
 SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
 
@@ -32,12 +31,11 @@ time.sleep(2.0)
 app = Flask(__name__)
 
 
-
 class roebot():
 
     def __init__(self, threadpool):
         self.tp = Thread(target=self.polling_thread)
-        self.th = Thread(target= self.detect_motion,args=(32,))
+        self.th = Thread(target=self.detect_motion, args=(32,))
         self.threadpool = threadpool
         self.regList = []
         self.tp.start()
@@ -48,8 +46,7 @@ class roebot():
         self.imageCv = imageProcessing2.imageProcessing()
         self.imageList = []
         app.run(host="localhost", port="8080", debug=True,
-            threaded=True, use_reloader=False)
-
+                threaded=True, use_reloader=False)
 
         # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
@@ -65,11 +62,8 @@ class roebot():
                 command = self.regList[0]
                 if command in range(1, 6):
 
-                   if self.sendIntModbus(0, 0):
-
+                    if self.sendIntModbus(0, 0):
                         self.switch_case(command)
-
-
 
     # Takes picture of tray.
     def takePicture(self):
@@ -110,7 +104,6 @@ class roebot():
 
         return self.client.write_single_register(address, value)
 
-
     # process images by creating a RoeImage adding them to roeimage Queue
     def processImages(self):
 
@@ -134,6 +127,7 @@ class roebot():
             sending = False
 
         return sending
+
     # generate coordinate list relative to the robot
 
     def generatecoordinateList(self):
@@ -144,12 +138,10 @@ class roebot():
 
             if len(list) > 0:
 
-
-
                 for i in range(len(list)):
                     coordinate = list[i]
 
-                    xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex())+1) * 300)
+                    xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 300)
                     ypos = coordinate.getyCoor()
 
                     newcoord = Coordinate.coordinate(xpos, ypos)
@@ -169,7 +161,7 @@ class roebot():
         print(arrayX)
         self.client.write_multiple_registers(10, arrayX)
 
-        #sleep so register can be updated
+        # sleep so register can be updated
         time.sleep(1)
         self.imageCv.processingQueue = []
         self.imageList = []
@@ -200,7 +192,7 @@ class roebot():
         # return the rendered template
         return render_template("index.html")
 
-    def detect_motion(self,frameCount):
+    def detect_motion(self, frameCount):
         # grab global references to the video stream, output frame, and
         # lock variables
         global vs, outputFrame, lock
@@ -250,10 +242,6 @@ class roebot():
             with lock:
                 outputFrame = frame.copy()
 
-
-
-
-
     def generate(self):
         # grab global references to the output frame and lock variables
         global outputFrame, lock
@@ -285,4 +273,4 @@ class roebot():
         return Response(self.generate(),
                         mimetype="multipart/x-mixed-replace; boundary=frame")
 
-vs.stop()
+    vs.stop()
