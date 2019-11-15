@@ -245,7 +245,7 @@ def detect_motion(frameCount):
 
             # update the background model and increment the total number
             # of frames read thus far
-        md.update(gray)
+        md.update(frame)
         total += 1
 
         # acquire the lock, set the output frame, and release the
