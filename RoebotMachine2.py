@@ -207,7 +207,7 @@ def detect_motion(frameCount):
         # read the next frame from the video stream, resize it,
         # convert the frame to grayscale, and blur it
         frame = vs.read()
-        frame = imutils.resize(frame, width=400)
+        frame = imutils.resize(frame, width=1920)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
@@ -294,7 +294,7 @@ if __name__ == '__main__':
     app.run(host="localhost", port=8080, debug=True,
             threaded=True, use_reloader=False)
 
-    
+
 
 
     # start the flask app
