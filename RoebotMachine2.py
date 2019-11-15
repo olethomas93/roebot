@@ -290,6 +290,11 @@ def main():
     switch_case(0)
 
 if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-i", "--ip", type=str, required=True,
+                    help="ip address of the device")
+
+    args = vars(ap.parse_args())
     # start a thread that will perform motion detection
     th1 = Thread(target=detect_motion, args=(
         32,))
@@ -301,7 +306,7 @@ if __name__ == '__main__':
     th2.start()
     th3.start()
 
-    app.run(host="localhost", port=8080, debug=True,
+    app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
 
 
