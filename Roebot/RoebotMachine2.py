@@ -46,7 +46,7 @@ class roebot():
         self.camera = Camera.Camera()
         self.imageCv = imageProcessing2.imageProcessing()
         self.imageList = []
-        app.run(host="158.38.142.139", port="8080", debug=True,
+        app.run(host="192.168.137.1", port="8080", debug=True,
             threaded=True, use_reloader=False)
 
 
