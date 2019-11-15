@@ -276,8 +276,8 @@ class roebot():
                    bytearray(encodedImage) + b'\r\n')
 
     @app.route("/video_feed")
-    def video_feed():
+    def video_feed(self):
         # return the response generated along with the specific media
         # type (mime type)
-        return Response(generate(),
+        return Response(self.generate(),
                         mimetype="multipart/x-mixed-replace; boundary=frame")
