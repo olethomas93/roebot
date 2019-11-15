@@ -276,6 +276,9 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
+def main():
+    switch_case(0)
+
 if __name__ == '__main__':
     # start a thread that will perform motion detection
     t = Thread(target=detect_motion, args=(
@@ -289,7 +292,8 @@ if __name__ == '__main__':
     app.run(host="localhost", port=8080, debug=True,
             threaded=True, use_reloader=False)
 
-    switch_case(0)
+    main()
+
 
     # start the flask app
 
