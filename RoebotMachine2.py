@@ -216,8 +216,8 @@ def detect_motion(frameCount):
         # convert the frame to grayscale, and blur it
         frame = vs.read()
         frame2 = vs.read()
-        frame = imutils.resize(frame, width=400)
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        frame = imutils.resize(frame, width=640)
+        gray = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         # grab the current timestamp and draw it on the frame
