@@ -163,7 +163,7 @@ def getImageList():
     time.sleep(1)
     switch_case(0)
 
-def switch_case(self, command):
+def switch_case(command):
 
     switcher = {
         0: poll_command,
