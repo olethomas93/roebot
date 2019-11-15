@@ -26,6 +26,7 @@ regs_lock = Lock()
 outputFrame = None
 lock = Lock()
 
+vs = VideoStream(usePiCamera=1).start()
 # initialize a flask object
 app = Flask(__name__)
 

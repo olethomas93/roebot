@@ -24,6 +24,7 @@ app = Flask(__name__)
 
 # initialize the video stream and allow the camera sensor to
 # warmup
+vs = VideoStream
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
 camera.resolution = (640, 480)
