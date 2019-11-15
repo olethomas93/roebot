@@ -48,7 +48,7 @@ def poll_command():
     while not commandpoll:
 
         # print regs list (with thread lock synchronization)
-        
+
         if regList:
             command = regList[0]
             if command in range(1, 6):
@@ -59,12 +59,13 @@ def poll_command():
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex,workFrame
+    global pictureIndex,workFrame,imageCv
     print("Executing take picture")
 
     RoeImage = camera.takePicture(workFrame,330, pictureIndex)
     pictureIndex += 1
     imageCv.processingQueue.append(RoeImage)
+    time.sleep(1)
     switch_case(0)
 
 
