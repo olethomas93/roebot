@@ -25,7 +25,7 @@ class SingleMotionDetector:
     def detect(self, image, tVal=25):
         # compute the absolute difference between the background model
         # and the image passed in, then threshold the delta image
-        delta = cv2.absdiff(self.bg.astype("uint8"), image)
+        
         #thresh = cv2.threshold(delta, tVal, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
 
