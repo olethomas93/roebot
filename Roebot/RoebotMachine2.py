@@ -9,6 +9,7 @@ from flask import Flask
 from flask import render_template
 import threading
 import argparse
+from imutils.video import VideoStream
 import datetime
 import imutils
 import time
@@ -28,9 +29,9 @@ lock = Lock()
 # initialize a flask object
 app = Flask(__name__)
 
-camera = PiCamera()
-camera.resolution = (640, 480)
-camera.framerate = 32
+camera1 = PiCamera()
+camera1.resolution = (640, 480)
+camera1.framerate = 32
 
 class roebot():
 
@@ -208,10 +209,10 @@ class roebot():
         # read thus far
         md = singleMotionDetector.SingleMotionDetector(accumWeight=0.5)
         total = 0
-        rawCapture = PiRGBArray(camera, size=(640, 480))
+        rawCapture = PiRGBArray(camera1, size=(640, 480))
 
         # loop over frames from the video stream
-        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        for frame in camera1.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             # read the next frame from the video stream, resize it,
             # convert the frame to grayscale, and blur it
             image = frame.array
