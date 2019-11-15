@@ -2,7 +2,7 @@ from pyModbusTCP.client import ModbusClient
 import time
 from threading import Thread, Lock
 from ImageProcessing import Coordinate, singleMotionDetector
-from ImageProcessing import Camera
+from ImageProcessing import crateImage
 from ImageProcessing import imageProcessing2
 from flask import Response
 from flask import Flask
@@ -23,6 +23,7 @@ SERVER_PORT = 2000
 # init a thread lock
 regs_lock = Lock()
 outputFrame = None
+workFrame = None
 lock = Lock()
 
 vs = VideoStream(usePiCamera=0).start()
@@ -31,7 +32,7 @@ time.sleep(2.0)
 app = Flask(__name__)
 regList = []
 pictureIndex = 0
-camera = Camera.Camera()
+camera = crateImage.Camera()
 imageCv = imageProcessing2.imageProcessing()
 imageList = []
 client = None
@@ -57,10 +58,10 @@ def poll_command():
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex
+    global pictureIndex,workFrame
     print("Executing take picture")
 
-    RoeImage = camera.takePicture(330, pictureIndex)
+    RoeImage = camera.takePicture(workFrame,330, pictureIndex)
     pictureIndex += 1
     imageCv.processingQueue.append(RoeImage)
     switch_case(0)
@@ -195,7 +196,7 @@ def index():
 def detect_motion(frameCount):
     # grab global references to the video stream, output frame, and
     # lock variables
-    global vs, outputFrame, lock
+    global vs, outputFrame, lock,workFrame
 
     # initialize the motion detector and the total number of frames
     # read thus far
@@ -207,7 +208,8 @@ def detect_motion(frameCount):
         # read the next frame from the video stream, resize it,
         # convert the frame to grayscale, and blur it
         frame = vs.read()
-        frame = imutils.resize(frame, width=1920)
+        frame2 = vs.read()
+        frame = imutils.resize(frame, width=400)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
@@ -241,6 +243,7 @@ def detect_motion(frameCount):
         # lock
         with lock:
             outputFrame = frame.copy()
+            workFrame = frame2.copy()
 
 
 def generate():
