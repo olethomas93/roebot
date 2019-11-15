@@ -5,11 +5,13 @@ from ImageProcessing import Coordinate
 from ImageProcessing import Camera
 from ImageProcessing import imageProcessing2
 
+
 SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
 
 # init a thread lock
 regs_lock = Lock()
+
 
 
 class roebot():
@@ -23,6 +25,7 @@ class roebot():
         self.camera = Camera.Camera()
         self.imageCv = imageProcessing2.imageProcessing()
         self.imageList = []
+
 
         # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 

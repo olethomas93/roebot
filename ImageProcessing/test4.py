@@ -89,7 +89,7 @@ class imageProcessing(object):
             array = []
             ii = 1
             if detected_circles is not None:
-                print("fefe")
+
                 # Convert the circle parameters a, b and r to integers.
                 detected_circles = np.uint16(np.around(detected_circles))
 
