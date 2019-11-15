@@ -281,6 +281,7 @@ if __name__ == '__main__':
     tp = Thread(target=polling_thread)
     tp.start()
     t.start()
+    switch_case(0)
 
     # start the flask app
     app.run(host="localhost", port=8080, debug=True,
