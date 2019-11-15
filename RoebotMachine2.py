@@ -76,7 +76,7 @@ def polling_thread():
             print("unable to connect to " + SERVER_HOST + ":" + str(SERVER_PORT))
             client.open()
 
-        if self.client.is_open():
+        if client.is_open():
             if not isOpen:
                 print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
                 isOpen = True
@@ -279,6 +279,7 @@ if __name__ == '__main__':
         32,))
     t.daemon = True
     tp = Thread(target=polling_thread)
+    tp.daemon = True
     tp.start()
     t.start()
     switch_case(0)
