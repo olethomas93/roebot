@@ -281,18 +281,20 @@ def main():
 
 if __name__ == '__main__':
     # start a thread that will perform motion detection
-    t = Thread(target=detect_motion, args=(
+    th1 = Thread(target=detect_motion, args=(
         32,))
 
-    tp = Thread(target=polling_thread)
+    th2 = Thread(target=polling_thread)
+    th3 = Thread(target=poll_command)
 
-    t.start()
-    tp.start()
+    th1.start()
+    th2.start()
+    th3.start()
 
     app.run(host="localhost", port=8080, debug=True,
             threaded=True, use_reloader=False)
 
-    main()
+    
 
 
     # start the flask app
