@@ -84,9 +84,9 @@ def polling_thread():
 
 
         if client.is_open():
-            if not isOpen:
-                print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
-                isOpen = True
+
+            print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
+                
 
         # do modbus reading on socket
         reg_list = client.read_holding_registers(0, 10)
