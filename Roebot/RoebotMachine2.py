@@ -46,8 +46,7 @@ class roebot():
         self.imageCv = imageProcessing2.imageProcessing()
         self.imageList = []
 
-        app.run(host="localhost", port="8080", debug=True,
-                threaded=True, use_reloader=False)
+
 
         # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
@@ -274,4 +273,8 @@ class roebot():
         return Response(self.generate(),
                         mimetype="multipart/x-mixed-replace; boundary=frame")
 
-    vs.stop()
+
+
+app.run(host="localhost", port="8080", debug=True,
+            threaded=True, use_reloader=False)
+vs.stop()
