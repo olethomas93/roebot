@@ -30,7 +30,7 @@ class SingleMotionDetector:
 
         detected_circles = cv2.HoughCircles(thresh.copy(),
                                             cv2.HOUGH_GRADIENT, 1, 20, param1=50,
-                                            param2=8, minRadius=25, maxRadius=50)
+                                            param2=8, minRadius=2, maxRadius=10)
         # perform a series of erosions and dilations to remove small
         # blobs
         # thresh = cv2.erode(thresh, None, iterations=2)
