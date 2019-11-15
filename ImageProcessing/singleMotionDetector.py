@@ -49,10 +49,12 @@ class SingleMotionDetector:
         # (minX, minY) = (np.inf, np.inf)
         # (maxX, maxY) = (-np.inf, -np.inf)
         # if no contours were found, return None
-        if len(detected_circles) == 0:
-            return None
+
 
         if detected_circles is not None:
+
+            if len(detected_circles) == 0:
+                return None
 
             # Convert the circle parameters a, b and r to integers.
             detected_circles = np.uint16(np.around(detected_circles))
