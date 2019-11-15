@@ -28,7 +28,7 @@ lock = Lock()
 vs = VideoStream(usePiCamera=0).start()
 time.sleep(2.0)
 # initialize a flask object
-app = Flask(__name__)
+app = Flask()
 
 
 class roebot():
