@@ -66,7 +66,7 @@ def takePicture():
     switch_case(0)
 
 # modbus polling thread
-def polling_thread(self):
+def polling_thread():
 
     isOpen = False
     # polling loop
