@@ -68,6 +68,7 @@ def takePicture():
 
 # modbus polling thread
 def polling_thread():
+    global regList,regs_lock
     client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
     isOpen = False
     # polling loop
