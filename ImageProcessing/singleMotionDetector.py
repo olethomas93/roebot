@@ -1,4 +1,3 @@
-
 import numpy as np
 import imutils
 import cv2
@@ -26,7 +25,7 @@ class SingleMotionDetector:
         # compute the absolute difference between the background model
         # and the image passed in, then threshold the delta image
 
-        #thresh = cv2.threshold(delta, tVal, 255, cv2.THRESH_BINARY)[1]
+        # thresh = cv2.threshold(delta, tVal, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
 
         detected_circles = cv2.HoughCircles(thresh.copy(),
@@ -34,22 +33,17 @@ class SingleMotionDetector:
                                             param2=8, minRadius=10, maxRadius=20)
         # perform a series of erosions and dilations to remove small
         # blobs
-        #thresh = cv2.erode(thresh, None, iterations=2)
-        #thresh = cv2.dilate(thresh, None, iterations=2)
+        # thresh = cv2.erode(thresh, None, iterations=2)
+        # thresh = cv2.dilate(thresh, None, iterations=2)
         # find contours in the thresholded image and initialize the
         # minimum and maximum bounding box regions for motion
-        #cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                #cv2.CHAIN_APPROX_SIMPLE)
-
-
-
-
+        # cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+        # cv2.CHAIN_APPROX_SIMPLE)
 
         # cnts = imutils.grab_contours(cnts)
         # (minX, minY) = (np.inf, np.inf)
         # (maxX, maxY) = (-np.inf, -np.inf)
         # if no contours were found, return None
-
 
         if detected_circles is not None:
 
@@ -58,9 +52,6 @@ class SingleMotionDetector:
 
             # Convert the circle parameters a, b and r to integers.
             detected_circles = np.uint16(np.around(detected_circles))
-
-            for pt in detected_circles[0, :]:
-                a, b, r = pt[0], pt[1], pt[2]
 
                 # Draw the circumference of the circle.
 
@@ -74,4 +65,4 @@ class SingleMotionDetector:
 
         # otherwise, return a tuple of the thresholded image along
         # with bounding box
-        return thresh, (a, b, r,)
+        return thresh, detected_circles

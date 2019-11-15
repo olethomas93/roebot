@@ -237,12 +237,15 @@ def detect_motion(frameCount):
             if motion is not None:
                 # unpack the tuple and draw the box surrounding the
                 # "motion area" on the output frame
-                thresh, (a, b, r,) = motion
+                thresh, detected_circles = motion
 
-                cv2.circle(frame, (a, b), r, (0, 255, 0), 2)
-                #cv2.rectangle(frame, (minX, minY), (maxX, maxY),
-                              #(0, 0, 255), 2)
+                for pt in detected_circles[0, :]:
+                    a, b, r = pt[0], pt[1], pt[2]
 
+                    # Draw the circumference of the circle.
+                    cv2.circle(frame, (a, b), r, (0, 255, 0), 2)
+
+                    cv2.circle(frame, (a, b), 1, (0, 0, 255), 3)
             # update the background model and increment the total number
             # of frames read thus far
         md.update(frame)
