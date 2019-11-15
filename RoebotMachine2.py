@@ -34,11 +34,10 @@ pictureIndex = 0
 camera = Camera.Camera()
 imageCv = imageProcessing2.imageProcessing()
 imageList = []
-client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
+client = None
 
 
-
-    # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
+# self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
 def poll_command():
     print("Polling server for commands")
@@ -55,6 +54,7 @@ def poll_command():
                 if sendIntModbus(0, 0):
                     switch_case(command)
 
+
 # Takes picture of tray.
 def takePicture():
     global pictureIndex
@@ -65,9 +65,10 @@ def takePicture():
     imageCv.processingQueue.append(RoeImage)
     switch_case(0)
 
+
 # modbus polling thread
 def polling_thread():
-
+    client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
     isOpen = False
     # polling loop
     while True:
@@ -90,10 +91,11 @@ def polling_thread():
         # 1s before next polling
         time.sleep(0.2)
 
-# send int to modbusServer
-def sendIntModbus( value, address):
 
+# send int to modbusServer
+def sendIntModbus(value, address):
     return client.write_single_register(address, value)
+
 
 # process images by creating a RoeImage adding them to roeimage Queue
 def processImages():
@@ -107,6 +109,7 @@ def processImages():
 
         switch_case(0)
 
+
 def sendcoord(self, arrayX, arrayY):
     sending = False
 
@@ -118,6 +121,7 @@ def sendcoord(self, arrayX, arrayY):
         sending = False
 
     return sending
+
 
 # generate coordinate list relative to the robot
 
@@ -141,6 +145,7 @@ def generatecoordinateList():
 
     return coordList
 
+
 def sendCordToPLC():
     print("sending to PLC")
     arrayX = []
@@ -158,13 +163,14 @@ def sendCordToPLC():
     imageList = []
     switch_case(0)
 
+
 def getImageList():
     print(len(imageList))
     time.sleep(1)
     switch_case(0)
 
-def switch_case(command):
 
+def switch_case(command):
     switcher = {
         0: poll_command,
         2: takePicture,
@@ -178,12 +184,14 @@ def switch_case(command):
     # Execute the function
     return func()
 
+
 @app.route("/")
 def index():
     # return the rendered template
     return render_template("index.html")
 
-def detect_motion( frameCount):
+
+def detect_motion(frameCount):
     # grab global references to the video stream, output frame, and
     # lock variables
     global vs, outputFrame, lock
@@ -233,6 +241,7 @@ def detect_motion( frameCount):
         with lock:
             outputFrame = frame.copy()
 
+
 def generate():
     # grab global references to the output frame and lock variables
     global outputFrame, lock
@@ -257,20 +266,13 @@ def generate():
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImage) + b'\r\n')
 
+
 @app.route("/video_feed")
 def video_feed():
     # return the response generated along with the specific media
     # type (mime type)
     return Response(generate(),
                     mimetype="multipart/x-mixed-replace; boundary=frame")
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
