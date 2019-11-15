@@ -79,7 +79,9 @@ def polling_thread():
         # keep TCP open
         if not client.is_open():
             print("unable to connect to " + SERVER_HOST + ":" + str(SERVER_PORT))
+            client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
             client.open()
+
 
         if client.is_open():
             if not isOpen:
