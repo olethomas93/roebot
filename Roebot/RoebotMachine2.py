@@ -27,6 +27,7 @@ outputFrame = None
 lock = Lock()
 
 vs = VideoStream(usePiCamera=1).start()
+time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
 
@@ -208,22 +209,22 @@ class roebot():
 
         # initialize the motion detector and the total number of frames
         # read thus far
-        md = singleMotionDetector.SingleMotionDetector(accumWeight=0.5)
+        md = singleMotionDetector(accumWeight=0.1)
         total = 0
-        rawCapture = PiRGBArray(camera1, size=(640, 480))
-
         # loop over frames from the video stream
-        for frame in camera1.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        # loop over frames from the video stream
+        while True:
             # read the next frame from the video stream, resize it,
             # convert the frame to grayscale, and blur it
-            image = frame.array
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            frame = vs.read()
+            frame = imutils.resize(frame, width=400)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
             # grab the current timestamp and draw it on the frame
             timestamp = datetime.datetime.now()
-            cv2.putText(image, timestamp.strftime(
-                "%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10),
+            cv2.putText(frame, timestamp.strftime(
+                "%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
             # if the total number of frames has reached a sufficient
@@ -238,8 +239,18 @@ class roebot():
                     # unpack the tuple and draw the box surrounding the
                     # "motion area" on the output frame
                     (thresh, (minX, minY, maxX, maxY)) = motion
-                    cv2.rectangle(image, (minX, minY), (maxX, maxY),
+                    cv2.rectangle(frame, (minX, minY), (maxX, maxY),
                                   (0, 0, 255), 2)
+
+                # update the background model and increment the total number
+                # of frames read thus far
+            md.update(gray)
+            total += 1
+
+            # acquire the lock, set the output frame, and release the
+            # lock
+            with lock:
+                outputFrame = frame.copy()
 
             # update the background model and increment the total number
             # of frames read thus far
@@ -283,3 +294,5 @@ class roebot():
         # type (mime type)
         return Response(self.generate(),
                         mimetype="multipart/x-mixed-replace; boundary=frame")
+
+vs.stop()
