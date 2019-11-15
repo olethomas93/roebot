@@ -237,9 +237,11 @@ def detect_motion(frameCount):
             if motion is not None:
                 # unpack the tuple and draw the box surrounding the
                 # "motion area" on the output frame
-                (thresh, (minX, minY, maxX, maxY)) = motion
-                cv2.rectangle(frame, (minX, minY), (maxX, maxY),
-                              (0, 0, 255), 2)
+                thresh, (a, b, r,) = motion
+
+                cv2.circle(frame, (a, b), r, (0, 255, 0), 2)
+                #cv2.rectangle(frame, (minX, minY), (maxX, maxY),
+                              #(0, 0, 255), 2)
 
             # update the background model and increment the total number
             # of frames read thus far
