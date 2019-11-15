@@ -283,9 +283,11 @@ if __name__ == '__main__':
     t.start()
     tp.start()
 
+    app.run(host="localhost", port=8080, debug=True,
+            threaded=True, use_reloader=False)
+
     switch_case(0)
 
     # start the flask app
-    app.run(host="localhost", port=8080, debug=True,
-            threaded=True, use_reloader=False)
+
 vs.stop()
