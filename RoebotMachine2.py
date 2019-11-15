@@ -231,7 +231,7 @@ def detect_motion(frameCount):
         # continue to process the frame
         if total > frameCount:
             # detect motion in the image
-            motion = md.detect(gray)
+            motion = md.detect(frame)
 
             # check to see if motion was found in the frame
             if motion is not None:
