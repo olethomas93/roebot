@@ -26,14 +26,12 @@ regs_lock = Lock()
 outputFrame = None
 lock = Lock()
 
-vs = VideoStream(usePiCamera=0).start()
+vs = VideoStream(usePiCamera=1).start()
 time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
 
-camera1 = PiCamera()
-camera1.resolution = (640, 480)
-camera1.framerate = 32
+
 
 class roebot():
 
