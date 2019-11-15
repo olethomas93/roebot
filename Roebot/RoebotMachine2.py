@@ -207,7 +207,7 @@ class roebot():
 
         # initialize the motion detector and the total number of frames
         # read thus far
-        md = singleMotionDetector(accumWeight=0.1)
+        md = singleMotionDetector.SingleMotionDetector(accumWeight=0.1)
         total = 0
         # loop over frames from the video stream
         # loop over frames from the video stream
