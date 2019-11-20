@@ -1,9 +1,9 @@
 from pyModbusTCP.client import ModbusClient
 import time
 from threading import Thread, Lock
-from ImageProcessing import Coordinate, singleMotionDetector
+from ImageProcessing import Coordinate, roedetector
 from ImageProcessing import crateImage
-from ImageProcessing import imageProcessing2
+from ImageProcessing import imageprocessing3
 from flask import Response
 from flask import Flask
 from flask import render_template
@@ -26,14 +26,15 @@ outputFrame = None
 workFrame = None
 lock = Lock()
 
-vs = VideoStream(usePiCamera=0).start()
+#vs = VideoStream(usePiCamera=0).start()
+vs = VideoStream(src=0).start()
 time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
 regList = []
 pictureIndex = 0
 camera = crateImage.Camera()
-imageCv = imageProcessing2.imageProcessing()
+imageCv = imageprocessing3.imageProcessing()
 imageList = []
 client = None
 
@@ -200,14 +201,14 @@ def index():
     return render_template("index.html")
 
 
-def detect_motion(frameCount):
+def detect_roe(frameCount):
     # grab global references to the video stream, output frame, and
     # lock variables
     global vs, outputFrame, lock,workFrame
 
     # initialize the motion detector and the total number of frames
     # read thus far
-    md = singleMotionDetector.SingleMotionDetector(accumWeight=0.1)
+    md = roedetector.SingleMotionDetector(accumWeight=0.1)
     total = 0
     # loop over frames from the video stream
     # loop over frames from the video stream
@@ -250,6 +251,8 @@ def detect_motion(frameCount):
             # of frames read thus far
         md.update(frame)
         total += 1
+
+        cv2.imwrite('update.jpg',frame.copy())
 
         # acquire the lock, set the output frame, and release the
         # lock
@@ -301,7 +304,7 @@ if __name__ == '__main__':
 
     args = vars(ap.parse_args())
     # start a thread that will perform motion detection
-    th1 = Thread(target=detect_motion, args=(
+    th1 = Thread(target=detect_roe, args=(
         32,))
 
     th2 = Thread(target=polling_thread)

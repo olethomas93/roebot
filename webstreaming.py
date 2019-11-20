@@ -1,5 +1,5 @@
 # import the necessary packages
-from ImageProcessing import singleMotionDetector
+from ImageProcessing import roedetector
 from imutils.video import VideoStream
 from flask import Response
 from flask import Flask
@@ -47,7 +47,7 @@ def detect_motion(frameCount):
 
     # initialize the motion detector and the total number of frames
     # read thus far
-    md = singleMotionDetector.SingleMotionDetector(accumWeight=0.5)
+    md = roedetector.SingleMotionDetector(accumWeight=0.5)
     total = 0
     rawCapture = PiRGBArray(camera, size=(640, 480))
 
