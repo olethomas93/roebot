@@ -10,7 +10,7 @@ import picamera
 class Camera:
     frame = None
     camToOpen = 0
-    FOV = 62
+    FOV = 78
     found = False
     timestamp = None
 

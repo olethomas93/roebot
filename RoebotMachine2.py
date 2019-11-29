@@ -27,7 +27,7 @@ workFrame = None
 lock = Lock()
 
 #vs = VideoStream(usePiCamera=0).start()
-vs = VideoStream(src=0).start()
+vs = VideoStream(src=0,resolution=(1920, 1080)).start()
 time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
@@ -69,6 +69,10 @@ def takePicture():
     time.sleep(1)
     switch_case(0)
 
+def writecoilModbus(coil,value):
+    global client
+
+    client.write_coils(coil,value,unit =1 )
 
 # modbus polling thread
 def polling_thread():
@@ -208,7 +212,7 @@ def detect_roe(frameCount):
 
     # initialize the motion detector and the total number of frames
     # read thus far
-    md = roedetector.SingleMotionDetector(accumWeight=0.1)
+    md = roedetector.roeDetector(accumWeight=0.1)
     total = 0
     # loop over frames from the video stream
     # loop over frames from the video stream

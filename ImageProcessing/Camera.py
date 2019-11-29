@@ -10,7 +10,7 @@ import picamera
 class Camera:
     frame = None
     camToOpen = 0
-    FOV = 62
+    FOV = 78
     found = False
     timestamp = None
 
@@ -22,7 +22,7 @@ class Camera:
         with picamera.PiCamera() as camera:
 
             with picamera.array.PiRGBArray(camera) as output:
-                camera.resolution = (1640, 922)
+                camera.resolution = (1920, 1080)
                 camera.start_preview()
                 sleep(2)
                 camera.capture(output, format='bgr')
