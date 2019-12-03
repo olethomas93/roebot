@@ -31,6 +31,7 @@ class imageProcessing(object):
             thresh = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
             # gh = 230
             cv2.imwrite('tresh.png', thresh)
+            cv2.imwrite('pre',image)
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
@@ -59,6 +60,7 @@ class imageProcessing(object):
                     self.pixelToMillimeterConversion(cord, roeImage)
 
             # add image to imagelist
+            cv2.imwrite('prosessed' + str(roeImage.getPictureIndex()) + ".png", image)
             imageList.append(roeImage)
             if self.debug:
                 print("LENGTH millimeter: " + str(len(roeImage.getRoePositionMillimeter())))

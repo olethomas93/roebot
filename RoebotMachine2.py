@@ -255,7 +255,7 @@ def detect_roe(frameCount):
         md.update(frame)
         total += 1
 
-        
+
 
         # acquire the lock, set the output frame, and release the
         # lock
