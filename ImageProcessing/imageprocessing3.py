@@ -31,7 +31,7 @@ class imageProcessing(object):
             thresh = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
             # gh = 230
             cv2.imwrite('tresh.png', thresh)
-            cv2.imwrite('pre',image)
+            cv2.imwrite('pre.png',image)
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
