@@ -2,7 +2,7 @@ from pyModbusTCP.client import ModbusClient
 import time
 from threading import Thread, Lock
 from ImageProcessing import Coordinate, roedetector
-from ImageProcessing import crateImage
+from ImageProcessing import Camera
 from ImageProcessing import imageprocessing3
 from flask import Response
 from flask import Flask
@@ -27,13 +27,13 @@ workFrame = None
 lock = Lock()
 
 #vs = VideoStream(usePiCamera=0).start()
-vs = VideoStream(src=0,resolution=(1920, 1080)).start()
+vs = VideoStream(src=0).start()
 time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
 regList = []
 pictureIndex = 0
-camera = crateImage.Camera()
+camera = Camera.Camera()
 imageCv = imageprocessing3.imageProcessing()
 imageList = []
 client = None
@@ -60,14 +60,14 @@ def poll_command():
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex,workFrame,imageCv
+    global pictureIndex,workFrame,imageCv,lock
     print("Executing take picture")
-
-    RoeImage = camera.takePicture(workFrame,330, pictureIndex)
-    pictureIndex += 1
-    imageCv.processingQueue.append(RoeImage)
-    time.sleep(1)
-    switch_case(0)
+    with lock:
+        RoeImage = camera.create(workFrame, 330, pictureIndex)
+        pictureIndex += 1
+        imageCv.processingQueue.append(RoeImage)
+        time.sleep(1)
+        switch_case(0)
 
 def writecoilModbus(coil,value):
     global client
@@ -170,6 +170,7 @@ def sendCordToPLC():
         arrayY.append(cord.getyCoor())
     print(arrayX)
     client.write_multiple_registers(10, arrayX)
+    client.write_multiple_registers(30,arrayY)
 
     # sleep so register can be updated
     time.sleep(1)
@@ -222,8 +223,6 @@ def detect_roe(frameCount):
         frame = vs.read()
         frame2 = vs.read()
         frame = imutils.resize(frame, width=640)
-        gray = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-        gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         # grab the current timestamp and draw it on the frame
         timestamp = datetime.datetime.now()
@@ -256,7 +255,8 @@ def detect_roe(frameCount):
         md.update(frame)
         total += 1
 
-        cv2.imwrite('update.jpg',frame.copy())
+        cv2.imwrite('pre-processed.jpg',frame2.copy())
+        cv2.imwrite('processed.jpg', frame.copy())
 
         # acquire the lock, set the output frame, and release the
         # lock
@@ -298,8 +298,7 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
-def main():
-    switch_case(0)
+
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()

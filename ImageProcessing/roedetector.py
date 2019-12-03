@@ -22,15 +22,30 @@ class roeDetector:
         cv2.accumulateWeighted(image, self.bg, self.accumWeight)
 
     def detect(self, image, tVal=25):
-        # compute the absolute difference between the background model
-        # and the image passed in, then threshold the delta image
+
+      # threshold the image
 
         # thresh = cv2.threshold(delta, tVal, 255, cv2.THRESH_BINARY)[1]
-        thresh = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
+        mask = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
 
-        detected_circles = cv2.HoughCircles(thresh.copy(),
+        grayImage = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+
+        StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        erodedImage = cv2.erode(mask, StructureElement)
+        dilatedImage = cv2.dilate(erodedImage, StructureElement)
+
+        detected_circles = cv2.HoughCircles(dilatedImage.copy(),
                                             cv2.HOUGH_GRADIENT, 1, 20, param1=50,
                                             param2=7, minRadius=3, maxRadius=10)
+
+        cv2.imwrite('masked', mask.copy())
+
+        cv2.imwrite('gray.jpg', grayImage.copy())
+
+        cv2.imwrite('eroded.jpg', erodedImage.copy())
+
+        cv2.imwrite('dilated.jpg', dilatedImage.copy())
+
         # perform a series of erosions and dilations to remove small
         # blobs
         # thresh = cv2.erode(thresh, None, iterations=2)
@@ -50,19 +65,9 @@ class roeDetector:
             if len(detected_circles) == 0:
                 return None
 
-            # Convert the circle parameters a, b and r to integers.
+
             detected_circles = np.uint16(np.around(detected_circles))
 
-                # Draw the circumference of the circle.
 
-        # otherwise, loop over the contours
-        # for c in cnts:
-        #     # compute the bounding box of the contour and use it to
-        #     # update the minimum and maximum bounding box regions
-        #     (x, y, w, h) = cv2.boundingRect(c)
-        #     (minX, minY) = (min(minX, x), min(minY, y))
-        #     (maxX, maxY) = (max(maxX, x + w), max(maxY, y + h))
 
-        # otherwise, return a tuple of the thresholded image along
-        # with bounding box
-        return thresh, detected_circles
+        return mask, detected_circles
