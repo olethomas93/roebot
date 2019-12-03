@@ -23,28 +23,16 @@ class roeDetector:
 
     def detect(self, image, tVal=25):
 
-      # threshold the image
+        # threshold the image
 
         # thresh = cv2.threshold(delta, tVal, 255, cv2.THRESH_BINARY)[1]
         mask = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
 
-        grayImage = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
-
-        StructureElement = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-        erodedImage = cv2.erode(mask, StructureElement)
-        dilatedImage = cv2.dilate(erodedImage, StructureElement)
-
-        detected_circles = cv2.HoughCircles(dilatedImage.copy(),
+        detected_circles = cv2.HoughCircles(mask.copy(),
                                             cv2.HOUGH_GRADIENT, 1, 20, param1=50,
                                             param2=7, minRadius=3, maxRadius=10)
 
         cv2.imwrite('masked', mask.copy())
-
-        cv2.imwrite('gray.jpg', grayImage.copy())
-
-        cv2.imwrite('eroded.jpg', erodedImage.copy())
-
-        cv2.imwrite('dilated.jpg', dilatedImage.copy())
 
         # perform a series of erosions and dilations to remove small
         # blobs
@@ -65,9 +53,6 @@ class roeDetector:
             if len(detected_circles) == 0:
                 return None
 
-
             detected_circles = np.uint16(np.around(detected_circles))
-
-
 
         return mask, detected_circles

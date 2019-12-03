@@ -49,13 +49,13 @@ def poll_command():
     while not commandpoll:
 
         # print regs list (with thread lock synchronization)
+        with regs_lock:
+            if regList:
+                command = regList[0]
+                if command in range(1, 6):
 
-        if regList:
-            command = regList[0]
-            if command in range(1, 6):
-
-                if sendIntModbus(0, 0):
-                    switch_case(command)
+                    if sendIntModbus(0, 0):
+                        switch_case(command)
 
 
 # Takes picture of tray.
