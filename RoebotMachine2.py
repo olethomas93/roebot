@@ -255,8 +255,7 @@ def detect_roe(frameCount):
         md.update(frame)
         total += 1
 
-        cv2.imwrite('pre-processed.jpg',frame2.copy())
-        cv2.imwrite('processed.jpg', frame.copy())
+        
 
         # acquire the lock, set the output frame, and release the
         # lock

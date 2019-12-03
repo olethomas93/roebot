@@ -32,7 +32,7 @@ class roeDetector:
                                             cv2.HOUGH_GRADIENT, 1, 20, param1=50,
                                             param2=7, minRadius=3, maxRadius=10)
 
-        cv2.imwrite('masked', mask.copy())
+
 
         # perform a series of erosions and dilations to remove small
         # blobs
