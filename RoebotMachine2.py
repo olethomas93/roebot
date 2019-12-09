@@ -70,12 +70,15 @@ def takePicture():
     pictureIndex += 1
     imageCv.processingQueue.append(RoeImage)
     time.sleep(1)
-    switch_case(0)
+    if writecoilModbus(4,True):
+
+        switch_case(0)
 
 def writecoilModbus(coil,value):
     global client
 
-    client.write_coils(coil,value,unit =1 )
+    if client.write_coils(coil,value,unit =1 ):
+        return True
 
 # modbus polling thread
 def polling_thread():
