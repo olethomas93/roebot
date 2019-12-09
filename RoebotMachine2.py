@@ -50,8 +50,8 @@ def poll_command():
 
     # display loop (in main thread)
 
-
-    with regs_lock: # print regs list (with thread lock synchronization)
+    # print regs list (with thread lock synchronization)
+    with regs_lock:
 
         if regList:
             command = regList[0]
