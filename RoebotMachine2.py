@@ -319,9 +319,9 @@ if __name__ == '__main__':
     th2 = Thread(target=polling_thread)
     th3 = Thread(target=poll_command)
 
+    th1.start()
     th2.start()
     th3.start()
-    th1.start()
 
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
