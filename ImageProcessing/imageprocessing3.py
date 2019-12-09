@@ -41,7 +41,7 @@ class imageProcessing(object):
             #detecting circles in tresholded image with a specific radius
             detected_circles = cv2.HoughCircles(thresh.copy(),
                                                 cv2.HOUGH_GRADIENT, 1, 20, param1=50,
-                                                param2=7, minRadius=3, maxRadius=40)
+                                                param2=6, minRadius=3, maxRadius=40)
 
             if detected_circles is not None:
 
@@ -62,6 +62,7 @@ class imageProcessing(object):
             if self.debug:
 
                 cv2.imwrite('prosessed'+str(roeImage.getPictureIndex())+".png", image)
+                cv2.imwrite('tresh.png',thresh)
 
         if len(imageList) >= 2:
             self.processingQueue = []
