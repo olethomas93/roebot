@@ -50,6 +50,7 @@ def poll_command():
     # display loop (in main thread)
     while not commandpoll:
         regList = client.read_holding_registers(0, 1)
+        print(list(regList)[0])
         # print regs list (with thread lock synchronization)
         if regList:
             command = regList[0]
