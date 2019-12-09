@@ -94,9 +94,9 @@ def polling_thread():
             client.open()
 
 
-        if client.is_open():
+       
 
-            print("connected to " + SERVER_HOST + ":" + str(SERVER_PORT))
+
 
 
         # do modbus reading on socket
