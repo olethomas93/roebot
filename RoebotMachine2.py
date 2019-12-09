@@ -317,16 +317,17 @@ if __name__ == '__main__':
         32,))
 
     th2 = Thread(target=polling_thread)
-    th3 = Thread(target=poll_command)
+    #th3 = Thread(target=poll_command)
 
     th2.start()
-    th3.start()
+    #th3.start()
     th1.start()
+
 
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
 
-
+    poll_command()
 
 
     # start the flask app
