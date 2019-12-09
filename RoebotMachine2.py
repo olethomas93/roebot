@@ -49,15 +49,16 @@ def poll_command():
     commandpoll = False
     # display loop (in main thread)
     while not commandpoll:
-        regList = client.read_holding_registers(0, 1)
-        print(list(regList)[0])
+        regList = client.read_holding_registers(0, 10)
+        if client.is_open():
+            print(list(regList)[0])
         # print regs list (with thread lock synchronization)
-        if regList:
-            command = regList[0]
-            if command in range(1, 6):
+            if regList:
+                command = regList[0]
+                if command in range(1, 6):
 
-                if sendIntModbus(0, 0):
-                    switch_case(command)
+                    if sendIntModbus(0, 0):
+                        switch_case(command)
 
 
 # Takes picture of tray.
