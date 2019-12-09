@@ -1,3 +1,6 @@
+
+
+
 from pyModbusTCP.client import ModbusClient
 import time
 from threading import Thread, Lock
@@ -14,8 +17,8 @@ import datetime
 import imutils
 import time
 import cv2
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+#from picamera.array import PiRGBArray
+#from picamera import PiCamera
 
 SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
@@ -219,15 +222,14 @@ def detect_roe(frameCount):
     # loop over frames from the video stream
     while True:
         # read the next frame from the video stream, resize it,
-        # convert the frame to grayscale, and blur it
+        #
         frame = vs.read()
-        frame2 = vs.read()
-        frame = imutils.resize(frame, width=640)
+        streamframe = imutils.resize(frame, width=640)
 
         # grab the current timestamp and draw it on the frame
         timestamp = datetime.datetime.now()
-        cv2.putText(frame, timestamp.strftime(
-            "%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
+        cv2.putText(streamframe, timestamp.strftime(
+            "%A %d %B %Y %I:%M:%S%p"), (10, streamframe.shape[0] - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
         # if the total number of frames has reached a sufficient
@@ -235,7 +237,7 @@ def detect_roe(frameCount):
         # continue to process the frame
         if total > frameCount:
             # detect motion in the image
-            motion = md.detect(frame)
+            motion = md.detect(streamframe)
 
             # check to see if motion was found in the frame
             if motion is not None:
@@ -247,12 +249,12 @@ def detect_roe(frameCount):
                         a, b, r = pt[0], pt[1], pt[2]
 
                     # Draw the circumference of the circle.
-                        cv2.circle(frame, (a, b), r, (0, 255, 0), 2)
+                        cv2.circle(streamframe, (a, b), r, (0, 255, 0), 2)
 
-                        cv2.circle(frame, (a, b), 1, (0, 0, 255), 3)
+                        cv2.circle(streamframe, (a, b), 1, (0, 0, 255), 3)
             # update the background model and increment the total number
             # of frames read thus far
-        md.update(frame)
+        md.update(streamframe)
         total += 1
 
 
@@ -260,8 +262,8 @@ def detect_roe(frameCount):
         # acquire the lock, set the output frame, and release the
         # lock
         with lock:
-            outputFrame = frame.copy()
-            workFrame = frame2.copy()
+            outputFrame = streamframe.copy()
+            workFrame = frame.copy()
 
 
 def generate():

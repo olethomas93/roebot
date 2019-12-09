@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
-import random as rng
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+
 from threading import Thread, Lock
 import cmath as math
 from ImageProcessing.Coordinate import coordinate
@@ -29,9 +27,8 @@ class imageProcessing(object):
 
             #tresholds image for detection of Roe
             thresh = cv2.inRange(image, (210, 0, 0), (255, 255, 255))
-            # gh = 230
-            cv2.imwrite('tresh.png', thresh)
-            cv2.imwrite('pre.png',image)
+
+
             # mask = cv2.adaptiveThreshold(image_ori,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             #             cv2.THRESH_BINARY_INV,33,2)
 
@@ -44,7 +41,7 @@ class imageProcessing(object):
             #detecting circles in tresholded image with a specific radius
             detected_circles = cv2.HoughCircles(thresh.copy(),
                                                 cv2.HOUGH_GRADIENT, 1, 20, param1=50,
-                                                param2=8, minRadius=10, maxRadius=20)
+                                                param2=7, minRadius=10, maxRadius=25)
 
             if detected_circles is not None:
 
@@ -60,7 +57,7 @@ class imageProcessing(object):
                     self.pixelToMillimeterConversion(cord, roeImage)
 
             # add image to imagelist
-            cv2.imwrite('prosessed' + str(roeImage.getPictureIndex()) + ".png", image)
+
             imageList.append(roeImage)
             if self.debug:
                 print("LENGTH millimeter: " + str(len(roeImage.getRoePositionMillimeter())))

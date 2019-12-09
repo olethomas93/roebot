@@ -1,5 +1,4 @@
 import numpy as np
-import imutils
 import cv2
 
 
@@ -34,19 +33,7 @@ class roeDetector:
 
 
 
-        # perform a series of erosions and dilations to remove small
-        # blobs
-        # thresh = cv2.erode(thresh, None, iterations=2)
-        # thresh = cv2.dilate(thresh, None, iterations=2)
-        # find contours in the thresholded image and initialize the
-        # minimum and maximum bounding box regions for motion
-        # cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-        # cv2.CHAIN_APPROX_SIMPLE)
 
-        # cnts = imutils.grab_contours(cnts)
-        # (minX, minY) = (np.inf, np.inf)
-        # (maxX, maxY) = (-np.inf, -np.inf)
-        # if no contours were found, return None
 
         if detected_circles is not None:
 

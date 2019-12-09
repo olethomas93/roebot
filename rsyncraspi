@@ -1,0 +1,1 @@
+sudo rsync -av -e ssh --exclude-from=./exclude ./ pi@158.38.143.198:/home/roebot
