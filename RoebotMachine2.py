@@ -122,8 +122,10 @@ def processImages():
         print("processing images")
         imageList1, processing = imageCv.processImages()
         imageList = imageList1
-        time.sleep(1)
-        switch_case(0)
+        time.sleep(2)
+        if writecoilModbus(4, True):
+
+            switch_case(0)
     else:
         imageList = []
 
