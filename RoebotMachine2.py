@@ -40,7 +40,7 @@ camera = Camera.Camera()
 imageCv = imageprocessing3.imageProcessing()
 imageList = []
 client = None
-
+client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
 
 # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
@@ -50,7 +50,7 @@ def poll_command():
     commandpoll = False
     # display loop (in main thread)
     while not commandpoll:
-
+        regList = client.read_holding_registers(0, 1)
         # print regs list (with thread lock synchronization)
         with regs_lock:
             if regList:
@@ -319,7 +319,7 @@ if __name__ == '__main__':
     th2 = Thread(target=polling_thread)
     th3 = Thread(target=poll_command)
 
-    th2.start()
+    #th2.start()
     th3.start()
     th1.start()
 
