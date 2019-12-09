@@ -77,7 +77,7 @@ def takePicture():
 def writecoilModbus(coil,value):
     global client
 
-    if client.write_coils(coil,value,unit =1 ):
+    if client.write_single_coil(coil, value):
         return True
 
 # modbus polling thread
