@@ -320,8 +320,8 @@ if __name__ == '__main__':
     th3 = Thread(target=poll_command)
 
     #th2.start()
-    th3.start()
     th1.start()
+    th3.start()
 
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
