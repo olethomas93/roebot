@@ -47,18 +47,18 @@ client = None
 def poll_command():
     global regList,regs_lock
     print("Polling server for commands")
-
+    commandpoll = False
     # display loop (in main thread)
+    while not commandpoll:
 
-    # print regs list (with thread lock synchronization)
-    with regs_lock:
+        # print regs list (with thread lock synchronization)
+        with regs_lock:
+            if regList:
+                command = regList[0]
+                if command in range(1, 6):
 
-        if regList:
-            command = regList[0]
-            if command in range(1, 6):
-
-                if sendIntModbus(0, 0):
-                    switch_case(command)
+                    if sendIntModbus(0, 0):
+                        switch_case(command)
 
 
 # Takes picture of tray.
@@ -317,17 +317,16 @@ if __name__ == '__main__':
         32,))
 
     th2 = Thread(target=polling_thread)
-    #th3 = Thread(target=poll_command)
+    th3 = Thread(target=poll_command)
 
     th2.start()
-    #th3.start()
+    th3.start()
     th1.start()
-
 
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
 
-    poll_command()
+
 
 
     # start the flask app
