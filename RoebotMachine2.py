@@ -47,11 +47,11 @@ client = None
 def poll_command():
     global regList,regs_lock
     print("Polling server for commands")
-    commandpoll = False
-    # display loop (in main thread)
-    while not commandpoll:
 
-        # print regs list (with thread lock synchronization)
+    # display loop (in main thread)
+
+
+    with regs_lock: # print regs list (with thread lock synchronization)
 
         if regList:
             command = regList[0]
