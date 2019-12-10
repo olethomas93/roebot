@@ -49,7 +49,7 @@ def poll_command():
 
     # display loop (in main thread)
     while True:
-        print("yyoyo")
+
         if regList:
             command = regList[0]
             if command in range(1, 6):
@@ -301,7 +301,7 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
     # start a thread that will perform motion detection
     th1 = Thread(target=detect_roe, args=(
-        32,),daemon=True)
+        32,))
 
     th2 = Thread(target=polling_thread,daemon=True)
     th3 = Thread(target=poll_command)
