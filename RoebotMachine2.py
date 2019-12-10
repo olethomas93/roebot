@@ -33,7 +33,7 @@ vs = VideoStream(src=0).start()
 time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
-regList = []
+regs = []
 pictureIndex = 0
 camera = Camera.Camera()
 imageCv = imageprocessing3.imageProcessing()
@@ -44,14 +44,14 @@ client = None
 # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
 def poll_command():
-    global regList, threadlock
+    global regs, threadlock
     print("Polling server for commands")
 
     # display loop (in main thread)
     while True:
+        with threadlock:
 
-        if regList:
-            command = regList[0]
+            command = regs[0]
             if command in range(1, 6):
 
                 if sendIntModbus(0, 0):
@@ -80,7 +80,7 @@ def writecoilModbus(coil, value):
 
 # modbus polling thread
 def polling_thread():
-    global regList, regs_lock, client
+    global regs,client
     client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
     isOpen = False
     # polling loop
@@ -96,9 +96,9 @@ def polling_thread():
         # if read is ok, store result in regs (with thread lock synchronization)
         if reg_list:
             with threadlock:
-                regList = list(reg_list)
+                regs = list(reg_list)
         # 1s before next polling
-        time.sleep(0.2)
+        time.sleep(1)
 
 
 # send int to modbusServer
@@ -303,7 +303,8 @@ if __name__ == '__main__':
     th1 = Thread(target=detect_roe, args=(
         32,))
 
-    th2 = Thread(target=polling_thread,daemon=True)
+    th2 = Thread(target=polling_thread)
+    th2.daemon=True
     th3 = Thread(target=poll_command)
     th1.start()
     th2.start()
