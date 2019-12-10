@@ -48,7 +48,7 @@ def poll_command():
 
     # display loop (in main thread)
     while True:
-
+        print("yyoyo")
         if regList:
             command = regList[0]
             if command in range(1, 6):
@@ -306,12 +306,12 @@ if __name__ == '__main__':
     th3 = Thread(target=poll_command)
 
     th1.start()
-    th2.start()
-    th3.start()
+
 
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
-
+    th2.start()
+    th3.start()
     # start the flask app
 
 vs.stop()
