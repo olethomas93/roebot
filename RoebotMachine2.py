@@ -1,6 +1,3 @@
-
-
-
 from pyModbusTCP.client import ModbusClient
 import time
 from threading import Thread, Lock
@@ -17,8 +14,9 @@ import datetime
 import imutils
 import time
 import cv2
-#from picamera.array import PiRGBArray
-#from picamera import PiCamera
+
+# from picamera.array import PiRGBArray
+# from picamera import PiCamera
 
 SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
@@ -29,7 +27,7 @@ outputFrame = None
 workFrame = None
 lock = Lock()
 
-#vs = VideoStream(usePiCamera=0).start()
+# vs = VideoStream(usePiCamera=0).start()
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
 # initialize a flask object
@@ -47,42 +45,41 @@ client = None
 def poll_command():
     global regList, threadlock
     print("Polling server for commands")
-    commandpoll = False
+
     # display loop (in main thread)
-    while not commandpoll:
+    while True:
 
-        with threadlock:
+        if regList:
+            command = regList[0]
+            if command in range(1, 6):
 
-            if regList:
-                command = regList[0]
-                if command in range(1, 6):
-
-                    if sendIntModbus(0, 0):
-                        switch_case(command)
+                if sendIntModbus(0, 0):
+                    switch_case(command)
 
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex,workFrame,imageCv,threadlock
+    global pictureIndex, workFrame, imageCv, threadlock
     print("Executing take picture")
     with threadlock:
         RoeImage = camera.create(workFrame, 330, pictureIndex)
         pictureIndex += 1
         imageCv.processingQueue.append(RoeImage)
         time.sleep(1)
-        if writecoilModbus(4,True):
-
+        if writecoilModbus(4, True):
             switch_case(0)
 
-def writecoilModbus(coil,value):
+
+def writecoilModbus(coil, value):
     global client
 
     if client.write_single_coil(coil, value):
         return True
 
+
 # modbus polling thread
 def polling_thread():
-    global regList,regs_lock,client
+    global regList, regs_lock, client
     client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
     isOpen = False
     # polling loop
@@ -92,7 +89,6 @@ def polling_thread():
             print("unable to connect to " + SERVER_HOST + ":" + str(SERVER_PORT))
             client = ModbusClient(host=SERVER_HOST, port=SERVER_PORT)
             client.open()
-
 
         # do modbus reading on socket
         reg_list = client.read_holding_registers(0, 10)
@@ -119,7 +115,6 @@ def processImages():
         imageList = imageList1
         time.sleep(1)
         if writecoilModbus(4, True):
-
             switch_case(0)
     else:
         imageList = []
@@ -173,7 +168,7 @@ def sendCordToPLC():
         arrayY.append(cord.getyCoor())
     print(arrayX)
     client.write_multiple_registers(10, arrayX)
-    client.write_multiple_registers(30,arrayY)
+    client.write_multiple_registers(30, arrayY)
 
     # sleep so register can be updated
     time.sleep(1)
@@ -212,7 +207,7 @@ def index():
 def detect_roe(frameCount):
     # grab global references to the video stream, output frame, and
     # lock variables
-    global vs, outputFrame, threadlock,workFrame
+    global vs, outputFrame, threadlock, workFrame
 
     # initialize the motion detector and the total number of frames
     # read thus far
@@ -248,7 +243,7 @@ def detect_roe(frameCount):
                     for pt in detected_circles[0, :]:
                         a, b, r = pt[0], pt[1], pt[2]
 
-                    # Draw the circumference of the circle.
+                        # Draw the circumference of the circle.
                         cv2.circle(streamframe, (a, b), r, (0, 255, 0), 2)
 
                         cv2.circle(streamframe, (a, b), 1, (0, 0, 255), 3)
@@ -256,8 +251,6 @@ def detect_roe(frameCount):
             # of frames read thus far
         md.update(streamframe)
         total += 1
-
-
 
         # acquire the lock, set the output frame, and release the
         # lock
@@ -299,8 +292,6 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
-
-
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-i", "--ip", type=str, required=True,
@@ -320,9 +311,6 @@ if __name__ == '__main__':
 
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
-
-
-
 
     # start the flask app
 
