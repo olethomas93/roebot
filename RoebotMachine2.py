@@ -78,6 +78,7 @@ def takePicture():
 def writecoilModbus(coil, value):
 
     if client.write_single_coil(coil, value):
+        time.sleep(1)
         return True
 
 
@@ -171,7 +172,7 @@ def sendCordToPLC():
     for cord in corrdList:
         arrayX.append(cord.getxCoor())
         arrayY.append(cord.getyCoor())
-    print(arrayX)
+
     client.write_multiple_registers(10, arrayX)
     client.write_multiple_registers(30, arrayY)
 
