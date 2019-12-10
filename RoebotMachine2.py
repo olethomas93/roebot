@@ -52,6 +52,7 @@ def poll_command():
         with threadlock:
             if regs:
                 command = regs[0]
+                print(str(command))
                 if command in range(1, 6):
 
                     if sendIntModbus(0, 0):
@@ -304,7 +305,6 @@ if __name__ == '__main__':
         32,))
 
     th2 = Thread(target=polling_thread)
-    th2.daemon=True
     th3 = Thread(target=poll_command)
     th1.start()
     th2.start()
