@@ -44,7 +44,7 @@ client = None
 # self.modbusclient = r_w_float_modbus.FloatModbusClient(ModbusClient)
 
 def poll_command():
-    global regs, threadlock
+    global regs,threadlock
     print("Polling server for commands")
 
     # display loop (in main thread)
@@ -60,9 +60,9 @@ def poll_command():
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex, workFrame, imageCv, threadlock
+    global pictureIndex, workFrame, imageCv, lock
     print("Executing take picture")
-    with threadlock:
+    with lock:
         RoeImage = camera.create(workFrame, 330, pictureIndex)
         pictureIndex += 1
         imageCv.processingQueue.append(RoeImage)
@@ -208,7 +208,7 @@ def index():
 def detect_roe(frameCount):
     # grab global references to the video stream, output frame, and
     # lock variables
-    global vs, outputFrame, threadlock, workFrame
+    global vs, outputFrame, lock, workFrame
 
     # initialize the motion detector and the total number of frames
     # read thus far
@@ -255,19 +255,19 @@ def detect_roe(frameCount):
 
         # acquire the lock, set the output frame, and release the
         # lock
-        with threadlock:
+        with lock:
             outputFrame = streamframe.copy()
             workFrame = frame.copy()
 
 
 def generate():
     # grab global references to the output frame and lock variables
-    global outputFrame, threadlock
+    global outputFrame, lock
 
     # loop over frames from the output stream
     while True:
         # wait until the lock is acquired
-        with threadlock:
+        with lock:
             # check if the output frame is available, otherwise skip
             # the iteration of the loop
             if outputFrame is None:
