@@ -54,11 +54,11 @@ def poll_command():
                 command = regs[0]
                 print(str(command))
 
-                if command in range(1, 6):
+        if command in range(1, 6) and not None:
 
-                    if sendIntModbus(0, 0):
+            if sendIntModbus(0, 0):
 
-                        switch_case(command)
+                switch_case(command)
         time.sleep(1)
 
 # Takes picture of tray.
