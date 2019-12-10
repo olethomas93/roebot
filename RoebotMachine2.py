@@ -71,6 +71,7 @@ def takePicture():
         imageCv.processingQueue.append(RoeImage)
         time.sleep(1)
         if writecoilModbus(4, True):
+            time.sleep(1)
             switch_case(0)
 
 
