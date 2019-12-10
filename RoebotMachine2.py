@@ -50,12 +50,12 @@ def poll_command():
     # display loop (in main thread)
     while True:
         with threadlock:
+            if regs:
+                command = regs[0]
+                if command in range(1, 6):
 
-            command = regs[0]
-            if command in range(1, 6):
-
-                if sendIntModbus(0, 0):
-                    switch_case(command)
+                    if sendIntModbus(0, 0):
+                        switch_case(command)
 
 
 # Takes picture of tray.
