@@ -66,7 +66,7 @@ def takePicture():
     global pictureIndex, imageCv
     print("Executing take picture")
 
-    RoeImage = camera.create(workFrame, 330, pictureIndex)
+    RoeImage = camera.create(workFrame, 290, pictureIndex)
     pictureIndex += 1
     imageCv.processingQueue.append(RoeImage)
 
@@ -153,7 +153,7 @@ def generatecoordinateList():
             for i in range(len(list)):
                 coordinate = list[i]
 
-                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 300)
+                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 360)
                 ypos = coordinate.getyCoor()
 
                 newcoord = Coordinate.coordinate(xpos, ypos)
