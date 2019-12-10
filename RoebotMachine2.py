@@ -53,9 +53,11 @@ def poll_command():
             if regs:
                 command = regs[0]
                 print(str(command))
+                time.sleep(1)
                 if command in range(1, 6):
 
                     if sendIntModbus(0, 0):
+                        time.sleep(1)
                         switch_case(command)
 
 
