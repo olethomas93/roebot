@@ -46,24 +46,24 @@ client = None
 def poll_command():
     global regs
     print("Polling server for commands")
-
+    command = None
     # display loop (in main thread)
     while True:
         with threadlock:
             if regs:
                 command = regs[0]
                 print(str(command))
-                time.sleep(1)
+
                 if command in range(1, 6):
 
                     if sendIntModbus(0, 0):
-                        time.sleep(1)
-                        switch_case(command)
 
+                        switch_case(command)
+        time.sleep(1)
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex, workFrame, imageCv
+    global pictureIndex, imageCv
     print("Executing take picture")
     with lock:
         RoeImage = camera.create(workFrame, 330, pictureIndex)
@@ -76,7 +76,6 @@ def takePicture():
 
 
 def writecoilModbus(coil, value):
-    global client
 
     if client.write_single_coil(coil, value):
         return True
