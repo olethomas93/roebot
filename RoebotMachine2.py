@@ -304,14 +304,15 @@ if __name__ == '__main__':
 
     th2 = Thread(target=polling_thread)
     th3 = Thread(target=poll_command)
-
+    th4 = Thread(target=app.run, args=(args["ip"], 8080, True, True, False))
     th1.start()
-
-
-    app.run(host=args["ip"], port=8080, debug=True,
-            threaded=True, use_reloader=False)
     th2.start()
     th3.start()
+    th4.start()
+
+   # app.run(host=args["ip"], port=8080, debug=True,
+            #threaded=True, use_reloader=False)
+
     # start the flask app
 
 vs.stop()
