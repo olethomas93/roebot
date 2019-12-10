@@ -5,9 +5,10 @@ from datetime import datetime
 class Camera:
     frame = None
     camToOpen = 0
-    FOV = 90
+    FOV = 78
     found = False
     timestamp = None
+
 
     def create(self, image, cameraHeigth, pictureIndex):
 
@@ -16,6 +17,7 @@ class Camera:
         now = datetime.now()
         timestamp = datetime.timestamp(now)
         self.frame = image
+
 
         self.timeStamp = timestamp
 

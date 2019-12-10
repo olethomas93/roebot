@@ -2,7 +2,7 @@ from pyModbusTCP.client import ModbusClient
 import time
 from threading import Thread, Lock
 from ImageProcessing import Coordinate
-from ImageProcessing import Camera_raspi
+from ImageProcessing import Camera
 from ImageProcessing import imageProcessing2
 
 
@@ -22,7 +22,7 @@ class roebot():
         self.regList = []
         self.tp.start()
         self.pictureIndex = 0
-        self.camera = Camera_raspi.Camera()
+        self.camera = Camera.Camera()
         self.imageCv = imageProcessing2.imageProcessing()
         self.imageList = []
 
