@@ -23,9 +23,10 @@ SERVER_PORT = 2000
 
 # init a thread lock
 threadlock = Lock()
+lock = Lock()
 outputFrame = None
 workFrame = None
-lock = Lock()
+
 
 # vs = VideoStream(usePiCamera=0).start()
 vs = VideoStream(src=0).start()
@@ -300,18 +301,17 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
     # start a thread that will perform motion detection
     th1 = Thread(target=detect_roe, args=(
-        32,))
+        32,),daemon=True)
 
-    th2 = Thread(target=polling_thread)
+    th2 = Thread(target=polling_thread,daemon=True)
     th3 = Thread(target=poll_command)
-    th4 = Thread(target=app.run, args=(args["ip"], 8080, True, True, False))
     th1.start()
     th2.start()
     th3.start()
-    th4.start()
 
-   # app.run(host=args["ip"], port=8080, debug=True,
-            #threaded=True, use_reloader=False)
+
+    app.run(host=args["ip"], port=8080, debug=True,
+            threaded=True, use_reloader=False)
 
     # start the flask app
 
