@@ -65,15 +65,15 @@ def poll_command():
 def takePicture():
     global pictureIndex, imageCv
     print("Executing take picture")
-    with lock:
-        RoeImage = camera.create(workFrame, 330, pictureIndex)
-        pictureIndex += 1
-        imageCv.processingQueue.append(RoeImage)
-        time.sleep(1)
-        if writecoilModbus(4, True):
-            time.sleep(1)
-            switch_case(0)
 
+    RoeImage = camera.create(workFrame, 330, pictureIndex)
+    pictureIndex += 1
+    imageCv.processingQueue.append(RoeImage)
+
+    if writecoilModbus(4, True):
+
+        switch_case(0)
+    time.sleep(1)
 
 def writecoilModbus(coil, value):
 
