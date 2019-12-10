@@ -29,7 +29,7 @@ workFrame = None
 
 
 # vs = VideoStream(usePiCamera=0).start()
-vs = VideoStream(src=0).start()
+vs = VideoStream(src=0,resolution=(1920,1080)).start()
 time.sleep(2.0)
 # initialize a flask object
 app = Flask(__name__)
