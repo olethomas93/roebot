@@ -5,7 +5,7 @@ from datetime import datetime
 class Camera:
     frame = None
     camToOpen = 0
-    FOV = 78
+    FOV = 90
     found = False
     timestamp = None
 
