@@ -24,7 +24,7 @@ SERVER_HOST = "192.168.137.65"
 SERVER_PORT = 2000
 
 # init a thread lock
-regs_lock = Lock()
+threadlock = Lock()
 outputFrame = None
 workFrame = None
 lock = Lock()
@@ -51,28 +51,28 @@ def poll_command():
     # display loop (in main thread)
     while not commandpoll:
 
-        # print regs list (with thread lock synchronization)
+        with threadlock:
 
-        if regList:
-            command = regList[0]
-            if command in range(1, 6):
+            if regList:
+                command = regList[0]
+                if command in range(1, 6):
 
-                if sendIntModbus(0, 0):
-                    switch_case(command)
+                    if sendIntModbus(0, 0):
+                        switch_case(command)
 
 
 # Takes picture of tray.
 def takePicture():
-    global pictureIndex,workFrame,imageCv,lock
+    global pictureIndex,workFrame,imageCv,threadlock
     print("Executing take picture")
+    with threadlock:
+        RoeImage = camera.create(workFrame, 330, pictureIndex)
+        pictureIndex += 1
+        imageCv.processingQueue.append(RoeImage)
+        time.sleep(1)
+        if writecoilModbus(4,True):
 
-    RoeImage = camera.create(workFrame, 330, pictureIndex)
-    pictureIndex += 1
-    imageCv.processingQueue.append(RoeImage)
-    time.sleep(1)
-    if writecoilModbus(4,True):
-
-        switch_case(0)
+            switch_case(0)
 
 def writecoilModbus(coil,value):
     global client
@@ -103,7 +103,7 @@ def polling_thread():
         reg_list = client.read_holding_registers(0, 10)
         # if read is ok, store result in regs (with thread lock synchronization)
         if reg_list:
-            with regs_lock:
+            with threadlock:
                 regList = list(reg_list)
         # 1s before next polling
         time.sleep(0.2)
@@ -266,7 +266,7 @@ def detect_roe(frameCount):
 
         # acquire the lock, set the output frame, and release the
         # lock
-        with lock:
+        with threadlock:
             outputFrame = streamframe.copy()
             workFrame = frame.copy()
 
@@ -278,7 +278,7 @@ def generate():
     # loop over frames from the output stream
     while True:
         # wait until the lock is acquired
-        with lock:
+        with threadlock:
             # check if the output frame is available, otherwise skip
             # the iteration of the loop
             if outputFrame is None:
@@ -313,22 +313,22 @@ if __name__ == '__main__':
 
     args = vars(ap.parse_args())
     # start a thread that will perform motion detection
-    #th1 = Thread(target=detect_roe, args=(
-        #32,))
+    th1 = Thread(target=detect_roe, args=(
+        32,))
 
     th2 = Thread(target=polling_thread)
     th3 = Thread(target=poll_command)
 
-    #th1.start()
+    th1.start()
     th2.start()
     th3.start()
 
-    #app.run(host=args["ip"], port=8080, debug=True,
-            #threaded=True, use_reloader=False)
+    app.run(host=args["ip"], port=8080, debug=True,
+            threaded=True, use_reloader=False)
 
 
 
 
     # start the flask app
 
-#vs.stop()
+vs.stop()
