@@ -53,7 +53,7 @@ def poll_command():
         with threadlock:
             if regs:
                 command = regs[0]
-               
+
 
         if command in range(1, 6) and not None:
 
@@ -173,8 +173,7 @@ def sendCordToPLC():
     for cord in corrdList:
         arrayX.append(cord.getxCoor())
         arrayY.append(cord.getyCoor())
-    print(arrayY)
-    print(arrayX)
+
     client.write_multiple_registers(10, arrayX)
     client.write_multiple_registers(30, arrayY)
     time.sleep(1)
