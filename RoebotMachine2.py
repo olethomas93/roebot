@@ -154,7 +154,7 @@ def generatecoordinateList():
             for i in range(len(list)):
                 coordinate = list[i]
 
-                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 200)
+                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex())) * 260)
                 ypos = coordinate.getyCoor()
 
                 newcoord = Coordinate.coordinate(xpos, ypos)
