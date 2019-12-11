@@ -228,9 +228,11 @@ def detect_roe(frameCount):
         # read the next frame from the video stream, resize it,
         #
         frame = vs.read()
-        streamframe = vs.read()
+
 
         if frame is not None:
+            streamframe = frame
+            roeframe = streamframe
             streamframe = imutils.resize(streamframe, width=640)
 
             # grab the current timestamp and draw it on the frame
@@ -268,7 +270,7 @@ def detect_roe(frameCount):
             # lock
             with lock:
                 outputFrame = streamframe.copy()
-                workFrame = frame
+                workFrame = roeframe
 
 
 def generate():

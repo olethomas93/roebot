@@ -80,6 +80,8 @@ class imageProcessing(object):
         height, width, _ = roe.getImage().shape
         imageHeigth = height
         imageWidth = width
+        print("width: " + str(width))
+        print("field of view: "+str(fieldOfView))
 
         # calculate length of diagonal of image in mm
         diagonalMillimeter = float(distance) * math.tan((fieldOfView / 2) * (math.pi / 180)) * 2
