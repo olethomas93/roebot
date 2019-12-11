@@ -13,7 +13,6 @@ class Camera:
     def create(self, image, cameraHeigth, pictureIndex):
 
         result = RoeImage.RoeImage(cameraHeigth, self.FOV)
-
         now = datetime.now()
         timestamp = datetime.timestamp(now)
         self.frame = image

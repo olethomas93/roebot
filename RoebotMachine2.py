@@ -67,7 +67,7 @@ def takePicture():
     global pictureIndex, imageCv
     print("Executing take picture")
 
-    RoeImage = camera.create(workFrame, 290, pictureIndex)
+    RoeImage = camera.create(workFrame, 260, pictureIndex)
     pictureIndex += 1
     imageCv.processingQueue.append(RoeImage)
 
@@ -154,7 +154,7 @@ def generatecoordinateList():
             for i in range(len(list)):
                 coordinate = list[i]
 
-                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 295)
+                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 200)
                 ypos = coordinate.getyCoor()
 
                 newcoord = Coordinate.coordinate(xpos, ypos)
@@ -228,9 +228,10 @@ def detect_roe(frameCount):
         # read the next frame from the video stream, resize it,
         #
         frame = vs.read()
+        streamframe = vs.read()
 
         if frame is not None:
-            streamframe = imutils.resize(frame, width=640)
+            streamframe = imutils.resize(streamframe, width=640)
 
             # grab the current timestamp and draw it on the frame
             timestamp = datetime.datetime.now()
@@ -267,7 +268,7 @@ def detect_roe(frameCount):
             # lock
             with lock:
                 outputFrame = streamframe.copy()
-                workFrame = frame.copy()
+                workFrame = frame
 
 
 def generate():

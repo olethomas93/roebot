@@ -1,16 +1,12 @@
-
 class RoeImage:
-    roePositionPixels = []
-
-    FOV = None
-    timeStamp = None
-    Image = None
-    captureHeight = 0
 
     def __init__(self, captureHeight, fieldOfView):
         self.captureHeight = captureHeight
         self.FOV = fieldOfView
         self.roePositionMillimeters = []
+        self.timeStamp = None
+        self.image = None
+        self.roePositionPixels = []
 
     def setImage(self, image):
         self.image = image
@@ -25,7 +21,6 @@ class RoeImage:
         return self.timeStamp
 
     def addRoePositionPixel(self, coordinate):
-
         self.roePositionPixels.append(coordinate)
 
     def getRoePositionPixel(self):
@@ -33,7 +28,6 @@ class RoeImage:
 
     def addRoePositionMillimeter(self, coordinate):
         self.roePositionMillimeters.append(coordinate)
-
 
     def getRoePositionMillimeter(self):
         return self.roePositionMillimeters
