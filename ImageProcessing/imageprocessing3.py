@@ -41,7 +41,7 @@ class imageProcessing(object):
             #detecting circles in tresholded image with a specific radius
             detected_circles = cv2.HoughCircles(thresh.copy(),
                                                 cv2.HOUGH_GRADIENT, 1, 20, param1=50,
-                                                param2=4, minRadius=3, maxRadius=7)
+                                                param2=6, minRadius=3, maxRadius=7)
 
             if detected_circles is not None:
 
