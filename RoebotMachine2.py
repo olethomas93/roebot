@@ -47,6 +47,7 @@ def poll_command():
     global regs
     print("Polling server for commands")
     command = None
+
     # display loop (in main thread)
     while True:
         with threadlock:
@@ -104,7 +105,6 @@ def polling_thread():
         # 1s before next polling
         time.sleep(1)
 
-
 # send int to modbusServer
 def sendIntModbus(value, address):
     global client
@@ -154,7 +154,7 @@ def generatecoordinateList():
             for i in range(len(list)):
                 coordinate = list[i]
 
-                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 360)
+                xpos = coordinate.getxCoor() + ((int(roeImage.getPictureIndex()) + 1) * 295)
                 ypos = coordinate.getyCoor()
 
                 newcoord = Coordinate.coordinate(xpos, ypos)
@@ -172,15 +172,17 @@ def sendCordToPLC():
     for cord in corrdList:
         arrayX.append(cord.getxCoor())
         arrayY.append(cord.getyCoor())
-
+    print(arrayY)
+    print(arrayX)
     client.write_multiple_registers(10, arrayX)
     client.write_multiple_registers(30, arrayY)
 
     # sleep so register can be updated
-    time.sleep(1)
-    imageCv.processingQueue = []
-    imageList = []
-    switch_case(0)
+    if writecoilModbus(4, True):
+        time.sleep(1)
+        imageCv.processingQueue = []
+        imageList = []
+        switch_case(0)
 
 
 def getImageList():
@@ -225,44 +227,46 @@ def detect_roe(frameCount):
         # read the next frame from the video stream, resize it,
         #
         frame = vs.read()
-        streamframe = imutils.resize(frame, width=640)
 
-        # grab the current timestamp and draw it on the frame
-        timestamp = datetime.datetime.now()
-        cv2.putText(streamframe, timestamp.strftime(
-            "%A %d %B %Y %I:%M:%S%p"), (10, streamframe.shape[0] - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        if frame is not None:
+            streamframe = imutils.resize(frame, width=640)
 
-        # if the total number of frames has reached a sufficient
-        # number to construct a reasonable background model, then
-        # continue to process the frame
-        if total > frameCount:
-            # detect motion in the image
-            motion = md.detect(streamframe)
+            # grab the current timestamp and draw it on the frame
+            timestamp = datetime.datetime.now()
+            cv2.putText(streamframe, timestamp.strftime(
+                "%A %d %B %Y %I:%M:%S%p"), (10, streamframe.shape[0] - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
-            # check to see if motion was found in the frame
-            if motion is not None:
-                # unpack the tuple and draw the box surrounding the
-                # "motion area" on the output frame
-                thresh, detected_circles = motion
-                if detected_circles is not None:
-                    for pt in detected_circles[0, :]:
-                        a, b, r = pt[0], pt[1], pt[2]
+            # if the total number of frames has reached a sufficient
+            # number to construct a reasonable background model, then
+            # continue to process the frame
+            if total > frameCount:
+                # detect motion in the image
+                motion = md.detect(streamframe)
 
-                        # Draw the circumference of the circle.
-                        cv2.circle(streamframe, (a, b), r, (0, 255, 0), 2)
+                # check to see if motion was found in the frame
+                if motion is not None:
+                    # unpack the tuple and draw the box surrounding the
+                    # "motion area" on the output frame
+                    thresh, detected_circles = motion
+                    if detected_circles is not None:
+                        for pt in detected_circles[0, :]:
+                            a, b, r = pt[0], pt[1], pt[2]
 
-                        cv2.circle(streamframe, (a, b), 1, (0, 0, 255), 3)
-            # update the background model and increment the total number
-            # of frames read thus far
-        md.update(streamframe)
-        total += 1
+                            # Draw the circumference of the circle.
+                            cv2.circle(streamframe, (a, b), r, (0, 255, 0), 2)
 
-        # acquire the lock, set the output frame, and release the
-        # lock
-        with lock:
-            outputFrame = streamframe.copy()
-            workFrame = frame.copy()
+                            cv2.circle(streamframe, (a, b), 1, (0, 0, 255), 3)
+                # update the background model and increment the total number
+                # of frames read thus far
+            md.update(streamframe)
+            total += 1
+
+            # acquire the lock, set the output frame, and release the
+            # lock
+            with lock:
+                outputFrame = streamframe.copy()
+                workFrame = frame.copy()
 
 
 def generate():
@@ -304,17 +308,19 @@ if __name__ == '__main__':
                     help="ip address of the device")
 
     args = vars(ap.parse_args())
-    # start a thread that will perform motion detection
+    # start a thread that will perform motion detection for stream
+
     th1 = Thread(target=detect_roe, args=(
         32,))
-
+    #start modbus polling thread
     th2 = Thread(target=polling_thread)
+    #start command excecuter thread
     th3 = Thread(target=poll_command)
     th1.start()
     th2.start()
     th3.start()
 
-
+    #start Flask web server
     app.run(host=args["ip"], port=8080, debug=True,
             threaded=True, use_reloader=False)
 
