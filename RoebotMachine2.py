@@ -165,6 +165,7 @@ def generatecoordinateList():
 
 
 def sendCordToPLC():
+    global imageList,imageCv
     print("sending to PLC")
     arrayX = []
     arrayY = []
@@ -176,7 +177,7 @@ def sendCordToPLC():
     print(arrayX)
     client.write_multiple_registers(10, arrayX)
     client.write_multiple_registers(30, arrayY)
-
+    time.sleep(1)
     # sleep so register can be updated
     if writecoilModbus(4, True):
         time.sleep(1)
