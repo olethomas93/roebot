@@ -53,7 +53,7 @@ def poll_command():
         with threadlock:
             if regs:
                 command = regs[0]
-                print(str(command))
+               
 
         if command in range(1, 6) and not None:
 
