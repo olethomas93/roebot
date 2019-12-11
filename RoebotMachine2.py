@@ -232,7 +232,7 @@ def detect_roe(frameCount):
         if frame is not None:
             streamframe = frame
             roeframe = streamframe
-            streamframe = imutils.resize(streamframe, width=320)
+            streamframe = imutils.resize(streamframe, width=640)
 
             # grab the current timestamp and draw it on the frame
             timestamp = datetime.datetime.now()
