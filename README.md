@@ -1,4 +1,4 @@
-# roebot
+# roebot 2019
 ip codesys PLC - 192.168.137.66
 ip- e!cockpit plc : 192.168.137.65
 
@@ -12,8 +12,7 @@ Set up a virtual environment and install opencv:
 install openCV for python 
 -pip install opencv-contrib-python
 
-- run python script "roebotMachine.py"
-
+- ```run python script "roebotMachine.py"```
 - in virtual environment
 run -python roebotMachine.py --ip "ip adress of pi"
 
