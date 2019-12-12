@@ -2,6 +2,10 @@
 ip codesys PLC - 192.168.137.66
 ip- e!cockpit plc : 192.168.137.65
 
+Raspberry pi 4:
+username : pi
+password : roebot
+
 Set up a virtual environment and install opencv:
 -https://www.pyimagesearch.com/2018/09/26/install-opencv-4-on-your-raspberry-pi/
 
