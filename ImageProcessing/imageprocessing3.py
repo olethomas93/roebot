@@ -39,7 +39,7 @@ class imageProcessing(object):
             # thresh = cv2.erode(thresh, kernel, iterations=6)
             # thresh = cv2.dilate(thresh, kernel, iterations=3)
             #detecting circles in tresholded image with a specific radius
-            detected_circles = cv2.HoughCircles(thresh.copy(),
+            detected_circles = cv2.HoughCircles(thresh,
                                                 cv2.HOUGH_GRADIENT, 1, 20, param1=50,
                                                 param2=4, minRadius=3, maxRadius=9)
 
@@ -62,7 +62,7 @@ class imageProcessing(object):
             if self.debug:
 
                 cv2.imwrite('prosessed'+str(roeImage.getPictureIndex())+".png", image)
-                cv2.imwrite('tresh.png',thresh)
+                cv2.imwrite('tresh.png'+str(roeImage.getPictureIndex())+".png",thresh)
 
         if len(imageList) >= 2:
             self.processingQueue = []
@@ -80,8 +80,7 @@ class imageProcessing(object):
         height, width, _ = roe.getImage().shape
         imageHeigth = height
         imageWidth = width
-        print("width: " + str(width))
-        print("field of view: "+str(fieldOfView))
+
 
         # calculate length of diagonal of image in mm
         diagonalMillimeter = float(distance) * math.tan((fieldOfView / 2) * (math.pi / 180)) * 2
